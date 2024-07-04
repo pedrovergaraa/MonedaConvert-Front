@@ -40,10 +40,10 @@ const routes: Routes = [
     redirectTo: 'converter',
     pathMatch: "full"
   },
-  {
-    path:"**",
-    //loadChildren: ()=> import('./pages/error/error.module').then(m => m.ErrorModule)
-  },
+  // {
+  //   path:"**",
+  //   //loadChildren: ()=> import('./pages/error/error.module').then(m => m.ErrorModule)
+  // },
 ];
 
 @NgModule({
