@@ -31,6 +31,11 @@ const routes: Routes = [
     loadChildren: ()=> import('./pages/coins/coins.module').then(m => m.CoinsModule)
   },
   {
+    path:"coin-detail",
+    //canActivate: [usuarioLogueadoGuard],
+    loadChildren: ()=> import('./pages/coin-detail/coin-detail.module').then(m => m.CoinDetailModule)
+  },
+  {
     path: "",
     redirectTo: 'converter',
     pathMatch: "full"
