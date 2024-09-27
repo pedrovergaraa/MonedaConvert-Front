@@ -26,7 +26,7 @@
     background-color: $background-color;
     height: 100%;
     overflow: hidden; /* Bloquear el scroll */
-    margin: 0; /* Eliminar cualquier margen */
+    margin: auto; /* Eliminar cualquier margen */
 }
 
 .sub-button, .view-coins-button, .convert-button {
