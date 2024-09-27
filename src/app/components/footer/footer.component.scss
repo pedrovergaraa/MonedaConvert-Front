@@ -1,0 +1,21 @@
+@import 'src/assets/styles/variables.scss';
+
+footer {
+    background-color: $primary-color;
+
+    padding: 10px;
+    text-align: center;
+}
+.plans-button {
+    background-color: $background-color; /* Color del botón */
+    color: $text-color; /* Color del texto */
+    border: none; /* Sin borde */
+    padding: 10px 20px; /* Espaciado */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    border-radius: 20px;
+    margin: 10px;
+    padding: 10px;
+    width: 80%;
+    font-size: 1rem;
+  }

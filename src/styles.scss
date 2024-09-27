@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    background-color: #25292F; /* Tu color de fondo */
+    margin: 0; /* Elimina el margen predeterminado */
+    padding: 0; /* Elimina el relleno predeterminado */
+    height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
+    display: flex; /* Flexbox para alinear el contenido */
+    flex-direction: column; /* Alinear en columna */
+  }
+  

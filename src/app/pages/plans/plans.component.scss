@@ -1,0 +1,38 @@
+@import 'src/assets/styles/variables.scss';
+
+.plans-container {
+    display: flex;
+    flex-direction: column; /* Apila las tarjetas verticalmente */
+    align-items: center; /* Centra las tarjetas */
+    padding: 20px;
+    background-color: $background-color; /* Color de fondo de la sección */
+    height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
+    justify-content: space-around; /* Espacio uniforme entre las tarjetas */
+  }
+  
+  .plan-card {
+    background-color: $primary-color; /* Cambiar el color de fondo a primario */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 100%; /* Mantener el ancho de las tarjetas */
+    max-width: 400px; /* Ancho máximo para tarjetas */
+    text-align: center; /* Centra el texto */
+    color: $text-color; /* Color del texto */
+  }
+  
+  .plan-title {
+    font-size: 50px; /* Aumentar el tamaño del título */
+    font-weight: 600; /* Semi bold */
+    margin-bottom: 10px; /* Espaciado inferior */
+  }
+  
+  .plan-description {
+    font-size: 20px; /* Tamaño de la descripción */
+    font-weight: normal; /* Peso normal para la descripción */
+  }
+
+  h3,p{
+    color: black;
+  }
+  
