@@ -3,9 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
+import { FavoriteCoinsComponent } from './components/favorite-coin/favorite-coin.component';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { ErrorMessageComponent } from './components/error-message/error-message.
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    ErrorMessageComponent
+    ErrorMessageComponent,
+    FavoriteCoinsComponent
   ],
   imports: [
     BrowserModule,

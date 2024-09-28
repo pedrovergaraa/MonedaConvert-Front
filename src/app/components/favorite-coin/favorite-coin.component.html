@@ -1,0 +1,14 @@
+<div class="dropdown">
+    <input type="text" id="from" placeholder="Selecciona una moneda">
+    <div class="icons">
+      <span class="edit-icon">✏️</span>
+      <span class="star-icon">⭐</span>
+      <span class="dropdown-arrow" (click)="toggleDropdown()">▼</span>
+    </div>
+    <ul *ngIf="showDropdown" class="dropdown-menu">
+      <li *ngFor="let coin of favoriteCoins" (click)="selectCoin(coin)">
+        {{ coin }}
+      </li>
+    </ul>
+  </div>
+  
