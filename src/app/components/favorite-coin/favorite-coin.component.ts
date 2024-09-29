@@ -10,7 +10,7 @@ export class FavoriteCoinComponent {
     @Output() coinSelected = new EventEmitter<string>();
     
     showDropdown: boolean = false;
-    availableCoins: string[] = ['USD', 'EUR', 'GBP']; // Ejemplo de monedas
+    availableCoins: string[] = ['USD', 'EUR', 'GBP', 'JYN','ARS']; // Ejemplo de monedas
     favoriteCoins: Set<string> = new Set(); // Para gestionar monedas favoritas
 
     toggleDropdown() {

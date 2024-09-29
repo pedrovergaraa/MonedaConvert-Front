@@ -1,5 +1,11 @@
 @import 'src/assets/styles/variables.scss';
 
+.input-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
 .dropdown {
     position: relative;
     display: inline-block;
@@ -14,14 +20,14 @@
 }
 
 .dropdown-arrow.rotated {
-    transform: rotate(180deg); /* Rota la flecha cuando está abierta */
+    transform: rotate(360deg); /* Rota la flecha cuando está abierta */
 }
 
 .dropdown-menu {
     display: block;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 100%; /* Para que ocupe todo el ancho del input */
+    min-width: 20%; /* Para que ocupe todo el ancho del input */
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
     margin-top: 5px;
@@ -29,7 +35,7 @@
 }
 
 .dropdown-menu li {
-    padding: 8px 12px;
+    padding: 8px ;
     cursor: pointer;
     list-style: none;
 }

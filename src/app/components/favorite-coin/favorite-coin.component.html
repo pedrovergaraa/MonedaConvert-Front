@@ -1,9 +1,11 @@
 <div class="dropdown">
-  <input type="text" [value]="selectedCoin" placeholder="Selecciona una moneda" (click)="toggleDropdown()" readonly>
-  <span class="edit-icon" (click)="editCoin()">✏️</span>
-  <span class="dropdown-arrow" 
-        [ngClass]="{'rotated': showDropdown}" 
-        (click)="toggleDropdown()">{{ showDropdown ? '▲' : '▼' }}</span>
+  <div class="input-container">
+      <input type="text" [value]="selectedCoin" placeholder="Selecciona una moneda" (click)="toggleDropdown()" readonly>
+      <span class="edit-icon" (click)="editCoin()">✏️</span>
+      <span class="dropdown-arrow" 
+            [ngClass]="{'rotated': showDropdown}" 
+            (click)="toggleDropdown()">{{ showDropdown ? '▲' : '▼' }}</span>
+  </div>
   <ul *ngIf="showDropdown" class="dropdown-menu">
       <li *ngFor="let coin of availableCoins" (click)="selectCoin(coin)">
           {{ coin }}
