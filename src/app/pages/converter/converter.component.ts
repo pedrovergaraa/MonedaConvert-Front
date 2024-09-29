@@ -6,5 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./converter.component.scss']
 })
 export class ConverterComponent {
+  selectedFromCoin: string = '';
+  selectedToCoin: string = '';
 
+    onFromCoinSelected(coin: string) {
+      this.selectedFromCoin = coin;
+  }
+
+  onToCoinSelected(coin: string) {
+      this.selectedToCoin = coin;
+  }
 }

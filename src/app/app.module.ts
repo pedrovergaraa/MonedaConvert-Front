@@ -5,8 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
-import { ErrorMessageComponent } from './components/error-message/error-message.component';
-import { FavoriteCoinsComponent } from './components/favorite-coin/favorite-coin.component';
 
 
 @NgModule({
@@ -14,8 +12,6 @@ import { FavoriteCoinsComponent } from './components/favorite-coin/favorite-coin
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    ErrorMessageComponent,
-    FavoriteCoinsComponent
   ],
   imports: [
     BrowserModule,

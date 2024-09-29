@@ -1,29 +1,31 @@
+@import 'src/assets/styles/variables.scss';
+
 .dropdown {
     position: relative;
     display: inline-block;
     width: 100%;
-}
-
-.icons {
-    display: inline-flex;
-    align-items: center;
+    margin: 10px 0; /* Espaciado adicional si lo necesitas */
 }
 
 .dropdown-arrow {
     margin-left: 8px;
     cursor: pointer;
+    transition: transform 0.3s ease; /* Añade una transición para la animación */
+}
+
+.dropdown-arrow.rotated {
+    transform: rotate(180deg); /* Rota la flecha cuando está abierta */
 }
 
 .dropdown-menu {
     display: block;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 160px;
+    min-width: 100%; /* Para que ocupe todo el ancho del input */
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
     margin-top: 5px;
     border-radius: 4px;
-    width: 100%;
 }
 
 .dropdown-menu li {
@@ -34,4 +36,20 @@
 
 .dropdown-menu li:hover {
     background-color: #f1f1f1;
+}
+
+label {
+    color: $primary-color;
+    font-size: 1rem;
+}
+
+input[type="text"] {
+    background-color: white;
+    border: 2px solid $primary-color;
+    border-radius: 20px;
+    color: black;
+    margin: 10px 0;
+    padding: 10px;
+    width: 95%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
