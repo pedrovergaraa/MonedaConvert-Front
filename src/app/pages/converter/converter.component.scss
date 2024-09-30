@@ -19,7 +19,7 @@
 .body {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content:space-evenly;
     padding: 20px;
     box-sizing: border-box;
     width: 100%;
@@ -32,14 +32,14 @@
 .sub-button, .view-coins-button, .convert-button {
     background-color: $primary-color;
     border: none;
-    border-radius: 20px;
+    border-radius: 15px;
     color: $text-color;
     cursor: pointer;
-    margin: 10px 0;
-    padding: 10px;
+    margin: 15px 0;
+    padding: 15px;
     width: 100%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 
 label {
@@ -56,15 +56,6 @@ input[type="text"] {
     padding: 10px;
     width: 100%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.dropdown {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: 20px;
-    margin: 10px 0;
-    padding: 10px;
 }
 
 .icons {

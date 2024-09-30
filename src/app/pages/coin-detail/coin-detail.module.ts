@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CoinDetailComponent } from './coin-detail.component';
 
+import { CoinDetailRoutingModule } from './coin-detail-routing.module';
+import { CoinDetailComponent } from './coin-detail.component';
 
 
 @NgModule({
@@ -9,7 +10,8 @@ import { CoinDetailComponent } from './coin-detail.component';
     CoinDetailComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    CoinDetailRoutingModule
   ]
 })
 export class CoinDetailModule { }

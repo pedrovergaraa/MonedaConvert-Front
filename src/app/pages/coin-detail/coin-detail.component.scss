@@ -1,0 +1,115 @@
+@import 'src/assets/styles/variables.scss';
+
+.edit-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: $primary-color;
+  }
+  
+  .currency-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: $background-color;
+    position: relative; /* Para mantener el botón de eliminar en la parte superior derecha */
+  }
+  
+  
+  .currency-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 300px;
+    margin-bottom: 20px;
+  
+    .currency-info {
+      p {
+        color: $text-color;
+        font-size: 1rem;
+      }
+    }
+  
+    .delete-button {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: darkred;
+      }
+    }
+  }
+  
+  .currency-form-card {
+    background-color: $header-background;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px;
+  
+    form {
+      display: flex;
+      flex-direction: column;
+  
+      label {
+        color: $text-color;
+        margin-bottom: 5px;
+      }
+  
+      input {
+        background: none;
+        border: none;
+        border-bottom: 1px solid $primary-color;
+        padding: 12px;
+        margin-bottom: 20px;
+        color: $text-color;
+        font-size: 1.1rem;
+  
+        &:focus {
+          outline: none;
+        }
+      }
+  
+      .form-buttons {
+        display: flex;
+        justify-content: space-between;
+  
+        .confirm-button {
+          background-color: $primary-color;
+          color: $background-color;
+          border: none;
+          padding: 12px;
+          border-radius: 10px;
+          cursor: pointer;
+          font-size: 1.1rem;
+          width: 48%;
+  
+          &:hover {
+            background-color: #d7ca80;
+          }
+        }
+  
+        .cancel-button {
+          background-color: gray;
+          color: $text-color;
+          border: none;
+          padding: 12px;
+          border-radius: 10px;
+          cursor: pointer;
+          font-size: 1.1rem;
+          width: 48%;
+  
+          &:hover {
+            background-color: darkgray;
+          }
+        }
+      }
+    }
+  }
+  
