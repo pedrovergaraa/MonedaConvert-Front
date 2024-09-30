@@ -1,0 +1,73 @@
+@import 'src/assets/styles/variables.scss';
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    place-items: center;
+    justify-content: center;
+}
+
+.container-general {
+    width: 95%;
+    height: 98%;
+    inset: 0;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.category {
+    width: 95%;
+    height: 33.3%;
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    justify-content: center;
+    gap: 5px;
+    }
+
+.title {
+    display: flex;
+    justify-content: space-around; // Espacio entre el título y el botón
+    align-items: center; // Alineación vertical centrada
+    color: white; // Color del texto
+}
+
+h1 {
+    font-size: 24px; // Tamaño del título
+    margin: 0; // Sin margen
+    color: $primary-color;
+}
+
+.coin-container {
+    width: 100%;
+    height: 77%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 5px;
+    overflow-y: scroll;
+}
+
+.coin {
+    margin: 2px; // Espaciado entre monedas
+}
+
+.create-button {
+    background-color: $primary-color; // Color del botón de crear
+    color: $background-color; // Color del texto del botón
+    border: none; // Sin borde
+    border-radius: 5px; // Bordes redondeados
+    padding: 10px 20px; // Espaciado interno del botón
+    font-size: 16px; // Tamaño del texto
+    cursor: pointer; // Cursor de puntero al pasar por encima
+    transition: background-color 0.3s; // Transición suave para el color de fondo
+    
+    &:hover {
+        background-color: darken( rgb(255, 185, 55), 10%); // Oscurecer el color al pasar el mouse
+    }
+}

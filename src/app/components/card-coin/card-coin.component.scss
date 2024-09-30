@@ -1,0 +1,31 @@
+@import 'src/assets/styles/variables.scss';
+
+.card-coin {
+    height: 41px;
+    display: flex;
+    justify-content: space-around; // Cambiado a space-between para mejor distribución
+    align-items: center; // Alineación vertical centrada
+    border: 2px solid #E4AE1E; // Color de borde con tu color principal
+    border-radius: 10px;
+    background: $primary-color; // Color de fondo definido en variables
+    padding: 8px; // Espaciado interno para evitar que el texto toque el borde
+    margin: 10px;
+
+    p {
+        color: $background-color;
+        margin: 0;
+        font-size: 20px;
+    }
+
+    span {
+        color: $background-color;
+        font-size: 25px;
+    }
+
+    // Efecto al pasar el mouse
+    &:hover {
+        border-color: darken(#c8b172, 10%); // Borde más oscuro al pasar el mouse
+        background: rgb(252, 193, 82); // Efecto de fondo ligero
+        cursor: pointer; // Cambia el cursor al pasar el mouse
+    }
+}
