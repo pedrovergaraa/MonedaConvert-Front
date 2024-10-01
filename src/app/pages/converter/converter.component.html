@@ -2,23 +2,25 @@
     <div class="body">
         <button class="sub-button">Free sub</button>
         <button class="view-coins-button">Ver Monedas</button>
-
-        <label for="amount">Importe</label>
-        <input type="text" id="amount" placeholder="1,00 $" />
-
-        <!-- Input para la moneda "de" -->
-        <label for="from">De</label>
-        <app-favorite-coin 
-            [selectedCoin]="selectedFromCoin" 
-            (coinSelected)="onFromCoinSelected($event)">
-        </app-favorite-coin>
-
-        <!-- Input para la moneda "a" -->
-        <label for="to">A</label>
-        <app-favorite-coin 
-            [selectedCoin]="selectedToCoin" 
-            (coinSelected)="onToCoinSelected($event)">
-        </app-favorite-coin>
+    
+        <div class="input-container">
+            <label for="amount">Importe</label>
+            <input type="text" id="amount" placeholder="1,00 $" />
+        </div>
+        <div class="input-container">    
+            <label for="from">De</label>
+            <app-favorite-coin 
+                [selectedCoin]="selectedFromCoin" 
+                (coinSelected)="onFromCoinSelected($event)">
+            </app-favorite-coin>
+        </div>
+        <div class="input-container">
+            <label for="to">A</label>
+            <app-favorite-coin 
+                [selectedCoin]="selectedToCoin" 
+                (coinSelected)="onToCoinSelected($event)">
+            </app-favorite-coin>
+        </div>
 
         <button class="convert-button" type="submit">Convertir</button>
         <p id="result">Resultado de la Conversión</p>

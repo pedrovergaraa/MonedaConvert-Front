@@ -39,7 +39,7 @@ const routes: Routes = [
   },
   {
     path: "",
-    redirectTo: 'converter',
+    redirectTo: "converter",
     pathMatch: "full"
   },
   // {
