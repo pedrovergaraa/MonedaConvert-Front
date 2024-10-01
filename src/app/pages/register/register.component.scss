@@ -1,68 +1,81 @@
 @import 'src/assets/styles/variables.scss';
 
-
 .register-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: $background-color;
-    padding: 20px;
-  }
-  
-  
-  .register-card {
-    background-color: $header-background;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 400px;
-  }
-  
-  .register-title {
-    text-align: center;
-    color: $text-color;
-    margin-bottom: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-label {
-    color: $text-color;
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .form-input {
-    width: 95%; /* Mantener el 100% para que los inputs sean responsivos */
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    background-color: #444; /* Color de fondo del input */
-    color: $text-color;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Asegura que el contenedor ocupe toda la pantalla */
+  background-color: $background-color;
+  padding: 20px;
+}
 
-  
-  .form-input:focus {
-    outline: none;
-    border: 2px solid $primary-color;
-  }
-  
-  .register-button {
-    width: 100%;
-    padding: 10px;
-    background-color: $primary-color;
-    color: $text-color;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .register-button:hover {
-    background-color: darken($primary-color, 10%);
-  }
-  
+.register-card {
+  background-color: $header-background;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 95%;
+  max-width: 400px;
+}
+
+.register-title {
+  text-align: center;
+  color: $primary-color;
+  margin-bottom: 20px;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.input-container {
+  margin-bottom: 15px; /* Añadir margen inferior */
+}
+
+.form-label {
+  color: $text-color;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-input {
+  width: 95%; /* Ajustado para mantener el 100% del ancho */
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #444; /* Color de fondo del input */
+  color: $text-color;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.form-input:focus {
+  outline: none;
+  border: 2px solid $primary-color;
+}
+
+.error {
+  color: red;
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+.register-button {
+  width: 100%;
+  padding: 10px;
+  background-color: $primary-color;
+  color: $background-color;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.register-button:hover {
+  background-color: darken($primary-color, 10%);
+}
+
+a {
+  display: block;
+  text-align: center;
+  color: rgb(170, 170, 170);
+  margin-top: 10px;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+}

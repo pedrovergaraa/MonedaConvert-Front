@@ -68,6 +68,6 @@ h1 {
     transition: background-color 0.3s; // Transición suave para el color de fondo
     
     &:hover {
-        background-color: darken( rgb(255, 185, 55), 10%); // Oscurecer el color al pasar el mouse
+        background-color: darken($primary-color, 10%);
     }
 }

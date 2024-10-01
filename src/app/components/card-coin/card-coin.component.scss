@@ -24,7 +24,7 @@
 
     // Efecto al pasar el mouse
     &:hover {
-        border-color: darken(#c8b172, 10%); // Borde más oscuro al pasar el mouse
+        border-color: darken($primary-color, 10%); // Borde más oscuro al pasar el mouse
         background: rgb(252, 193, 82); // Efecto de fondo ligero
         cursor: pointer; // Cambia el cursor al pasar el mouse
     }

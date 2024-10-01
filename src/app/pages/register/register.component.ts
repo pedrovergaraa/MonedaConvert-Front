@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
+import { Router } from '@angular/router';
+import { RegisterData } from 'src/app/interfaces/User';
+import { AuthService } from 'src/app/services/auth.service';
+
 
 @Component({
   selector: 'app-register',
@@ -6,5 +10,29 @@ import { Component } from '@angular/core';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
+  
+  authService = inject(AuthService)
+  router = inject(Router);
+  errorRegister: WritableSignal<boolean> = signal(false)
 
+  registerData: RegisterData = {
+    name: "",
+    email: "",
+    password: "",
+  }
+
+  async register(){
+    this.errorRegister.set(false);
+    try{
+      const res = await this.authService.register(this.registerData);
+      if(res.ok) {
+        this.router.navigate(["/login"])
+      }
+      else {
+        this.errorRegister.set(true);
+      }
+    } catch(err) {
+      console.warn('Error registrando', err)
+    }
+  }
 }
