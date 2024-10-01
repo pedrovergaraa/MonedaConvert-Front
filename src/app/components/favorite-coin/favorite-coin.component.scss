@@ -44,6 +44,26 @@
     background-color: #f1f1f1;
 }
 
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    cursor: pointer;
+  }
+  
+  .star-icon {
+    margin-left: 8px;
+    cursor: pointer;
+  }
+  
+  .favorite {
+    color: yellow; /* Las estrellas de monedas favoritas serán de color amarillo */
+  }
+  
+  li:hover {
+    background-color: #f1f1f1;
+  }
 label {
     color: $primary-color;
     font-size: 1rem;

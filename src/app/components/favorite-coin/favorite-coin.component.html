@@ -1,15 +1,20 @@
 <div class="dropdown">
-  <div class="input-container">
-      <input type="text" [value]="selectedCoin" placeholder="Selecciona una moneda" (click)="toggleDropdown()" readonly>
-      <span class="edit-icon" (click)="editCoin()">✏️</span>
-      <span class="dropdown-arrow" 
-            [ngClass]="{'rotated': showDropdown}" 
-            (click)="toggleDropdown()">{{ showDropdown ? '▲' : '▼' }}</span>
+    <div class="input-container">
+        <input type="text" [value]="selectedCoin" placeholder="Selecciona una moneda" (click)="toggleDropdown()" readonly>
+        <span class="edit-icon" (click)="editCoin()">✏️</span>
+        <span class="dropdown-arrow" 
+              [ngClass]="{'rotated': showDropdown}" 
+              (click)="toggleDropdown()">{{ showDropdown ? '▲' : '▼' }}</span>
+    </div>
+    <ul *ngIf="showDropdown" class="dropdown-menu">
+        <li *ngFor="let coin of favoriteCoins" (click)="selectCoin(coin)">
+            {{ coin }} 
+            <i class="fas fa-star favorite" (click)="toggleFavorite(coin, $event)"></i>
+        </li>
+        <li *ngFor="let coin of availableNonFavoriteCoins" (click)="selectCoin(coin)">
+            {{ coin }}
+            <i class="far fa-star" (click)="toggleFavorite(coin, $event)"></i>
+        </li>
+    </ul>
   </div>
-  <ul *ngIf="showDropdown" class="dropdown-menu">
-      <li *ngFor="let coin of availableCoins" (click)="selectCoin(coin)">
-          {{ coin }}
-          <span class="star-icon" (click)="toggleFavorite(coin)">⭐</span>
-      </li>
-  </ul>
-</div>
+  
