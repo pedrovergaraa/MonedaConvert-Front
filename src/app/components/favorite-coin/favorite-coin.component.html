@@ -1,7 +1,10 @@
 <div class="dropdown">
     <div class="input-container">
         <input type="text" [value]="selectedCoin" placeholder="Selecciona una moneda" (click)="toggleDropdown()" readonly>
-        <span class="edit-icon" (click)="editCoin()">✏️</span>
+        <!-- Lápiz como botón con routerLink a otra ruta -->
+        <a [routerLink]="['/coin-detail']" class="edit-icon">
+            ✏️
+        </a>
         <span class="dropdown-arrow" 
               [ngClass]="{'rotated': showDropdown}" 
               (click)="toggleDropdown()">{{ showDropdown ? '▲' : '▼' }}</span>

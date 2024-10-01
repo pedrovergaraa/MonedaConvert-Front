@@ -34,11 +34,6 @@
     border-radius: 4px;
 }
 
-.dropdown-menu li {
-    padding: 8px ;
-    cursor: pointer;
-    list-style: none;
-}
 
 .dropdown-menu li:hover {
     background-color: #f1f1f1;
@@ -58,12 +53,9 @@ li {
   }
   
   .favorite {
-    color: yellow; /* Las estrellas de monedas favoritas serán de color amarillo */
+    color: $primary-color; /* Las estrellas de monedas favoritas serán de color amarillo */
   }
   
-  li:hover {
-    background-color: #f1f1f1;
-  }
 label {
     color: $primary-color;
     font-size: 1rem;
@@ -78,4 +70,8 @@ input[type="text"] {
     padding: 10px;
     width: 95%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+a{
+    color: $background-color;
 }
