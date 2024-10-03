@@ -34,7 +34,7 @@ export class CreatCoinComponent {
   };
 
   onSubmit() {
-    this.currencyService.create(this.currency).then(res => {
+    this.currencyService.createCurrency(this.currency).then(res => {
       this.close.emit();
       if (res) {
         localStorage.setItem('mensajeOkey', 'Creada correctamente');
