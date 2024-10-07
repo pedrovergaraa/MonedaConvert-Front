@@ -31,8 +31,8 @@
     }
 
 h1 {
-    font-size: 24px; // Tamaño del título
-    margin: 0; // Sin margen
+    font-size: 24px; 
+    margin: 0; 
     color: $primary-color;
 }
 
@@ -47,27 +47,27 @@ h1 {
 }
 
 .coin {
-    margin: 2px; // Espaciado entre monedas
+    margin: 2px; 
 }
 
 .title {
     display: flex;
-    justify-content: space-between; /* Espacio entre el título y el botón */
-    align-items: center; /* Alineación vertical centrada */
-    color: white; /* Color del texto */
-    padding: 0 20px; /* Ajuste para dar espacio lateral si es necesario */
+    justify-content: space-between; 
+    align-items: center; 
+    color: white; 
+    padding: 0 20px; 
 }
 
 .create-button {
-    background-color: #E4AE1E; /* Color del botón de crear */
-    color: #25292F; /* Color del texto del botón */
-    border: none; /* Sin borde */
-    border-radius: 5px; /* Bordes redondeados */
-    padding: 10px 20px; /* Espaciado interno del botón */
-    font-size: 20px; /* Tamaño del texto */
-    cursor: pointer; /* Cursor de puntero al pasar por encima */
-    transition: background-color 0.3s; /* Transición suave para el color de fondo */
-    margin-left: 50px; /* Asegura que el botón quede alineado a la derecha */
+    background-color: #E4AE1E;
+    color: #25292F; 
+    border: none; 
+    border-radius: 5px; 
+    padding: 10px 20px; 
+    font-size: 20px; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+    margin-left: 50px;
 }
 
 .create-button:hover {

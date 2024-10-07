@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Currency } from 'src/app/interfaces/Currency';
 import { CurrencyService } from 'src/app/services/currency.service';
-import { mensajeError, mensajeOkey } from 'src/app/helpers/messageModal';
+import { ErrorMessage, SuccessMessage } from 'src/app/helpers/messageModal';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -28,7 +28,7 @@ export class CreatCoinComponent {
   ngOnInit(): void {
     const message = localStorage.getItem('mensajeOkey');
         if (message) {
-          mensajeOkey(message);
+          ErrorMessage(message);
           localStorage.removeItem('mensajeOkey');
         }
   };
@@ -40,7 +40,7 @@ export class CreatCoinComponent {
         localStorage.setItem('mensajeOkey', 'Creada correctamente');
         location.reload()
       } else {
-        mensajeError('Error creando moneda')
+        SuccessMessage('Error creando moneda')
       }
     });
   }

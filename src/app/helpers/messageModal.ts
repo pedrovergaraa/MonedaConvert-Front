@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-export function mensajeOkey(messageText:string){
+export function SuccessMessage(messageText:string){
     Swal.fire({
         title: messageText,
         timer: 2000,
@@ -13,7 +13,7 @@ export function mensajeOkey(messageText:string){
       })
 }
 
-export function mensajeError(messageText:string){
+export function ErrorMessage(messageText:string){
   Swal.fire({
       title: messageText,
       timer: 2000,
