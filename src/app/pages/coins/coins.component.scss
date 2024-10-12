@@ -42,7 +42,6 @@
         margin-left: 5px; // Espaciado entre la palabra "Favoritas" y la estrella
     }
     
-
 h1 {
     font-size: 24px; // Tamaño del título
     margin: 0; // Sin margen
@@ -69,17 +68,26 @@ h1 {
     margin: 2px; // Espaciado entre monedas
 }
 
+.title {
+    display: flex;
+    justify-content: space-between; /* Espacio entre el título y el botón */
+    align-items: center; /* Alineación vertical centrada */
+    color: white; /* Color del texto */
+    padding: 0 20px; /* Ajuste para dar espacio lateral si es necesario */
+}
+
 .create-button {
-    background-color: $primary-color; // Color del botón de crear
-    color: $background-color; // Color del texto del botón
-    border: none; // Sin borde
-    border-radius: 5px; // Bordes redondeados
-    padding: 10px 20px; // Espaciado interno del botón
-    font-size: 16px; // Tamaño del texto
-    cursor: pointer; // Cursor de puntero al pasar por encima
-    transition: background-color 0.3s; // Transición suave para el color de fondo
-    
-    &:hover {
-        background-color: darken($primary-color, 10%);
-    }
+    background-color: #E4AE1E; /* Color del botón de crear */
+    color: #25292F; /* Color del texto del botón */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px 20px; /* Espaciado interno del botón */
+    font-size: 20px; /* Tamaño del texto */
+    cursor: pointer; /* Cursor de puntero al pasar por encima */
+    transition: background-color 0.3s; /* Transición suave para el color de fondo */
+    margin-left: 50px; /* Asegura que el botón quede alineado a la derecha */
+}
+
+.create-button:hover {
+    background-color: darken(#E4AE1E, 10%);
 }

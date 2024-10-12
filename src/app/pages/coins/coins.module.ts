@@ -6,6 +6,7 @@ import { CoinsComponent } from './coins.component';
 import { CardCoinComponent } from 'src/app/components/card-coin/card-coin.component';
 
 
+
 @NgModule({
   declarations: [
     CoinsComponent
