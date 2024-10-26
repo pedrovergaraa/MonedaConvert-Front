@@ -3,21 +3,12 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden; /* Evita el scroll vertical y horizontal */
-  background-color: #25292F; /* Color de fondo */
+  background-color: #25292F;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
-
 
 * {
-  box-sizing: border-box; /* Aplicar a todos los elementos para evitar problemas de overflow */
+  box-sizing: border-box;
 }
-
-
-.container {
-  max-width: 100%; /* Asegura que los elementos no se extiendan más allá del ancho de la pantalla */
-  height: auto; /* Ajusta la altura según el contenido */
-  padding: 10px; /* Un poco de espacio para el contenido */
-}
-

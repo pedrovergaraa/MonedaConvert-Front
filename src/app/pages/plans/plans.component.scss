@@ -2,38 +2,40 @@
 
 .plans-container {
     display: flex;
-    flex-direction: column; 
-    align-items: center; 
+    flex-direction: column;
+    align-items: center;
     padding: 20px;
     background-color: $background-color;
-    height: 100vh; 
-    justify-content: space-around; 
-  }
-  
-  .plan-card {
-    background-color: $primary-color; 
-    border-radius: 8px;
+    height: calc(100vh - 120px); /* Ajuste para el espacio del header y footer */
+    justify-content: center; /* Centra las tarjetas verticalmente */
+    gap: 15px; /* Espacio uniforme entre tarjetas */
+    overflow: hidden;
+}
+
+.plan-card {
+    background-color: $primary-color;
+    border-radius: 15px; /* Bordes redondeados */
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    width: 100%; 
-    max-width: 300px; 
-    text-align: center; 
-    color: $text-color; 
-  }
-  
-  .plan-title {
-    font-size: 50px; 
-    font-weight: 600; 
-    margin-bottom: 10px; 
-    font-family:serif;
-  }
-  
-  .plan-description {
-    font-size: 20px;
-    font-weight: normal; 
-  }
+    width: 100%;
+    max-width: 280px; /* Ancho fijo para que sean consistentes */
+    text-align: center;
+    color: $text-color;
+}
 
-  h3,p{
+.plan-title {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.plan-description {
+    font-size: 16px;
+    font-weight: normal;
+    color: black; /* Color de texto en la descripción */
+}
+
+h3, p {
     color: black;
-  }
-  
+}
