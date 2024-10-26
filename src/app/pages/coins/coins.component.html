@@ -21,7 +21,7 @@
 
         <div class="category">
             <div class="title">
-                <h1>Favoritas <img src="./../../../assets/img/star.png" alt="Star"></h1>
+                <h1>Favoritas <img src="./../../../assets/images/starIcon.png" alt="Star" class="star-icon"></h1>
             </div>
             <div class="coin-container">
                 <div class="coin">
@@ -43,13 +43,16 @@
         </div>
 
         <div class="category">
-            <div class="titulo">
-                <h1>Mis Monedas</h1>
-                <!-- <button (click)="dialogCreateCoin.showModal()">Crear +</button>      
+
+            <div class="title">
+                <h1>My Coins</h1>
+                <div class="button-container">
+                     <!-- <button (click)="dialogCreateCoin.showModal()" class="create-button">Crear +</button>      
                 <dialog #dialogCreatecurrency>
                     <app-create-coin (close)="dialogCreatecurrency.close()"></app-create-coin>
                 </dialog> -->
-            </div>
+                </div>
+
             <div class="coin-container">
                 <div class="coin">
                     <app-card-coin></app-card-coin>
@@ -64,6 +67,6 @@
                     <app-card-coin></app-card-coin>
                 </div>
             </div>
-        </div>
+
     </div>
 </div>

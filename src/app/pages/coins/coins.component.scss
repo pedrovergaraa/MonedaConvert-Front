@@ -28,12 +28,30 @@
     place-items: center;
     justify-content: center;
     gap: 5px;
-    }
+ }
 
+    .title {
+        display: flex;
+        justify-content: space-between; // Espacio entre el título y el botón
+        align-items: center; // Alineación vertical centrada
+    }
+    
+    .star-icon {
+        width: 20px; // Ajusta el tamaño de la estrella según sea necesario
+        height: 20px; // Ajusta el tamaño de la estrella según sea necesario
+        margin-left: 5px; // Espaciado entre la palabra "Favoritas" y la estrella
+    }
+    
 h1 {
     font-size: 24px; 
     margin: 0; 
     color: $primary-color;
+}
+
+.button-container {
+    display: flex; // Usar flex para alinear el botón
+    justify-content: flex-end; // Alinear el botón a la derecha
+    margin: 10px;
 }
 
 .coin-container {
