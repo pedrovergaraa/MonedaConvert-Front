@@ -1,16 +1,14 @@
-
 <div class="plans-container">
-    <div class="plan-card">
-      <h3 class="plan-title">Free Sub</h3>
-      <p class="plan-description">10 conversiones gratis</p>
-    </div>
-    <div class="plan-card">
-      <h3 class="plan-title">Trial Sub</h3>
-      <p class="plan-description">100 conversiones</p>
-    </div>
-    <div class="plan-card">
-      <h3 class="plan-title">Pro Sub</h3>
-      <p class="plan-description">Conversiones ilimitadas</p>
-    </div>
+  <div class="plan-card" (click)="selectPlan('Free')">
+    <h3 class="plan-title">Free Sub</h3>
+    <p class="plan-description">10 conversiones gratis</p>
   </div>
-  
+  <div class="plan-card" (click)="selectPlan('Trial')">
+    <h3 class="plan-title">Trial Sub</h3>
+    <p class="plan-description">100 conversiones</p>
+  </div>
+  <div class="plan-card" (click)="selectPlan('Pro')">
+    <h3 class="plan-title">Pro Sub</h3>
+    <p class="plan-description">Conversiones ilimitadas</p>
+  </div>
+</div>
