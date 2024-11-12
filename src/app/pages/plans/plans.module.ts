@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { PlansRoutingModule } from './plans-routing.module';
 import { PlansComponent } from './plans.component';
-import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -12,8 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     CommonModule,
-    PlansRoutingModule,
-    HttpClientModule
+    PlansRoutingModule
   ]
 })
 export class PlansModule { }

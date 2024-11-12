@@ -1,7 +1,5 @@
 // src/app/services/subscription.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 export type SubscriptionType = 'Free' | 'Trial' | 'Pro';
 
@@ -39,40 +37,46 @@ export class SubscriptionService {
         this.remainingAttempts = 100;
         break;
       case 'Pro':
-        this.remainingAttempts = Infinity;
+        this.remainingAttempts = Infinity; // Ilimitados
         break;
     }
   }
 
-  async updateSubscription(type: SubscriptionType): Promise<void> {
-    this.subscriptionType = type;
-    this.updateAttemptsBasedOnSubscription();
+  // Método para convertir y restar un intento
+  // Método para convertir y restar un intento
+async convert(amount: number, from: string, to: string): Promise<number> {
+  // Verificamos si el usuario tiene intentos restantes según su plan
+  if (this.subscriptionType !== 'Pro' && this.remainingAttempts <= 0) {
+    throw new Error(`Conversion limit reached for ${this.subscriptionType} plan`);
   }
-  
 
-  async convert(amount: number, from: number, to: number): Promise<number> {
-    if (this.subscriptionType !== 'Pro' && this.remainingAttempts <= 0) {
-      throw new Error(`Conversion limit reached for ${this.subscriptionType} plan`);
+  try {
+    // Hacemos la solicitud al backend para convertir la moneda
+    const response = await fetch('/api/convert', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ amount, from, to }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Error in conversion');
     }
-    try {
-      const response = await fetch('/api/convert', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ amount, from, to }),
-      });
-      if (!response.ok) {
-        throw new Error(`Error en la conversión: ${response.statusText}`);
-      }
-      const result = await response.json();
-      if (this.subscriptionType !== 'Pro') {
-        this.remainingAttempts--;
-      }
-      return result;
-    } catch (error) {
-      console.error('Error en la conversión:', error);
-      throw error;
+
+    const result = await response.json();
+
+    // Si no es 'Pro', restamos un intento
+    if (this.subscriptionType !== 'Pro') {
+      this.remainingAttempts--;
     }
+
+    // Devolvemos el resultado de la conversión
+    return result.convertedAmount; // Suponiendo que el backend devuelve el monto convertido con el campo "convertedAmount"
+  } catch (error) {
+    console.error('Error en la conversión:', error);
+    throw error;
   }
+}
+
 }

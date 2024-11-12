@@ -1,9 +1,10 @@
 <div class="container">
   <div class="body">
-    <button class="sub-button">Free sub</button>
+    <p>Plan: {{ subscriptionService.getSubscriptionType() }}</p>
     <button class="view-coins-button" [routerLink]="['/coins']">Ver Monedas</button>
     <label for="amount">Importe</label>
-    <input type="text" id="amount" placeholder="1,00 $" />
+    <input type="text" id="amount" placeholder="1,00 $" [(ngModel)]="amount" />
+    
     <div class="input-container">
       <label for="from">De</label>
       <app-favorite-coin 
@@ -11,6 +12,7 @@
         (coinSelected)="onFromCoinSelected($event)">
       </app-favorite-coin>
     </div>
+    
     <div class="input-container">
       <label for="to">A</label>
       <app-favorite-coin 
@@ -18,10 +20,14 @@
         (coinSelected)="onToCoinSelected($event)">
       </app-favorite-coin>
     </div>
-    <button class="convert-button" type="submit">Convertir</button>
-    <p id="result">Resultado de la Conversión</p>
+    
+    <button class="convert-button" type="button" (click)="convertCurrency(amount, selectedFromCoin, selectedToCoin)">
+      Convertir
+    </button>
+
+    <p id="result">Resultado de la Conversión: {{ result }}</p>
     <div class="attempts">
-      Te quedan <span class="attempts-number">{{ remainingAttempts }}</span> intentos
+      <p>Intentos restantes: {{ subscriptionService.getRemainingAttempts() }}</p>
     </div>
   </div>
 </div>

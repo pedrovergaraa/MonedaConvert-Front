@@ -44,16 +44,25 @@ export class CurrencyService extends ApiService {
     return parseInt(total, 10);
   }
 
-  // Función para realizar una conversión, respetando el límite del plan del usuario
-  async convertCurrency(amount: number, fromCurrency: number, toCurrency: number): Promise<string | number> {
-    const remainingAttempts = this.subscriptionService.getRemainingAttempts();
-    if (remainingAttempts <= 0) {
-      return `You have reached your conversion limit for the ${this.subscriptionService.getSubscriptionType()} plan.`;
-    }
-    // Realiza la conversión si hay intentos restantes
-    return await this.subscriptionService.convert(amount, fromCurrency, toCurrency);
+ // Función para realizar una conversión, respetando el límite del plan del usuario
+async convertCurrency(amount: number, fromCurrency: string, toCurrency: string): Promise<string | number> {
+  const remainingAttempts = this.subscriptionService.getRemainingAttempts();
+
+  // Verificamos si se alcanzó el límite de intentos
+  if (remainingAttempts <= 0) {
+    return `You have reached your conversion limit for the ${this.subscriptionService.getSubscriptionType()} plan.`;
   }
-  
+
+  try {
+    // Realiza la conversión si hay intentos restantes
+    const convertedAmount = await this.subscriptionService.convert(amount, fromCurrency, toCurrency);
+    return convertedAmount;
+  } catch (error) {
+    console.error('Error in conversion:', error);
+    return 'There was an error during the conversion process.';
+  }
+}
+
 
   // CRUD para Monedas
 
