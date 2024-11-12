@@ -7,6 +7,9 @@ import { LoginData, RegisterData } from '../interfaces/User';
   providedIn: 'root'
 })
 export class AuthService {
+  getToken() {
+    throw new Error('Method not implemented.');
+  }
 
   constructor() {
     this.token.set(localStorage.getItem('token'));

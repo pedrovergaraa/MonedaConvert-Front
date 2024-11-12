@@ -1,38 +1,27 @@
-<!-- converter.component.html -->
-<div *ngIf="message" class="subscription-message">
-    {{ message }}
-  </div>
-  
-  <div class="container">
-    <div class="body">
-      <button class="sub-button">{{ subscriptionType }} sub</button>
-      <button class="view-coins-button" [routerLink]="['/coins']">Ver Monedas</button>
-  
-      <label for="amount">Importe</label>
-      <input type="text" id="amount" placeholder="1,00 $" [(ngModel)]="amount" />
-  
-      <div class="input-container">
-        <label for="from">De</label>
-        <app-favorite-coin
-          [selectedCoin]="selectedFromCoin"
-          (coinSelected)="onFromCoinSelected($event)"
-        ></app-favorite-coin>
-      </div>
-  
-      <div class="input-container">
-        <label for="to">A</label>
-        <app-favorite-coin
-          [selectedCoin]="selectedToCoin"
-          (coinSelected)="onToCoinSelected($event)"
-        ></app-favorite-coin>
-      </div>
-  
-      <button class="convert-button" type="button" (click)="Convert(amount)">Convertir</button>
-      <p id="result">Resultado de la Conversión: {{ result }}</p>
-  
-      <div class="attempts">
-        Te quedan <span class="attempts-number">{{ remainingAttempts === 99999 ? 'intentos ilimitados' : remainingAttempts }}</span> intentos
-      </div>
+<div class="container">
+  <div class="body">
+    <button class="sub-button">Free sub</button>
+    <button class="view-coins-button" [routerLink]="['/coins']">Ver Monedas</button>
+    <label for="amount">Importe</label>
+    <input type="text" id="amount" placeholder="1,00 $" />
+    <div class="input-container">
+      <label for="from">De</label>
+      <app-favorite-coin 
+        [selectedCoin]="selectedFromCoin" 
+        (coinSelected)="onFromCoinSelected($event)">
+      </app-favorite-coin>
+    </div>
+    <div class="input-container">
+      <label for="to">A</label>
+      <app-favorite-coin 
+        [selectedCoin]="selectedToCoin" 
+        (coinSelected)="onToCoinSelected($event)">
+      </app-favorite-coin>
+    </div>
+    <button class="convert-button" type="submit">Convertir</button>
+    <p id="result">Resultado de la Conversión</p>
+    <div class="attempts">
+      Te quedan <span class="attempts-number">{{ remainingAttempts }}</span> intentos
     </div>
   </div>
-  
+</div>

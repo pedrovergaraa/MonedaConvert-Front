@@ -1,6 +1,7 @@
 // src/app/services/subscription.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 export type SubscriptionType = 'Free' | 'Trial' | 'Pro';
 
@@ -8,10 +9,11 @@ export type SubscriptionType = 'Free' | 'Trial' | 'Pro';
   providedIn: 'root',
 })
 export class SubscriptionService {
+  
   private subscriptionType: SubscriptionType = 'Free';
   private remainingAttempts: number = 10;
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this.updateAttemptsBasedOnSubscription();
   }
 
@@ -42,16 +44,35 @@ export class SubscriptionService {
     }
   }
 
+  async updateSubscription(type: SubscriptionType): Promise<void> {
+    this.subscriptionType = type;
+    this.updateAttemptsBasedOnSubscription();
+  }
+  
+
   async convert(amount: number, from: number, to: number): Promise<number> {
+    if (this.subscriptionType !== 'Pro' && this.remainingAttempts <= 0) {
+      throw new Error(`Conversion limit reached for ${this.subscriptionType} plan`);
+    }
     try {
-      const response = await this.http.post<number>('/api/convert', { amount, from, to }).toPromise();
-      if (this.subscriptionType !== 'Pro' && this.remainingAttempts > 0) {
+      const response = await fetch('/api/convert', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ amount, from, to }),
+      });
+      if (!response.ok) {
+        throw new Error(`Error en la conversión: ${response.statusText}`);
+      }
+      const result = await response.json();
+      if (this.subscriptionType !== 'Pro') {
         this.remainingAttempts--;
       }
-      return response;
+      return result;
     } catch (error) {
       console.error('Error en la conversión:', error);
-      return -2; // Código para error o condición particular
+      throw error;
     }
   }
 }
