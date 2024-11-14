@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable, Inject, inject } from '@angular/core';
 import { API } from '../constants/api';
 import { ApiService } from './api.service';
 import { Currency } from '../interfaces/Currency';
@@ -8,16 +8,19 @@ import { SubscriptionService } from './sub.service';
   providedIn: 'root'
 })
 export class CurrencyService extends ApiService {
-  
 
-  subscriptionService = inject(SubscriptionService)
+  apiService = inject(ApiService)
 
+  @Inject(SubscriptionService) subscriptionService: SubscriptionService;
 
   async getCurrencyById(id: number): Promise<Currency> {
     const res = await this.getAuth(`Currency/GetCurrencyById?CurrencyId=${id}`);
-    return await res.json();
+    if (res.ok) {
+      return await res.json();
+    } else {
+      throw new Error('Error fetching currency');
+    }
   }
-  
 
   // Función para verificar el plan del usuario
   async checkUserPlan(): Promise<string> {
@@ -44,34 +47,23 @@ export class CurrencyService extends ApiService {
     return parseInt(total, 10);
   }
 
- // Función para realizar una conversión, respetando el límite del plan del usuario
-async convertCurrency(amount: number, fromCurrency: string, toCurrency: string): Promise<string | number> {
-  const remainingAttempts = this.subscriptionService.getRemainingAttempts();
+  // Función para realizar una conversión, respetando el límite del plan del usuario
+  async convertCurrency(amount: number, fromCurrency: string, toCurrency: string): Promise<string | number> {
+    const remainingAttempts = this.subscriptionService.getRemainingAttempts();
 
-  // Verificamos si se alcanzó el límite de intentos
-  if (remainingAttempts <= 0) {
-    return `You have reached your conversion limit for the ${this.subscriptionService.getSubscriptionType()} plan.`;
+    if (remainingAttempts <= 0) {
+      return `You have reached your conversion limit for the ${this.subscriptionService.getSubscriptionType()} plan.`;
+    }
+
+    try {
+      // Realiza la conversión si hay intentos restantes
+      const convertedAmount = await this.subscriptionService.convert(amount, fromCurrency, toCurrency);
+      return convertedAmount;
+    } catch (error) {
+      console.error('Error in conversion:', error);
+      return 'There was an error during the conversion process.';
+    }
   }
-
-  try {
-    // Realiza la conversión si hay intentos restantes
-    const convertedAmount = await this.subscriptionService.convert(amount, fromCurrency, toCurrency);
-    return convertedAmount;
-  } catch (error) {
-    console.error('Error in conversion:', error);
-    return 'There was an error during the conversion process.';
-  }
-}
-
-
-  // CRUD para Monedas
-
-  // Obtener todas las monedas
-  async getCurrencies(): Promise<Currency[]> {
-    const res = await this.getAuth("Currency/GetAll");
-    return await res.json();
-  }
-
 
 
   // Crear una nueva moneda
@@ -142,9 +134,20 @@ async convertCurrency(amount: number, fromCurrency: string, toCurrency: string):
     return res.ok;
   }
 
-  // Ver monedas favoritas
+  async getUserCurrencies(): Promise<Currency[]> {
+    const res = await this.apiService.getAuth("Currency/GetUserCurrencies");
+    return await res.json();
+  }
+
+  // Obtener monedas favoritas
   async getFavoriteCurrencies(): Promise<Currency[]> {
-    const res = await this.getAuth("View/GetFavoriteCurrencies");
+    const res = await this.apiService.getAuth("View/GetFavoriteCurrencies");
+    return await res.json();
+  }
+
+  // Obtener monedas por defecto
+  async getDefaultCurrencies(): Promise<Currency[]> {
+    const res = await this.apiService.getAuth("Currency/GetAll");
     return await res.json();
   }
 }

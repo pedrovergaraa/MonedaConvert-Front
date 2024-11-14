@@ -15,6 +15,7 @@ export class CoinDetailComponent implements OnInit {
   router = inject(Router);
 
   originalCurrency: Currency | null = null;
+  
   selectedCurrency: Currency = {
     id: 0,
     legend: '',

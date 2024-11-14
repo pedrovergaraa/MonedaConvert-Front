@@ -1,93 +1,114 @@
 @import 'src/assets/styles/variables.scss';
 
-.container {
-    width: 100%;
+/* Asegura que el body ocupe toda la pantalla */
+body, html {
+    margin: 0;
+    padding: 0;
     height: 100%;
     display: flex;
-    place-items: center;
-    justify-content: center;
+    flex-direction: column;
 }
 
-.container-general {
-    width: 95%;
-    height: 98%;
-    inset: 0;
-    margin: auto;
+/* Contenedor principal */
+.container {
+    width: 100%;
+    height: 100%; /* Ocupa toda la pantalla */
     display: flex;
     flex-direction: column;
     place-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    overflow-y: auto; /* Habilita el desplazamiento vertical si el contenido excede el tamaño */
+}
+
+/* Contenedor general */
+.container-general {
+    width: 95%;
+    max-width: 1200px; /* Para que el contenido no se estire demasiado en pantallas grandes */
+    height: 100%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
     border-radius: 10px;
 }
 
+/* Contenedor de categorías */
 .category {
-    width: 95%;
-    height: 33.3%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    place-items: center;
-    justify-content: center;
-    gap: 5px;
- }
-
-    .title {
-        display: flex;
-        justify-content: space-between; // Espacio entre el título y el botón
-        align-items: center; // Alineación vertical centrada
-    }
-    
-    .star-icon {
-        width: 20px; // Ajusta el tamaño de la estrella según sea necesario
-        height: 20px; // Ajusta el tamaño de la estrella según sea necesario
-        margin-left: 5px; // Espaciado entre la palabra "Favoritas" y la estrella
-    }
-    
-h1 {
-    font-size: 24px; 
-    margin: 0; 
-    color: $primary-color;
+    gap: 10px;
+    padding: 20px 0;
 }
 
+/* Estilo del título */
+.title {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+}
+
+/* Título principal */
+h1 {
+    font-size: 24px;
+    margin: 0;
+    color: $primary-color;
+    flex-grow: 1;
+}
+
+/* Contenedor del botón */
 .button-container {
-    display: flex; // Usar flex para alinear el botón
-    justify-content: flex-end; // Alinear el botón a la derecha
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
     margin: 10px;
 }
 
-.coin-container {
-    width: 100%;
-    height: 77%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 5px;
-    overflow-y: scroll;
-}
-
-.coin {
-    margin: 2px; 
-}
-
-.title {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center; 
-    color: white; 
-    padding: 0 20px; 
-}
-
+/* Estilo del botón */
 .create-button {
     background-color: #E4AE1E;
-    color: #25292F; 
-    border: none; 
-    border-radius: 5px; 
-    padding: 10px 20px; 
-    font-size: 20px; 
-    cursor: pointer; 
-    transition: background-color 0.3s; 
-    margin-left: 50px;
+    color: #25292F;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
+/* Hover del botón */
 .create-button:hover {
     background-color: darken(#E4AE1E, 10%);
+}
+
+/* Contenedor de monedas */
+.coin-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px 0;
+    overflow-y: auto;
+}
+
+/* Estilo de las monedas */
+.coin {
+    margin: 5px;
+}
+
+/* Permite scroll en el contenedor de monedas si es necesario */
+.coin-container {
+    max-height: 400px; /* Ajusta este valor según el espacio que quieras ocupar */
+    overflow-y: auto;
+}
+
+/* Estilo de la estrella */
+.star-icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
 }

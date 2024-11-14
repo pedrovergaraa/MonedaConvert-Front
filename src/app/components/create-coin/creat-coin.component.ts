@@ -17,7 +17,7 @@ export class CreatCoinComponent {
   currencyService = inject(CurrencyService);
   router = inject(Router);
 
-  @Output() close = new EventEmitter();
+  @Output() close = new EventEmitter<void>();
   @Input() currency: Currency = {
     id: 0,
     legend: '',
@@ -27,20 +27,28 @@ export class CreatCoinComponent {
 
   ngOnInit(): void {
     const message = localStorage.getItem('mensajeOkey');
-        if (message) {
-          ErrorMessage(message);
-          localStorage.removeItem('mensajeOkey');
-        }
-  };
+    if (message) {
+      ErrorMessage(message);
+      localStorage.removeItem('mensajeOkey');
+    }
+  }
 
+  // Manejo del formulario para crear una moneda
   onSubmit() {
+    // Verifica que todos los campos estén completos
+    if (!this.currency.legend || !this.currency.symbol || this.currency.ic <= 0) {
+      SuccessMessage('Por favor complete todos los campos correctamente.');
+      return;
+    }
+
+    // Llamada al servicio para crear la moneda
     this.currencyService.createCurrency(this.currency).then(res => {
-      this.close.emit();
+      this.close.emit(); // Emite un evento para cerrar el modal
       if (res) {
         localStorage.setItem('mensajeOkey', 'Creada correctamente');
-        location.reload()
+        location.reload(); // Recarga la página para mostrar la moneda creada
       } else {
-        SuccessMessage('Error creando moneda')
+        SuccessMessage('Error creando moneda'); // Muestra mensaje de error
       }
     });
   }

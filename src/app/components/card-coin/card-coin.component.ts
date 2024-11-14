@@ -15,6 +15,16 @@ export class CardCoinComponent {
 
   coinsService = inject(CurrencyService);
   router = inject(Router);
+  isCreateCoinModalOpen = false;
+
+
+  openCreateCoinModal() {
+    this.isCreateCoinModalOpen = true;
+  }
+
+  closeCreateCoinModal() {
+    this.isCreateCoinModalOpen = false;
+  }
 
   // Método para eliminar la moneda
   async deleteCoin() {
