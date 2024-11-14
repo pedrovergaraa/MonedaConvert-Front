@@ -1,14 +1,26 @@
-<form #form="ngForm" (ngSubmit)="onSubmit()">
+<div class="currency-form-container">
     <h1>Crear Moneda</h1>
-    <div class="card-coin">
-            <input type="text" autocomplete="off" placeholder="Leyenda" [(ngModel)]="currency.legend" name="leyenda">
+    <div class="currency-form-card">
+        <form #form="ngForm" (ngSubmit)="onSubmit()">
+            <div class="currency-header">
+                <div class="currency-info">
+                    <p>Leyenda</p>
+                    <input type="text" autocomplete="off" placeholder="Leyenda" [(ngModel)]="currency.legend" name="leyenda">
+                </div>
+                <div class="currency-info">
+                    <p>Símbolo</p>
+                    <input type="text" autocomplete="off" placeholder="Símbolo" [(ngModel)]="currency.symbol" name="simbolo">
+                </div>
+                <div class="currency-info">
+                    <p>Índice de Convertibilidad</p>
+                    <input type="number" autocomplete="off" placeholder="Índice de Convertibilidad" [(ngModel)]="currency.ic" name="ic">
+                </div>
+            </div>
 
-            <input type="text" autocomplete="off" placeholder="Símbolo" [(ngModel)]="currency.symbol" name="simbolo">
-        
-            <input type="number" autocomplete="off" placeholder="Índice de Convertibilidad" [(ngModel)]="currency.ic" name="ic">
+            <div class="form-buttons">
+                <button class="confirm-button" type="submit" id="crear" [disabled]="(currency.legend.length == 0 || currency.symbol.length == 0 || currency.ic <= 0)">Crear +</button>
+                <button class="cancel-button" type="button" id="cancelar" (click)="close.emit()">Cancelar</button>
+            </div>
+        </form>
     </div>
-    <div class="options">
-        <button id="crear" type="submit" [disabled]="(currency.legend.length == 0 || currency.symbol.length == 0 || currency.ic <= 0)">Crear +</button>
-        <button id="cancelar" type="button" (click)="close.emit()">Cancelar</button>
-    </div>
-</form>
+</div>
