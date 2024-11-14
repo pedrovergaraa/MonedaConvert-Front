@@ -1,6 +1,6 @@
 <div class="container">
   <div class="body">
-    <p>Plan: {{ subscriptionService.getSubscriptionType() }}</p>
+    <p class="p-text">Plan: {{ subscriptionService.getSubscriptionType() }}</p>
     <button class="view-coins-button" [routerLink]="['/coins']">Ver Monedas</button>
     <label for="amount">Importe</label>
     <input type="text" id="amount" placeholder="1,00 $" [(ngModel)]="amount" />
@@ -26,7 +26,7 @@
     </button>
 
     <p id="result">Resultado de la Conversión: {{ result }}</p>
-    <div class="attempts">
+    <div class="p-text">
       <p>Intentos restantes: {{ subscriptionService.getRemainingAttempts() }}</p>
     </div>
   </div>

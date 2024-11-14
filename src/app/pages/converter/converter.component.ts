@@ -14,8 +14,8 @@ export class ConverterComponent {
   selectedToCoin: string = '';
   message: string = '';
   subscriptionType: string = 'Standard';
-  amount: number = 0;
-  result: number = 0;
+  amount: number;
+  result: number;
 
   // Método para manejar la selección de la moneda "De"
   onFromCoinSelected(coin: string): void {

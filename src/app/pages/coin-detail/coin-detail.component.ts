@@ -10,76 +10,56 @@ import { CurrencyService } from 'src/app/services/currency.service';
   styleUrls: ['./coin-detail.component.scss']
 })
 export class CoinDetailComponent implements OnInit {
+  currencyService = inject(CurrencyService);
+  activatedRoute = inject(ActivatedRoute);
+  router = inject(Router);
 
-  coinsService = inject(CurrencyService)
-  activatedRoute = inject(ActivatedRoute)
-  router = inject(Router)
-
-  currency: Currency = {
+  originalCurrency: Currency | null = null;
+  selectedCurrency: Currency = {
     id: 0,
     legend: '',
     symbol: '',
     ic: 0
-  }
-
-  editCurrency: Currency = {
-    id: 0,
-    legend: '',
-    symbol: '',
-    ic: 0
-  }
-
-  currencyFav: Currency = {
-    id: 0,
-    legend: '',
-    symbol: '',
-    ic: 0
-  }
-
-  botonDeshabilitado = false;
+  };
 
   ngOnInit(): void {
-   
+    // Obtener el ID de la moneda desde la URL
+    const id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+    this.loadCurrency(id);
   }
 
-  async editCoin() {
-    const res = await this.coinsService.editCurrency(this.editCurrency);
-    if (res) {
-      SuccessMessage('Editada correctamente');
-      this.router.navigate(['/coins']);
-    } else {
-      ErrorMessage('Error editando Currency');
-    }
-  }
-
-  async deleteCoin() {
-    this.activatedRoute.params.subscribe(async params => {
-      const id = parseFloat(params['id']);
-      const response = await this.coinsService.deleteCurrency(id);
-      if (response) {
-        SuccessMessage('Eliminada correctamente');
-        this.router.navigate(['/coins']);
-      } else {
-        ErrorMessage('Error eliminando Currency');
+  // Método para cargar los datos de la moneda a editar
+  async loadCurrency(id: number) {
+    try {
+      const currency = await this.currencyService.getCurrencyById(id);
+      if (currency) {
+        this.originalCurrency = { ...currency }; // Guardar una copia de la moneda original
+        this.selectedCurrency = { ...currency };  // Cargar la moneda en selectedCurrency para edición
       }
-    });
-  }
-
-  async createFav() {
-    const res = await this.coinsService.addFavorite(this.currency);
-    if (res) {
-      SuccessMessage('Agregada como favorita');
-    } else {
-      ErrorMessage('Error agregando Currency');
+    } catch (error) {
+      ErrorMessage('Error al cargar la moneda');
     }
-    this.botonDeshabilitado = true;
   }
 
-  async getFavByLegend(legend: string) {
-    const res = await this.coinsService.getFavoriteCurrencies();
-    if (res) {
-      // Aquí deberías filtrar por leyenda si es necesario
-      this.currencyFav = res.find(fav => fav.legend === legend) || this.currencyFav;
+  // Método para guardar los cambios de edición
+  async editCoin() {
+    try {
+      const success = await this.currencyService.editCurrency(this.selectedCurrency);
+      if (success) {
+        SuccessMessage('Editada correctamente');
+        this.router.navigate(['/coins']); // Redirigir a la lista de monedas después de editar
+      } else {
+        ErrorMessage('Error editando Currency');
+      }
+    } catch (error) {
+      ErrorMessage('Error al editar la moneda');
+    }
+  }
+
+  // Método para cancelar la edición y restaurar los valores originales
+  cancelEdit() {
+    if (this.originalCurrency) {
+      this.selectedCurrency = { ...this.originalCurrency }; // Restaurar a los valores originales
     }
   }
 }

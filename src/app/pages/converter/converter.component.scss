@@ -41,7 +41,7 @@ html, body {
     margin: auto;
 }
 
-.sub-button, .view-coins-button, .convert-button {
+.view-coins-button, .convert-button {
     background-color: $primary-color;
     border: none;
     border-radius: 15px;
@@ -52,8 +52,8 @@ html, body {
     padding: 15px;
     width: 100%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    font-size: 1.2rem;
-    font-family: serif;
+    font-size: 1.3rem;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 label {
@@ -81,7 +81,7 @@ input[type="text"] {
     cursor: pointer;
 }
 
-.attempts {
+.p-text {
     color: $primary-color;
     margin: 10px 0;
     text-align: center;
