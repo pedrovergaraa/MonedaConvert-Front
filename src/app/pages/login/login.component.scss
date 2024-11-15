@@ -10,6 +10,12 @@
   box-sizing: border-box;
 }
 
+.logo-icon {
+  font-size: 50px;  
+  color: $primary-color;  
+}
+
+
 .login-card {
   background-color: $header-background;
   border-radius: 10px;
@@ -92,7 +98,6 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Mobile responsiveness */
 @media (max-width: 480px) {
   .login-card {
     padding: 20px;

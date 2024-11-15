@@ -31,13 +31,10 @@ export class CoinsComponent implements OnInit {
     }
   }
 
-
-  // Método para abrir el modal
   openCreateCoinModal() {
     this.isCreateCoinModalOpen = true;
   }
 
-  // Método para cerrar el modal
   closeCreateCoinModal() {
     this.isCreateCoinModalOpen = false;
   }

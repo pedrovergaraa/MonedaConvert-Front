@@ -17,19 +17,16 @@ export class ConverterComponent {
   amount: number;
   result: number;
 
-  // Método para manejar la selección de la moneda "De"
   onFromCoinSelected(coin: string): void {
     this.selectedFromCoin = coin;
     console.log(`Moneda de origen seleccionada: ${this.selectedFromCoin}`);
   }
 
-  // Método para manejar la selección de la moneda "A"
   onToCoinSelected(coin: string): void {
     this.selectedToCoin = coin;
     console.log(`Moneda de destino seleccionada: ${this.selectedToCoin}`);
   }
 
-  // Método para hacer la conversión y restar un intento
   async convertCurrency(amount: number, fromCurrency: string, toCurrency: string): Promise<string | number> {
     const remainingAttempts = this.subscriptionService.getRemainingAttempts();
 

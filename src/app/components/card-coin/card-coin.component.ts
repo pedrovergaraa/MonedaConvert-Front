@@ -17,7 +17,6 @@ export class CardCoinComponent {
   coinsService = inject(CurrencyService);
   router = inject(Router);
 
-  // Método para confirmar y eliminar la moneda
   confirmDelete() {
     Swal.fire({
       title: '¿Estás seguro?',
@@ -40,7 +39,7 @@ export class CardCoinComponent {
       const response = await this.coinsService.deleteCurrency(this.currency.id);
       if (response) {
         SuccessMessage('Eliminada correctamente');
-        this.router.navigate(['/converter']); // Redirige a /converter después de la eliminación
+        this.router.navigate(['/converter']);
       } else {
         ErrorMessage('Error eliminando Currency');
       }

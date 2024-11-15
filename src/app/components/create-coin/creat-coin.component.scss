@@ -60,7 +60,7 @@ form {
 
 .form-buttons {
     display: flex;
-    gap: 15px; // Añade espacio entre los botones
+    gap: 15px;
     width: 100%;
 }
 
@@ -99,7 +99,6 @@ form {
     }
 }
 
-/* Media Query para Mobile */
 @media (max-width: 768px) {
     form {
         padding: 15px;

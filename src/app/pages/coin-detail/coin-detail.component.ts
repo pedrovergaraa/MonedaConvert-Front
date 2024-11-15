@@ -25,30 +25,26 @@ export class CoinDetailComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    // Obtener el ID de la moneda desde la URL
     const id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
     this.loadCurrency(id);
   }
 
-  // Método para cargar los datos de la moneda a editar
   async loadCurrency(id: number) {
     try {
       const currency = await this.currencyService.getCurrencyById(id);
       if (currency) {
-        this.originalCurrency = { ...currency }; // Guardar una copia de la moneda original
-        this.selectedCurrency = { ...currency };  // Cargar la moneda en selectedCurrency para edición
+        this.originalCurrency = { ...currency };
+        this.selectedCurrency = { ...currency };  
       }
     } catch (error) {
       ErrorMessage('Error al cargar la moneda');
     }
   }
 
-  // Método para guardar los cambios de edición
   async editCoin() {
     try {
       const success = await this.currencyService.editCurrency(this.selectedCurrency);
       if (success) {
-        // Mostrar mensaje de éxito con SweetAlert
         Swal.fire({
           icon: 'success',
           title: 'Editada correctamente',
@@ -56,7 +52,7 @@ export class CoinDetailComponent implements OnInit {
           confirmButtonText: 'OK',
           confirmButtonColor: '#3085d6',
         }).then(() => {
-          this.router.navigate(['/coins']); // Redirigir a la lista de monedas después de editar
+          this.router.navigate(['/coins']); 
         });
       } else {
         ErrorMessage('Error editando Currency');
@@ -66,7 +62,6 @@ export class CoinDetailComponent implements OnInit {
     }
   }
 
-  // Método para cancelar la edición y restaurar los valores originales
   cancelEdit() {
     Swal.fire({
       title: '¿Estás seguro?',
@@ -80,9 +75,9 @@ export class CoinDetailComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         if (this.originalCurrency) {
-          this.selectedCurrency = { ...this.originalCurrency }; // Restaurar a los valores originales
+          this.selectedCurrency = { ...this.originalCurrency }; 
         }
-        this.router.navigate(['/converter']); // Redirigir a la lista de monedas
+        this.router.navigate(['/converter']); 
       }
     });
   }

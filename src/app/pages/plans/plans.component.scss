@@ -6,19 +6,19 @@
     align-items: center;
     padding: 20px;
     background-color: $background-color;
-    height: calc(100vh - 120px); /* Ajuste para el espacio del header y footer */
-    justify-content: center; /* Centra las tarjetas verticalmente */
-    gap: 15px; /* Espacio uniforme entre tarjetas */
+    height: calc(100vh - 120px); 
+    justify-content: center; 
+    gap: 15px; 
     overflow: hidden;
 }
 
 .plan-card {
     background-color: $primary-color;
-    border-radius: 15px; /* Bordes redondeados */
+    border-radius: 15px; 
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     width: 100%;
-    max-width: 280px; /* Ancho fijo para que sean consistentes */
+    max-width: 280px; 
     text-align: center;
     color: $text-color;
 }
@@ -33,7 +33,7 @@
 .plan-description {
     font-size: 16px;
     font-weight: normal;
-    color: black; /* Color de texto en la descripción */
+    color: black; 
 }
 
 h3, p {

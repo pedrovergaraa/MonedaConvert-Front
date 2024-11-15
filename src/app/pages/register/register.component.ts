@@ -14,12 +14,11 @@ export class RegisterComponent {
   router = inject(Router);
   errorRegister: WritableSignal<boolean> = signal(false);
 
-  // Inicializa registerData con el campo confirmPassword
   registerData: RegisterData = {
     name: "",
     email: "",
     password: "",
-    confirmPassword: "" // Asegúrate de inicializarlo aquí
+    confirmPassword: "" 
   };
 
   async register() {

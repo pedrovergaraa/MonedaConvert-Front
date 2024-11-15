@@ -6,7 +6,6 @@
     box-sizing: border-box;
 }
 
-/* Estructura principal */
 html, body {
     width: 100%;
     height: 100%;
@@ -16,20 +15,18 @@ html, body {
     overflow: hidden;
 }
 
-/* Contenedor principal */
 .container {
     width: 100%;
     display: flex;
     flex-direction: column;
     padding: 0;
     margin: 0;
-    padding-top: 60px; /* Espacio para el header */
-    padding-bottom: 60px; /* Espacio para el footer */
+    padding-top: 60px; 
+    padding-bottom: 60px; 
     flex: 1;
-    overflow-y: auto; /* Permite scroll solo en el contenido principal */
+    overflow-y: auto; 
 }
 
-/* Estilos del contenido central */
 .body {
     display: flex;
     flex-direction: column;

@@ -22,13 +22,11 @@ export class CurrencyService extends ApiService {
     }
   }
 
-  // Función para verificar el plan del usuario
   async checkUserPlan(): Promise<string> {
     const plan = await (await this.getAuth("View/GetUserPlan")).text();
     return plan;
   }
 
-  // Función para ver y modificar la suscripción del usuario
   async modifyUserPlan(newPlan: string): Promise<boolean> {
     const res = await fetch(`${API}User/ModifyPlan`, {
       method: 'PUT',
@@ -41,13 +39,11 @@ export class CurrencyService extends ApiService {
     return res.ok;
   }
 
-  // Obtener la cantidad total de conversiones realizadas por el usuario
   async getTotalConversions(): Promise<number> {
     const total = await (await this.getAuth("View/GetTotalConversions")).text();
     return parseInt(total, 10);
   }
 
-  // Función para realizar una conversión, respetando el límite del plan del usuario
   async convertCurrency(amount: number, fromCurrency: string, toCurrency: string): Promise<string | number> {
     const remainingAttempts = this.subscriptionService.getRemainingAttempts();
 
@@ -56,7 +52,6 @@ export class CurrencyService extends ApiService {
     }
 
     try {
-      // Realiza la conversión si hay intentos restantes
       const convertedAmount = await this.subscriptionService.convert(amount, fromCurrency, toCurrency);
       return convertedAmount;
     } catch (error) {
@@ -66,7 +61,6 @@ export class CurrencyService extends ApiService {
   }
 
 
-  // Crear una nueva moneda
   async createCurrency(currency: Currency): Promise<boolean> {
     if (currency.id) return false;
     const res = await fetch(`${API}Currency/CreateCurrency`, {
@@ -80,7 +74,6 @@ export class CurrencyService extends ApiService {
     return res.ok;
   }
 
-  // Editar una moneda existente
   async editCurrency(currency: Currency): Promise<boolean> {
     if (!currency.id) return false;
     const url = `${API}Currency/EditCurrency?CurrencyId=${currency.id}`;
@@ -95,7 +88,6 @@ export class CurrencyService extends ApiService {
     return res.ok;
   }
 
-  // Eliminar una moneda
   async deleteCurrency(id: number): Promise<boolean> {
     const url = `${API}Currency/DeleteCurrency?CurrencyId=${id}`;
     const res = await fetch(url, {
@@ -107,9 +99,6 @@ export class CurrencyService extends ApiService {
     return res.ok;
   }
 
-  // Favoritos
-
-  // Agregar moneda a favoritos
   async addFavorite(currency: Currency): Promise<boolean> {
     const res = await fetch(`${API}Currency/AddFavorite`, {
       method: 'POST',
@@ -122,7 +111,6 @@ export class CurrencyService extends ApiService {
     return res.ok;
   }
 
-  // Eliminar moneda de favoritos
   async removeFavorite(currencyId: number): Promise<boolean> {
     const url = `${API}Currency/RemoveFavorite?CurrencyId=${currencyId}`;
     const res = await fetch(url, {
@@ -139,13 +127,11 @@ export class CurrencyService extends ApiService {
     return await res.json();
   }
 
-  // Obtener monedas favoritas
   async getFavoriteCurrencies(): Promise<Currency[]> {
     const res = await this.apiService.getAuth("View/GetFavoriteCurrencies");
     return await res.json();
   }
 
-  // Obtener monedas por defecto
   async getDefaultCurrencies(): Promise<Currency[]> {
     const res = await this.apiService.getAuth("Currency/GetAll");
     return await res.json();

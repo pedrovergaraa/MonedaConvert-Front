@@ -37,21 +37,17 @@ export class SubscriptionService {
         this.remainingAttempts = 100;
         break;
       case 'Pro':
-        this.remainingAttempts = Infinity; // Ilimitados
+        this.remainingAttempts = Infinity; 
         break;
     }
   }
 
-  // Método para convertir y restar un intento
-  // Método para convertir y restar un intento
 async convert(amount: number, from: string, to: string): Promise<number> {
-  // Verificamos si el usuario tiene intentos restantes según su plan
   if (this.subscriptionType !== 'Pro' && this.remainingAttempts <= 0) {
     throw new Error(`Conversion limit reached for ${this.subscriptionType} plan`);
   }
 
   try {
-    // Hacemos la solicitud al backend para convertir la moneda
     const response = await fetch('/api/convert', {
       method: 'POST',
       headers: {
@@ -66,13 +62,11 @@ async convert(amount: number, from: string, to: string): Promise<number> {
 
     const result = await response.json();
 
-    // Si no es 'Pro', restamos un intento
     if (this.subscriptionType !== 'Pro') {
       this.remainingAttempts--;
     }
 
-    // Devolvemos el resultado de la conversión
-    return result.convertedAmount; // Suponiendo que el backend devuelve el monto convertido con el campo "convertedAmount"
+    return result.convertedAmount; 
   } catch (error) {
     console.error('Error en la conversión:', error);
     throw error;

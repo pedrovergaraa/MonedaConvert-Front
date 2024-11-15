@@ -8,11 +8,11 @@ export function SuccessMessage(messageText: string) {
     icon: 'success',
     toast: true,
     position: 'top',
-    background: '#324E67', // Fondo oscuro
-    color: 'white', // Texto blanco
-    iconColor: '#4CAF50', // Icono verde
+    background: '#324E67', 
+    color: 'white', 
+    iconColor: '#4CAF50', 
     customClass: {
-      popup: 'swal2-rounded swal2-shadow', // Clases personalizadas
+      popup: 'swal2-rounded swal2-shadow', 
     },
   });
 }
@@ -25,11 +25,11 @@ export function ErrorMessage(messageText: string) {
     icon: 'error',
     toast: true,
     position: 'top',
-    background: '#324E67', // Fondo oscuro
-    color: 'white', // Texto blanco
-    iconColor: '#F44336', // Icono rojo
+    background: '#324E67', 
+    color: 'white', 
+    iconColor: '#F44336', 
     customClass: {
-      popup: 'swal2-rounded swal2-shadow', // Clases personalizadas
+      popup: 'swal2-rounded swal2-shadow', 
     },
   });
 }

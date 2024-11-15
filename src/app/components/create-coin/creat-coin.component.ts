@@ -32,23 +32,20 @@ export class CreatCoinComponent {
       localStorage.removeItem('mensajeOkey');
     }
   }
-
-  // Manejo del formulario para crear una moneda
+  
   onSubmit() {
-    // Verifica que todos los campos estén completos
     if (!this.currency.legend || !this.currency.symbol || this.currency.ic <= 0) {
       SuccessMessage('Por favor complete todos los campos correctamente.');
       return;
     }
 
-    // Llamada al servicio para crear la moneda
     this.currencyService.createCurrency(this.currency).then(res => {
-      this.close.emit(); // Emite un evento para cerrar el modal
+      this.close.emit();
       if (res) {
         localStorage.setItem('mensajeOkey', 'Creada correctamente');
-        location.reload(); // Recarga la página para mostrar la moneda creada
+        location.reload(); 
       } else {
-        SuccessMessage('Error creando moneda'); // Muestra mensaje de error
+        SuccessMessage('Error creando moneda');
       }
     });
   }

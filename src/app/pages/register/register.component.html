@@ -1,9 +1,12 @@
 <div class="register-container">
   <div class="register-card">
+    <div class="logo-container">
+      <i class="fas fa-coins logo-icon"></i> 
+    </div>
     <h2 class="register-title">Registrarse</h2>
     <form #registerForm="ngForm" (ngSubmit)="register()">
       <div class="input-container">
-        <label for="email" class="form-label">Correo Electrónico</label>
+        <label for="email" class="form-label"></label>
         <input
           name="email"
           [(ngModel)]="registerData.email" #email="ngModel"
@@ -16,7 +19,7 @@
         <p class="error" *ngIf="email.invalid && (email.touched || email.dirty)">Ingrese un email válido</p>
       </div>
       <div class="input-container">
-        <label for="password" class="form-label">Contraseña</label>
+        <label for="password" class="form-label"></label>
         <input
           name="password"
           [(ngModel)]="registerData.password" #password="ngModel"
@@ -29,7 +32,7 @@
         <p class="error" *ngIf="password.invalid && (password.touched || password.dirty)">Ingrese una contraseña</p>
       </div>
       <div class="input-container">
-        <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+        <label for="confirmPassword" class="form-label"></label>
         <input
           name="confirmPassword"
           [(ngModel)]="registerData.confirmPassword" #confirmPassword="ngModel"

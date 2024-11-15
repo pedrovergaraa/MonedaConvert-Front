@@ -15,8 +15,6 @@ export class PlansComponent {
   selectPlan(type: SubscriptionType) {
     this.subscriptionService.setSubscriptionType(type);
     const remainingAttempts = this.subscriptionService.getRemainingAttempts();
-    
-    // Redirigir al conversor con un mensaje
     this.router.navigate(['/converter'], {
       queryParams: {
         message: `Has seleccionado la suscripción ${type}. ${remainingAttempts === Infinity ? 

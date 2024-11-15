@@ -10,6 +10,11 @@
   box-sizing: border-box;
 }
 
+.logo-icon {
+  font-size: 50px;  
+  color: $primary-color;  
+}
+
 .register-card {
   background-color: $header-background;
   border-radius: 10px;
@@ -92,7 +97,6 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Mobile responsiveness */
 @media (max-width: 480px) {
   .register-card {
     padding: 20px;
