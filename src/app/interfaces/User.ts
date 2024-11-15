@@ -1,5 +1,6 @@
 export interface RegisterData extends User {
     password: string,
+    confirmPassword: string;
 }
 
 export interface User{

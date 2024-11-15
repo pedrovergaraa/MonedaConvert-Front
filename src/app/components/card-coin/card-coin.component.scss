@@ -1,46 +1,43 @@
 @import 'src/assets/styles/variables.scss';
 
 .card-coin {
-    display: flex;
-    height: 41px;
-    display: flex;
-    justify-content: space-around; 
-    align-items: center; 
-    border: 2px solid #E4AE1E; 
-    background: $primary-color; 
-    padding: 8px; 
-    margin: 10px;
-    background-color: $primary-color;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  height: 41px;
+  justify-content: space-around; 
+  align-items: center; 
+  border: 2px solid #E4AE1E; 
+  background: $primary-color; 
+  padding: 8px; 
+  margin: 10px;
+  background-color: $primary-color;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
+  p {
+    color: $background-color;
+    margin: 0;
+    font-size: 20px;
+  }
 
-    p {
-        color: $background-color;
-        margin: 0;
-        font-size: 20px;
-    }
+  span {
+    color: $background-color;
+    font-size: 25px;
+  }
 
-    span {
-        color: $background-color;
-        font-size: 25px;
+  .delete-button {
+    background: none;
+    border: none;
+    color: red;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+
+    i {
+      font-size: 20px;
     }
 
     &:hover {
-        border-color: darken($primary-color, 10%); 
-        background: rgb(252, 193, 82); 
-        cursor: pointer; 
+      color: darkred;
     }
-    .delete-button {
-        background-color: red;
-        color: white;
-        border: none;
-        padding: 5px;
-        border-radius: 5px;
-        cursor: pointer;
-    
-        &:hover {
-          background-color: darkred;
-        }
-      }
+  }
 }

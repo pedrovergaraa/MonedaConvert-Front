@@ -1,5 +1,6 @@
 import { Component, inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { ErrorMessage, SuccessMessage } from 'src/app/helpers/messageModal';
 import { Currency } from 'src/app/interfaces/Currency';
 import { CurrencyService } from 'src/app/services/currency.service';
@@ -15,24 +16,31 @@ export class CardCoinComponent {
 
   coinsService = inject(CurrencyService);
   router = inject(Router);
-  isCreateCoinModalOpen = false;
 
-
-  openCreateCoinModal() {
-    this.isCreateCoinModalOpen = true;
+  // Método para confirmar y eliminar la moneda
+  confirmDelete() {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: `¿Deseas eliminar la moneda ${this.currency.legend}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await this.deleteCoin();
+      }
+    });
   }
 
-  closeCreateCoinModal() {
-    this.isCreateCoinModalOpen = false;
-  }
-
-  // Método para eliminar la moneda
   async deleteCoin() {
     try {
       const response = await this.coinsService.deleteCurrency(this.currency.id);
       if (response) {
         SuccessMessage('Eliminada correctamente');
-        this.router.navigate(['/coins']); // Redirige después de la eliminación
+        this.router.navigate(['/converter']); // Redirige a /converter después de la eliminación
       } else {
         ErrorMessage('Error eliminando Currency');
       }

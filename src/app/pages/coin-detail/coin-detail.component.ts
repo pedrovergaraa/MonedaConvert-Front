@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ErrorMessage, SuccessMessage } from 'src/app/helpers/messageModal';
 import { Currency } from 'src/app/interfaces/Currency';
 import { CurrencyService } from 'src/app/services/currency.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-coin-detail',
@@ -47,8 +48,16 @@ export class CoinDetailComponent implements OnInit {
     try {
       const success = await this.currencyService.editCurrency(this.selectedCurrency);
       if (success) {
-        SuccessMessage('Editada correctamente');
-        this.router.navigate(['/coins']); // Redirigir a la lista de monedas después de editar
+        // Mostrar mensaje de éxito con SweetAlert
+        Swal.fire({
+          icon: 'success',
+          title: 'Editada correctamente',
+          text: 'La moneda se ha editado con éxito',
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#3085d6',
+        }).then(() => {
+          this.router.navigate(['/coins']); // Redirigir a la lista de monedas después de editar
+        });
       } else {
         ErrorMessage('Error editando Currency');
       }
@@ -59,8 +68,22 @@ export class CoinDetailComponent implements OnInit {
 
   // Método para cancelar la edición y restaurar los valores originales
   cancelEdit() {
-    if (this.originalCurrency) {
-      this.selectedCurrency = { ...this.originalCurrency }; // Restaurar a los valores originales
-    }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Perderás los cambios no guardados',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, cancelar',
+      cancelButtonText: 'No, volver',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (this.originalCurrency) {
+          this.selectedCurrency = { ...this.originalCurrency }; // Restaurar a los valores originales
+        }
+        this.router.navigate(['/converter']); // Redirigir a la lista de monedas
+      }
+    });
   }
 }
