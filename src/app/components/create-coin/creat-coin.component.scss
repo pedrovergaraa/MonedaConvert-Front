@@ -58,7 +58,13 @@ form {
     margin-top: 15px;
 }
 
-#crear {
+.form-buttons {
+    display: flex;
+    gap: 15px; // Añade espacio entre los botones
+    width: 100%;
+}
+
+#create {
     background-color: $primary-color;
     color: $background-color;
     border: none;
@@ -78,7 +84,7 @@ form {
     }
 }
 
-#cancelar {
+#cancel {
     background-color: gray;
     color: $text-color;
     border: none;

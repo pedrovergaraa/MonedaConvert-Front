@@ -18,8 +18,8 @@
             </div>
 
             <div class="form-buttons">
-                <button class="confirm-button" type="submit" id="crear" [disabled]="(currency.legend.length == 0 || currency.symbol.length == 0 || currency.ic <= 0)">Crear +</button>
-                <button class="cancel-button" type="button" id="cancelar" (click)="close.emit()">Cancelar</button>
+                <button type="submit" id="create" [disabled]="(currency.legend.length == 0 || currency.symbol.length == 0 || currency.ic <= 0)">Crear +</button>
+                <button type="button" id="cancel" (click)="close.emit()">Cancelar</button>
             </div>
         </form>
     </div>

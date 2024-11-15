@@ -1,45 +1,51 @@
 <div class="container">
-    <div class="container-general">
-      <!-- Categoría Monedas por defecto -->
-      <div class="category">
-        <div class="title">
-          <h1>Por defecto</h1>
-        </div>
-        <div class="coin-container">
-          <div class="coin" *ngFor="let coin of defaultCurrencies">
-            <app-card-coin [currency]="coin"></app-card-coin>
-          </div>
+    <!-- Categoría Monedas por defecto -->
+    <div class="category">
+      <div class="title">
+        <h1>Por defecto</h1>
+      </div>
+      <div class="coin-container">
+        <div class="coin" *ngFor="let coin of defaultCurrencies">
+          <app-card-coin [currency]="coin"></app-card-coin>
         </div>
       </div>
-  
-      <!-- Categoría Favoritas -->
-      <div class="category">
-        <div class="title">
-          <h1>Favoritas <img src="./../../../assets/images/starIcon.png" alt="Star" class="star-icon"></h1>
-        </div>
-        <div class="coin-container">
-          <div class="coin" *ngFor="let coin of favoriteCurrencies">
-            <app-card-coin [currency]="coin"></app-card-coin>
-          </div>
-        </div>
-      </div>
-  
-      <!-- Categoría Mis Monedas -->
-      <div class="category">
-        <div class="title">
-          <h1>Mis Monedas</h1>
-          <div class="button-container">
-            <button (click)="openCreateCoinModal()">Crear +</button>
-            <app-creat-coin *ngIf="isCreateCoinModalOpen" (close)="closeCreateCoinModal()"></app-creat-coin>
+    </div>
 
-          </div>
+    <!-- Categoría Favoritas -->
+    <div class="category">
+      <div class="title">
+        <h1>
+          Favoritas
+          <img src="./../../../assets/images/starIcon.png" alt="Star" class="star-icon" />
+        </h1>
+      </div>
+      <div class="coin-container">
+        <div class="coin" *ngFor="let coin of favoriteCurrencies">
+          <app-card-coin [currency]="coin"></app-card-coin>
         </div>
-        <div class="coin-container">
-          <div class="coin" *ngFor="let coin of userCurrencies">
-            <app-card-coin [currency]="coin"></app-card-coin>
-          </div>
+      </div>
+    </div>
+
+    <!-- Categoría Mis Monedas -->
+    <div class="category">
+      <div class="title">
+        <h1>Mis Monedas</h1>
+        <div class="button-container">
+          <button class="create-button" (click)="openCreateCoinModal()">Crear +</button>
+        </div>
+      </div>
+      <div class="coin-container">
+        <div class="coin" *ngFor="let coin of userCurrencies">
+          <app-card-coin [currency]="coin"></app-card-coin>
         </div>
       </div>
     </div>
   </div>
-  
+
+  <!-- Modal para Crear Moneda -->
+  <div *ngIf="isCreateCoinModalOpen" class="modal-overlay">
+    <div class="modal-content">
+      <app-creat-coin (close)="closeCreateCoinModal()"></app-creat-coin>
+    </div>
+  </div>
+

@@ -1,16 +1,17 @@
 @import 'src/assets/styles/variables.scss';
 
-/* Asegura que el body ocupe toda la pantalla */
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
+// /* Asegura que el body ocupe toda la pantalla */
+// body, html {
+//     margin: 0;
+//     padding: 0;
+//     height: 100%;
+//     display: flex;
+//     flex-direction: column;
+// }
 
 /* Contenedor principal */
 .container {
+    padding-top: 100px;
     width: 100%;
     height: 100%; /* Ocupa toda la pantalla */
     display: flex;
@@ -20,18 +21,6 @@ body, html {
     overflow-y: auto; /* Habilita el desplazamiento vertical si el contenido excede el tamaño */
 }
 
-/* Contenedor general */
-.container-general {
-    width: 95%;
-    max-width: 1200px; /* Para que el contenido no se estire demasiado en pantallas grandes */
-    height: 100%;
-    margin: 20px auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    border-radius: 10px;
-}
 
 /* Contenedor de categorías */
 .category {
@@ -93,6 +82,7 @@ h1 {
     gap: 10px;
     padding: 20px 0;
     overflow-y: auto;
+    margin-top: 80px; 
 }
 
 /* Estilo de las monedas */
