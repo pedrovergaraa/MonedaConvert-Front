@@ -48,7 +48,7 @@ async convert(amount: number, from: string, to: string): Promise<number> {
   }
 
   try {
-    const response = await fetch('/api/convert', {
+    const response = await fetch('/api/currency/convert', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

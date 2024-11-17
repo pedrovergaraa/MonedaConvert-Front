@@ -39,7 +39,7 @@ export class AuthService {
   }
 
   async register(registerData: RegisterData){
-    const res = await fetch(API+"User/Registro", {
+    const res = await fetch(API+"user/register", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',

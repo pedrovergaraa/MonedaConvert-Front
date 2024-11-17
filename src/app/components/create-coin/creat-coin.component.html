@@ -4,15 +4,12 @@
         <form #form="ngForm" (ngSubmit)="onSubmit()">
             <div class="currency-header">
                 <div class="currency-info">
-                    <p>Leyenda</p>
                     <input type="text" autocomplete="off" placeholder="Leyenda" [(ngModel)]="currency.legend" name="leyenda">
                 </div>
                 <div class="currency-info">
-                    <p>Símbolo</p>
                     <input type="text" autocomplete="off" placeholder="Símbolo" [(ngModel)]="currency.symbol" name="simbolo">
                 </div>
                 <div class="currency-info">
-                    <p>Índice de Convertibilidad</p>
                     <input type="number" autocomplete="off" placeholder="Índice de Convertibilidad" [(ngModel)]="currency.ic" name="ic">
                 </div>
             </div>

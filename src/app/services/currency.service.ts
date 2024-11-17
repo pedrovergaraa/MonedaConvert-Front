@@ -14,21 +14,22 @@ export class CurrencyService extends ApiService {
   @Inject(SubscriptionService) subscriptionService: SubscriptionService;
 
   async getCurrencyById(id: number): Promise<Currency> {
-    const res = await this.getAuth(`Currency/GetCurrencyById?CurrencyId=${id}`);
+    const res = await this.getAuth(`currency/${id}`);
     if (res.ok) {
       return await res.json();
     } else {
       throw new Error('Error fetching currency');
     }
   }
+  
 
   async checkUserPlan(): Promise<string> {
-    const plan = await (await this.getAuth("View/GetUserPlan")).text();
+    const plan = await (await this.getAuth("subscription/userSub")).text();
     return plan;
   }
 
   async modifyUserPlan(newPlan: string): Promise<boolean> {
-    const res = await fetch(`${API}User/ModifyPlan`, {
+    const res = await fetch(`${API}subscription/change`, {
       method: 'PUT',
       headers: {
         "Content-type": "application/json",
@@ -40,7 +41,7 @@ export class CurrencyService extends ApiService {
   }
 
   async getTotalConversions(): Promise<number> {
-    const total = await (await this.getAuth("View/GetTotalConversions")).text();
+    const total = await (await this.getAuth("currency/convert")).text();
     return parseInt(total, 10);
   }
 
@@ -63,11 +64,11 @@ export class CurrencyService extends ApiService {
 
   async createCurrency(currency: Currency): Promise<boolean> {
     if (currency.id) return false;
-    const res = await fetch(`${API}Currency/CreateCurrency`, {
+    const res = await fetch(`${API}currency/create`, { 
       method: 'POST',
       headers: {
         "Content-type": "application/json",
-        Authorization: "Bearer " + this.auth.token()
+        Authorization: "Bearer " + this.auth.token() 
       },
       body: JSON.stringify(currency)
     });
@@ -76,7 +77,7 @@ export class CurrencyService extends ApiService {
 
   async editCurrency(currency: Currency): Promise<boolean> {
     if (!currency.id) return false;
-    const url = `${API}Currency/EditCurrency?CurrencyId=${currency.id}`;
+    const url = `${API}currency/edit/${currency.id}`;  
     const res = await fetch(url, {
       method: 'PUT',
       headers: {
@@ -89,7 +90,7 @@ export class CurrencyService extends ApiService {
   }
 
   async deleteCurrency(id: number): Promise<boolean> {
-    const url = `${API}Currency/DeleteCurrency?CurrencyId=${id}`;
+    const url = `${API}currency/${id}`;  
     const res = await fetch(url, {
       method: 'DELETE',
       headers: {
@@ -99,8 +100,9 @@ export class CurrencyService extends ApiService {
     return res.ok;
   }
 
+
   async addFavorite(currency: Currency): Promise<boolean> {
-    const res = await fetch(`${API}Currency/AddFavorite`, {
+    const res = await fetch(`${API}currency/favorite`, {
       method: 'POST',
       headers: {
         "Content-type": "application/json",
@@ -112,7 +114,7 @@ export class CurrencyService extends ApiService {
   }
 
   async removeFavorite(currencyId: number): Promise<boolean> {
-    const url = `${API}Currency/RemoveFavorite?CurrencyId=${currencyId}`;
+    const url = `${API}currency/favorite?CurrencyId=${currencyId}`;
     const res = await fetch(url, {
       method: 'DELETE',
       headers: {
@@ -123,17 +125,17 @@ export class CurrencyService extends ApiService {
   }
 
   async getUserCurrencies(): Promise<Currency[]> {
-    const res = await this.apiService.getAuth("Currency/GetUserCurrencies");
+    const res = await this.apiService.getAuth("currency/all");
     return await res.json();
   }
 
   async getFavoriteCurrencies(): Promise<Currency[]> {
-    const res = await this.apiService.getAuth("View/GetFavoriteCurrencies");
+    const res = await this.apiService.getAuth("currency/favorites");
     return await res.json();
   }
 
   async getDefaultCurrencies(): Promise<Currency[]> {
-    const res = await this.apiService.getAuth("Currency/GetAll");
+    const res = await this.apiService.getAuth("currency/defaultCurrencies");  
     return await res.json();
   }
 }
