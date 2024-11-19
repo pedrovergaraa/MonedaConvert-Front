@@ -41,26 +41,28 @@ export class CoinDetailComponent implements OnInit {
     }
   }
 
-  async editCoin() {
-    try {
-      const success = await this.currencyService.editCurrency(this.selectedCurrency);
-      if (success) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Editada correctamente',
-          text: 'La moneda se ha editado con éxito',
-          confirmButtonText: 'OK',
-          confirmButtonColor: '#3085d6',
-        }).then(() => {
-          this.router.navigate(['/coins']); 
-        });
-      } else {
-        ErrorMessage('Error editando Currency');
-      }
-    } catch (error) {
-      ErrorMessage('Error al editar la moneda');
+ // coin-detail.component.ts
+async editCoin() {
+  try {
+    const success = await this.currencyService.editCurrency(this.selectedCurrency.id, this.selectedCurrency);
+    if (success) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Editada correctamente',
+        text: 'La moneda se ha editado con éxito',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#3085d6',
+      }).then(() => {
+        this.router.navigate(['/coins']); // Redirige después de la edición exitosa
+      });
+    } else {
+      ErrorMessage('Error editando la moneda');
     }
+  } catch (error) {
+    ErrorMessage('Error al editar la moneda');
   }
+}
+
 
   cancelEdit() {
     Swal.fire({

@@ -18,6 +18,12 @@ export class AuthService {
    router = inject(Router);
   token:WritableSignal<string | null> = signal(null);
 
+
+  getUserId(): number {
+    const userId = localStorage.getItem('userId');
+    return userId ? parseInt(userId, 10) : 0;  // Devuelve el userId o 0 si no está presente
+  }
+
   async login(loginData:LoginData){
     try{
       const res = await fetch(API+"authentication/authenticate", {
