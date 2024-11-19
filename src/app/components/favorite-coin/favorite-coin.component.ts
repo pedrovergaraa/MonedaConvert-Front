@@ -14,11 +14,13 @@ export class FavoriteCoinComponent {
   currencyService = inject(CurrencyService)
 
   currencyFav : Currency = {
-    id: 0,
-    legend: '',
-    symbol: '',
-    ic: 0
-}
+      currencyId: 0,
+      legend: '',
+      symbol: '',
+      ic: 0,
+      isDefault: false,
+      userId: 0
+  }
     
     showDropdown: boolean = false;
     availableCoins: string[] = ['USD', 'EUR', 'GBP', 'JYN', 'ARS']; 

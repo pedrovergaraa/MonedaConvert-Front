@@ -36,7 +36,7 @@ export class CardCoinComponent {
 
   async deleteCoin() {
     try {
-      const response = await this.coinsService.deleteCurrency(this.currency.id);
+      const response = await this.coinsService.deleteCurrency(this.currency.currencyId);
       if (response) {
         SuccessMessage('Eliminada correctamente');
         this.router.navigate(['/converter']);

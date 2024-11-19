@@ -15,10 +15,15 @@ export class RegisterComponent {
   errorRegister: WritableSignal<boolean> = signal(false);
 
   registerData: RegisterData = {
-    name: "",
     email: "",
     password: "",
-    confirmPassword: "" 
+    confirmPassword: "",
+    userId: 0,
+    attempts: 0,
+    subscriptionId: 0,
+    subscription: undefined,
+    currencies: [],
+    favoriteCurrencies: []
   };
 
   async register() {

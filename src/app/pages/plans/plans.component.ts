@@ -1,25 +1,45 @@
-// plans.component.ts
-import { Component } from '@angular/core';
-import { SubscriptionService, SubscriptionType } from '../../services/sub.service';
+import { Component, inject, OnInit } from '@angular/core';
+import { SubscriptionService } from '../../services/sub.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'src/app/interfaces/Subscription'; // Importamos la interfaz Subscription
 
 @Component({
   selector: 'app-plans',
   templateUrl: './plans.component.html',
   styleUrls: ['./plans.component.scss']
 })
-export class PlansComponent {
-  constructor(private subscriptionService: SubscriptionService, private router: Router) {}
-  message: '';
+export class PlansComponent implements OnInit {
 
-  selectPlan(type: SubscriptionType) {
-    this.subscriptionService.setSubscriptionType(type);
-    const remainingAttempts = this.subscriptionService.getRemainingAttempts();
-    this.router.navigate(['/converter'], {
-      queryParams: {
-        message: `Has seleccionado la suscripción ${type}. ${remainingAttempts === Infinity ? 
-          'Intentos ilimitados' : remainingAttempts + ' intentos'}.`
+  subscriptionService = inject(SubscriptionService);
+  router = inject(Router);
+
+  subscriptions: Subscription[] = []; // Tipamos la propiedad con la interfaz Subscription
+
+  ngOnInit(): void {
+    this.loadSubscriptions(); // Llamamos a la función para cargar las suscripciones al iniciar el componente
+  }
+
+  async loadSubscriptions() {
+    try {
+      this.subscriptions = await this.subscriptionService.getAllSubscriptions();
+    } catch (err) {
+      console.warn("Error loading subscriptions", err);
+    }
+  }
+
+  async updateSubscription(subId: number) {
+    try {
+      const res = await this.subscriptionService.updateSubscription({
+        subId,
+        name: '',
+        allowedAttempts: 0,
+        price: 0
+      });
+      if (res.ok) {
+        this.router.navigate(["/converter"]);
       }
-    });
+    } catch (err) {
+      console.warn("Error updating subscription", err);
+    }
   }
 }

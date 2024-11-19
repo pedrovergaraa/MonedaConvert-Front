@@ -1,9 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ErrorMessage, SuccessMessage } from 'src/app/helpers/messageModal';
-import { Currency } from 'src/app/interfaces/Currency';
-import { CurrencyService } from 'src/app/services/currency.service';
+import { Component, inject, Inject, OnInit } from '@angular/core';
+import { CurrencyService } from '../../services/currency.service';
+import { Currency } from '../../interfaces/Currency';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-coin-detail',
@@ -11,58 +10,38 @@ import Swal from 'sweetalert2';
   styleUrls: ['./coin-detail.component.scss']
 })
 export class CoinDetailComponent implements OnInit {
-  currencyService = inject(CurrencyService);
-  activatedRoute = inject(ActivatedRoute);
-  router = inject(Router);
 
-  originalCurrency: Currency | null = null;
-  
-  selectedCurrency: Currency = {
-    id: 0,
-    legend: '',
-    symbol: '',
-    ic: 0
-  };
+  router = inject(Router)
+  currency: Currency | null = null;
+  selectedCurrency: Currency;
+
+  constructor(private currencyService: CurrencyService) {}
 
   ngOnInit(): void {
-    const id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
-    this.loadCurrency(id);
+    this.loadCurrencyDetails();
   }
 
-  async loadCurrency(id: number) {
+  // Cargar los detalles de la moneda
+  async loadCurrencyDetails() {
     try {
-      const currency = await this.currencyService.getCurrencyById(id);
-      if (currency) {
-        this.originalCurrency = { ...currency };
-        this.selectedCurrency = { ...currency };  
+      const currencyId = 1; // Deberás obtener el ID dinámicamente
+      this.currency = await this.currencyService.getCurrencyById(currencyId);
+    } catch (error) {
+      console.error('Error al cargar los detalles de la moneda', error);
+    }
+  }
+
+  // Método para editar la moneda
+  async editCurrency() {
+    try {
+      if (this.currency) {
+        await this.currencyService.editCurrency(this.currency.currencyId, this.currency);
+
       }
     } catch (error) {
-      ErrorMessage('Error al cargar la moneda');
+      console.error('Error al editar la moneda', error);
     }
   }
-
- // coin-detail.component.ts
-async editCoin() {
-  try {
-    const success = await this.currencyService.editCurrency(this.selectedCurrency.id, this.selectedCurrency);
-    if (success) {
-      Swal.fire({
-        icon: 'success',
-        title: 'Editada correctamente',
-        text: 'La moneda se ha editado con éxito',
-        confirmButtonText: 'OK',
-        confirmButtonColor: '#3085d6',
-      }).then(() => {
-        this.router.navigate(['/coins']); // Redirige después de la edición exitosa
-      });
-    } else {
-      ErrorMessage('Error editando la moneda');
-    }
-  } catch (error) {
-    ErrorMessage('Error al editar la moneda');
-  }
-}
-
 
   cancelEdit() {
     Swal.fire({
@@ -76,11 +55,21 @@ async editCoin() {
       cancelButtonText: 'No, volver',
     }).then((result) => {
       if (result.isConfirmed) {
-        if (this.originalCurrency) {
-          this.selectedCurrency = { ...this.originalCurrency }; 
+        if (this.currency) {
+          this.selectedCurrency = { ...this.currency }; 
         }
         this.router.navigate(['/converter']); 
       }
     });
+  }
+  // Método para eliminar la moneda
+  async deleteCurrency() {
+    try {
+      if (this.currency) {
+        await this.currencyService.deleteCurrency(this.currency.currencyId);
+      }
+    } catch (error) {
+      console.error('Error al eliminar la moneda', error);
+    }
   }
 }

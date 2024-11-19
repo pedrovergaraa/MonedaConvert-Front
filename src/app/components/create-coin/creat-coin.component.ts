@@ -19,10 +19,12 @@ export class CreatCoinComponent {
 
   @Output() close = new EventEmitter<void>();
   @Input() currency: Currency = {
-    id: 0,
+    currencyId: 0,
     legend: '',
     symbol: '',
     ic: 0,
+    isDefault: false,
+    userId: 0
   }
 
   ngOnInit(): void {

@@ -1,76 +1,65 @@
 // src/app/services/subscription.service.ts
 import { Injectable } from '@angular/core';
-
+import { API } from '../constants/api';
+import { ApiService } from './api.service';
+import { Subscription } from '../interfaces/Subscription';
 export type SubscriptionType = 'Free' | 'Trial' | 'Pro';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SubscriptionService {
-  
-  private subscriptionType: SubscriptionType = 'Free';
-  private remainingAttempts: number = 10;
+export class SubscriptionService  extends ApiService {
 
-  constructor() {
-    this.updateAttemptsBasedOnSubscription();
-  }
 
-  setSubscriptionType(type: SubscriptionType) {
-    this.subscriptionType = type;
-    this.updateAttemptsBasedOnSubscription();
-  }
-
-  getSubscriptionType(): SubscriptionType {
-    return this.subscriptionType;
-  }
-
-  getRemainingAttempts(): number {
-    return this.remainingAttempts;
-  }
-
-  private updateAttemptsBasedOnSubscription() {
-    switch (this.subscriptionType) {
-      case 'Free':
-        this.remainingAttempts = 10;
-        break;
-      case 'Trial':
-        this.remainingAttempts = 100;
-        break;
-      case 'Pro':
-        this.remainingAttempts = Infinity; 
-        break;
-    }
-  }
-
-async convert(amount: number, from: string, to: string): Promise<number> {
-  if (this.subscriptionType !== 'Pro' && this.remainingAttempts <= 0) {
-    throw new Error(`Conversion limit reached for ${this.subscriptionType} plan`);
-  }
-
-  try {
-    const response = await fetch('/api/currency/convert', {
-      method: 'POST',
+  async getSub(userId: number) {
+    const response = await fetch(API + `subscription/userSub/${userId}`, {
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-type": "application/json",
+        Authorization: "Bearer " + this.auth.token(),
       },
-      body: JSON.stringify({ amount, from, to }),
     });
-
+  
     if (!response.ok) {
-      throw new Error('Error in conversion');
+      throw new Error("Network response was not ok");
     }
-
-    const result = await response.json();
-
-    if (this.subscriptionType !== 'Pro') {
-      this.remainingAttempts--;
-    }
-
-    return result.convertedAmount; 
-  } catch (error) {
-    console.error('Error en la conversión:', error);
-    throw error;
+  
+    const subscription = await response.json(); // Cambié a .json() para obtener un objeto
+    return subscription.AllowedAttempts; // Esto te devuelve los intentos restantes
   }
-}
+  
+  async getAllSubscriptions(): Promise<Subscription[]> {
+    const response = await fetch(API + `subscription/all`, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + this.auth.token(),
+      },
+    });
+  
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+  
+    const subscriptions: Subscription[] = await response.json(); // Aseguramos que la respuesta es un array de tipo Subscription
+    return subscriptions;
+  }
+  
+  
+
+  async updateSubscription(newSubscriptionId: Subscription) {
+		const res = await fetch(API + `subscription/change`, {
+			method: "POST",
+			headers: {
+				"Content-type": "application/json",
+				Authorization: "Bearer " + this.auth.token(),
+			},
+			body: JSON.stringify(newSubscriptionId),
+		});
+		return res;
+	}
+
+  
+
 
 }

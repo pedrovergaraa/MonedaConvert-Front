@@ -36,7 +36,7 @@
     
     <!-- Muestra los intentos restantes según el tipo de suscripción -->
     <div class="p-text">
-      <p>Intentos restantes: {{ subscriptionService.getRemainingAttempts() }}</p>
+      <p>Intentos restantes: {{ remainingAttempts }}</p>
     </div>
 
     <!-- Listado de monedas favoritas -->
@@ -45,7 +45,7 @@
       <ul>
         <li *ngFor="let currency of favoriteCoins">
           {{ currency.legend }}
-          <button (click)="deleteCurrency(currency.id)">Eliminar</button>
+          <button (click)="deleteCurrency(currency.currencyId)">Eliminar</button>
         </li>
       </ul>
     </div>

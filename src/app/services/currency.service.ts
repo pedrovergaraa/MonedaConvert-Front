@@ -1,6 +1,5 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { AuthService } from './auth.service';
 import { Currency } from '../interfaces/Currency';
 import {API} from '../constants/api'
 
@@ -10,43 +9,35 @@ import {API} from '../constants/api'
 
 export class CurrencyService  extends ApiService {
 
-  apiService = inject(ApiService);
 
-  async getUserCurrencies(): Promise<any> {
-    const res = await this.apiService.getAuth('currency/all');
-    if (res.ok) {
-      return res.json();
-    }
-    throw new Error('Error al obtener las currencys');
+  async getUserCurrencies(): Promise<Currency[]> {
+    const res = await fetch(API + "Currency/all", {
+			method: "GET",
+			headers: {
+				"Content-type": "application/json",
+				Authorization: "Bearer " + this.auth.token(),
+			},
+		});
+		const data = await res.json();
+		return data;
   }
 
-  async getCurrencies(): Promise<Currency[]> {
-    try {
-      const res = await this.apiService.getAuth('currency/all'); // Endpoint correcto
-      if (!res.ok) {
-        const errorMessage = await res.text();
-        throw new Error(`Error al obtener las monedas: ${errorMessage}`);
-      }
+  async getCurrencyById(currencyId: number): Promise<Currency> {
+		const res = await fetch(API + `Currency/${currencyId}`, {
+			method: "GET",
+			headers: {
+				"Content-type": "application/json",
+				Authorization: "Bearer " + this.auth.token(),
+			},
+		});
+		const data = await res.json();
+		return data;
+	}
+
   
-      return res.json(); // Asegúrate de que la respuesta sea del tipo esperado
-    } catch (error) {
-      console.error('Error al obtener las monedas del usuario:', error);
-      throw new Error('Hubo un problema al comunicarse con la API.');
-    }
-  }
-  
-
-  async getCurrencyById(currencyId: number): Promise<any> {
-    const res = await this.apiService.getAuth(`currency/${currencyId}`);
-    if (res.ok) {
-      return res.json();
-    }
-    throw new Error('Error al obtener la currency');
-  }
-
   async getFavoriteCurrencies(userId: number): Promise<Currency[]> {
   try {
-    const res = await this.apiService.getAuth(`currency/favorites/${userId}`);
+    const res = await fetch(API +`currency/favorites/${userId}`);
     
     if (res.ok) {
       return res.json(); 
@@ -61,7 +52,7 @@ export class CurrencyService  extends ApiService {
 }
 
   async getDefaultCurrencies(): Promise<any> {
-    const res = await this.apiService.getAuth('currency/defaultCurrencies');
+    const res = await fetch('currency/defaultCurrencies');
     if (res.ok) {
       return res.json();
     }
@@ -80,11 +71,6 @@ export class CurrencyService  extends ApiService {
         },
       });
   
-      if (!response.ok) {
-        console.error('Error en la solicitud al backend');
-        return "-2"; // Status personalizado para errores en la solicitud
-      }
-  
       // Parsear la respuesta en JSON (si el backend devuelve JSON) o texto
       const result = await response.json();
       return result;
@@ -97,7 +83,7 @@ export class CurrencyService  extends ApiService {
   
 
   async createCurrency(currency: Currency): Promise<boolean> {
-    if (currency.id) return false;
+    if (currency.currencyId) return false;
     const res = await fetch(API + 'currency/create', {
       method: 'POST',
       headers: {
