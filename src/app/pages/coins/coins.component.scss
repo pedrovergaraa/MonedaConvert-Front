@@ -1,93 +1,115 @@
 @import 'src/assets/styles/variables.scss';
 
-.container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    place-items: center;
-    justify-content: center;
-}
+// /* Asegura que el body ocupe toda la pantalla */
+// body, html {
+//     margin: 0;
+//     padding: 0;
+//     height: 100%;
+//     display: flex;
+//     flex-direction: column;
+// }
 
-.container-general {
-    width: 95%;
-    height: 98%;
-    inset: 0;
-    margin: auto;
+.container {
+    padding-top: 100px;
+    width: 100%;
+    height: 100%; 
     display: flex;
     flex-direction: column;
     place-items: center;
-    justify-content: center;
-    border-radius: 10px;
+    justify-content: flex-start;
+    overflow-y: auto; 
 }
+
 
 .category {
-    width: 95%;
-    height: 33.3%;
-    display: flex;
-    flex-direction: column;
-    place-items: center;
-    justify-content: center;
-    gap: 5px;
- }
-
-    .title {
-        display: flex;
-        justify-content: space-between; // Espacio entre el título y el botón
-        align-items: center; // Alineación vertical centrada
-    }
-    
-    .star-icon {
-        width: 20px; // Ajusta el tamaño de la estrella según sea necesario
-        height: 20px; // Ajusta el tamaño de la estrella según sea necesario
-        margin-left: 5px; // Espaciado entre la palabra "Favoritas" y la estrella
-    }
-    
-h1 {
-    font-size: 24px; // Tamaño del título
-    margin: 0; // Sin margen
-    color: $primary-color;
-}
-
-.button-container {
-    display: flex; // Usar flex para alinear el botón
-    justify-content: flex-end; // Alinear el botón a la derecha
-    margin: 10px;
-}
-
-.coin-container {
     width: 100%;
-    height: 77%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 5px;
-    overflow-y: scroll;
-}
-
-.coin {
-    margin: 2px; // Espaciado entre monedas
+    gap: 10px;
+    padding: 20px 0;
 }
 
 .title {
+    width: 100%;
     display: flex;
-    justify-content: space-between; /* Espacio entre el título y el botón */
-    align-items: center; /* Alineación vertical centrada */
-    color: white; /* Color del texto */
-    padding: 0 20px; /* Ajuste para dar espacio lateral si es necesario */
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+}
+
+h1 {
+    font-size: 24px;
+    margin: 0;
+    color: $primary-color;
+    flex-grow: 1;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 10px;
 }
 
 .create-button {
-    background-color: #E4AE1E; /* Color del botón de crear */
-    color: #25292F; /* Color del texto del botón */
-    border: none; /* Sin borde */
-    border-radius: 5px; /* Bordes redondeados */
-    padding: 10px 20px; /* Espaciado interno del botón */
-    font-size: 20px; /* Tamaño del texto */
-    cursor: pointer; /* Cursor de puntero al pasar por encima */
-    transition: background-color 0.3s; /* Transición suave para el color de fondo */
-    margin-left: 50px; /* Asegura que el botón quede alineado a la derecha */
+    background-color: #E4AE1E;
+    color: #25292F;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .create-button:hover {
     background-color: darken(#E4AE1E, 10%);
 }
+
+.coin-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px 0;
+    overflow-y: auto;
+    margin-top: 80px; 
+}
+
+.coin {
+    margin: 5px;
+}
+
+.coin-container {
+    max-height: 400px; 
+    overflow-y: auto;
+}
+
+.star-icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+}
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background-color: $header-background;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 400px;
+  }
+  

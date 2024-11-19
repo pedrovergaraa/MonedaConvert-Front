@@ -2,13 +2,11 @@
 
 <div class="currency-form-container">
   <div class="currency-header">
-    <div class="moneda">
-      <div class="container-moneda">
-        <app-card-coin></app-card-coin>
+
+    <div class="currency">
+      <div  class="container-moneda">
+          <app-card-coin [currency]="selectedCurrency"></app-card-coin>
       </div>
-      <button class="delete-button">Eliminar</button>
-    </div>
-  </div>
 
   <div class="currency-form-card">
     <form>
@@ -22,8 +20,8 @@
       <input id="convertibility-index" type="number" placeholder="Indice convertibilidad" />
 
       <div class="form-buttons">
-        <button type="submit" class="confirm-button">Confirmar</button>
-        <button type="button" class="cancel-button">Cancelar</button>
+        <button type="submit" class="confirm-button" (click)="editCurrency()">Confirmar</button>
+        <button type="button" class="cancel-button"(click)="cancelEdit()">Cancelar</button>
       </div>
     </form>
   </div>

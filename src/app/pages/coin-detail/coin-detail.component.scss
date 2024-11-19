@@ -14,7 +14,7 @@
     justify-content: center;
     height: 100vh;
     background-color: $background-color;
-    position: relative; /* Para mantener el botón de eliminar en la parte superior derecha */
+    position: relative; 
   }
   
   
@@ -50,6 +50,7 @@
         }
       }
     }
+
   }
   
   .currency-form-card {

@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Currency } from 'src/app/interfaces/Currency';
+import { CurrencyService } from 'src/app/services/currency.service';
 
 @Component({
     selector: 'app-favorite-coin',
@@ -6,38 +8,50 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     styleUrls: ['./favorite-coin.component.scss']
 })
 export class FavoriteCoinComponent {
-    @Input() selectedCoin: string = '';
-    @Output() coinSelected = new EventEmitter<string>();
+  @Input() selectedCoin: string;
+  @Output() coinSelected = new EventEmitter<string>();
+
+  currencyService = inject(CurrencyService)
+
+  currencyFav : Currency = {
+      currencyId: 0,
+      legend: '',
+      symbol: '',
+      ic: 0,
+      isDefault: false,
+      userId: 0
+  }
     
     showDropdown: boolean = false;
-    availableCoins: string[] = ['USD', 'EUR', 'GBP', 'JYN', 'ARS']; // Lista completa de monedas
-    favoriteCoins: Set<string> = new Set(); // Gestión de monedas favoritas
+    availableCoins: string[] = ['USD', 'EUR', 'GBP', 'JYN', 'ARS']; 
+    favoriteCoins: Set<string> = new Set(); 
 
     toggleDropdown() {
         this.showDropdown = !this.showDropdown;
     }
 
     selectCoin(coin: string) {
-        this.coinSelected.emit(coin);
-        this.showDropdown = false; // Cerrar el dropdown al seleccionar
-    }
+      this.coinSelected.emit(coin); 
+      this.showDropdown = false; 
+  }
+  
 
     toggleFavorite(coin: string, event: MouseEvent) {
-        event.stopPropagation(); // Evitar que el dropdown se cierre al marcar/desmarcar favoritos
+        event.stopPropagation(); 
 
         if (this.favoriteCoins.has(coin)) {
-            this.favoriteCoins.delete(coin); // Eliminar de favoritos
+            this.favoriteCoins.delete(coin); 
         } else {
-            this.favoriteCoins.add(coin); // Agregar a favoritos
+            this.favoriteCoins.add(coin); 
         }
     }
 
     get availableNonFavoriteCoins() {
-        // Monedas disponibles que no son favoritas
+        
         return this.availableCoins.filter(coin => !this.favoriteCoins.has(coin));
     }
 
     editCoin() {
-        // Implementar funcionalidad de edición si es necesario
+       
     }
 }

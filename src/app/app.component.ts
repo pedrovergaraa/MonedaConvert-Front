@@ -8,6 +8,7 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
   showHeaderFooter: boolean = true;
 
   constructor(private router: Router) {

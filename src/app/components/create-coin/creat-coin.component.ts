@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Currency } from 'src/app/interfaces/Currency';
 import { CurrencyService } from 'src/app/services/currency.service';
-import { mensajeError, mensajeOkey } from 'src/app/helpers/messageModal';
+import { ErrorMessage, SuccessMessage } from 'src/app/helpers/messageModal';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -17,30 +17,37 @@ export class CreatCoinComponent {
   currencyService = inject(CurrencyService);
   router = inject(Router);
 
-  @Output() close = new EventEmitter();
+  @Output() close = new EventEmitter<void>();
   @Input() currency: Currency = {
-    id: 0,
+    currencyId: 0,
     legend: '',
     symbol: '',
     ic: 0,
+    isDefault: false,
+    userId: 0
   }
 
   ngOnInit(): void {
     const message = localStorage.getItem('mensajeOkey');
-        if (message) {
-          mensajeOkey(message);
-          localStorage.removeItem('mensajeOkey');
-        }
-  };
-
+    if (message) {
+      ErrorMessage(message);
+      localStorage.removeItem('mensajeOkey');
+    }
+  }
+  
   onSubmit() {
+    if (!this.currency.legend || !this.currency.symbol || this.currency.ic <= 0) {
+      SuccessMessage('Por favor complete todos los campos correctamente.');
+      return;
+    }
+
     this.currencyService.createCurrency(this.currency).then(res => {
       this.close.emit();
       if (res) {
         localStorage.setItem('mensajeOkey', 'Creada correctamente');
-        location.reload()
+        location.reload(); 
       } else {
-        mensajeError('Error creando moneda')
+        SuccessMessage('Error creando moneda');
       }
     });
   }

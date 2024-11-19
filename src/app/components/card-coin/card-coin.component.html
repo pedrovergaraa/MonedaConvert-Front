@@ -1,7 +1,11 @@
 <div class="card-coin">
-    <p id="leyenda">leyenda</p>
+    <p id="leyenda">{{ currency.legend }}</p>
     <span>|</span>
-    <p id="simbolo">simbolo</p>
+    <p id="simbolo">{{ currency.symbol }}</p>
     <span>|</span>
-    <p id="ic">IC</p>
-</div>
+    <p id="ic">{{ currency.ic }}</p>
+    <button class="delete-button" (click)="confirmDelete()">
+      <i class="fas fa-trash-alt"></i>
+    </button>
+  </div>
+  

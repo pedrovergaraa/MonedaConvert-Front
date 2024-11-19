@@ -1,0 +1,23 @@
+<div class="currency-form-container">
+    <h1>Crear Moneda</h1>
+    <div class="currency-form-card">
+        <form #form="ngForm" (ngSubmit)="onSubmit()">
+            <div class="currency-header">
+                <div class="currency-info">
+                    <input type="text" autocomplete="off" placeholder="Leyenda" [(ngModel)]="currency.legend" name="leyenda">
+                </div>
+                <div class="currency-info">
+                    <input type="text" autocomplete="off" placeholder="Símbolo" [(ngModel)]="currency.symbol" name="simbolo">
+                </div>
+                <div class="currency-info">
+                    <input type="number" autocomplete="off" placeholder="Índice de Convertibilidad" [(ngModel)]="currency.ic" name="ic">
+                </div>
+            </div>
+
+            <div class="form-buttons">
+                <button type="submit" id="create" [disabled]="(currency.legend.length == 0 || currency.symbol.length == 0 || currency.ic <= 0)">Crear +</button>
+                <button type="button" id="cancel" (click)="close.emit()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>

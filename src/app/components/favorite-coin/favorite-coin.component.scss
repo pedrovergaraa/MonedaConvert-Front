@@ -10,24 +10,24 @@
     position: relative;
     display: inline-block;
     width: 100%;
-    margin: 10px 0; /* Espaciado adicional si lo necesitas */
+    margin: 10px 0; 
 }
 
 .dropdown-arrow {
     margin-left: 8px;
     cursor: pointer;
-    transition: transform 0.3s ease; /* Añade una transición para la animación */
+    transition: transform 0.3s ease; 
 }
 
 .dropdown-arrow.rotated {
-    transform: rotate(360deg); /* Rota la flecha cuando está abierta */
+    transform: rotate(360deg); 
 }
 
 .dropdown-menu {
     display: block;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 20%; /* Para que ocupe todo el ancho del input */
+    min-width: 20%; 
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
     margin-top: 5px;
@@ -53,7 +53,7 @@ li {
   }
   
   .favorite {
-    color: $primary-color; /* Las estrellas de monedas favoritas serán de color amarillo */
+    color: $primary-color; 
   }
   
 label {
