@@ -1,10 +1,16 @@
 <div class="container">
   <div class="body">
-    <p class="p-text">Plan: {{ subscriptionService.getSubscriptionType() }}</p>
+    <!-- Muestra el tipo de suscripción del usuario -->
+    <p class="p-text">Plan: {{ userSubscriptionType }}</p>
+    
+    <!-- Botón para ver todas las monedas -->
     <button class="view-coins-button" [routerLink]="['/coins']">Ver Monedas</button>
+    
+    <!-- Campo de entrada para el importe -->
     <label for="amount">Importe</label>
     <input type="text" id="amount" placeholder="1,00 $" [(ngModel)]="amount" />
-    
+
+    <!-- Selector de la moneda de origen usando el componente FavoriteCoin -->
     <div class="input-container">
       <label for="from">De</label>
       <app-favorite-coin 
@@ -12,7 +18,8 @@
         (coinSelected)="onFromCoinSelected($event)">
       </app-favorite-coin>
     </div>
-    
+
+    <!-- Selector de la moneda destino usando el componente FavoriteCoin -->
     <div class="input-container">
       <label for="to">A</label>
       <app-favorite-coin 
@@ -20,14 +27,27 @@
         (coinSelected)="onToCoinSelected($event)">
       </app-favorite-coin>
     </div>
-    
-    <button class="convert-button" type="button" (click)="convertCurrency(amount, selectedFromCoin, selectedToCoin)">
-      Convertir
-    </button>
 
+    <!-- Botón para realizar la conversión -->
+    <button class="convert-button" type="button" (click)="convertCurrency()">Convertir</button>
+
+    <!-- Muestra el resultado de la conversión -->
     <p id="result">Resultado de la Conversión: {{ result }}</p>
+    
+    <!-- Muestra los intentos restantes según el tipo de suscripción -->
     <div class="p-text">
       <p>Intentos restantes: {{ subscriptionService.getRemainingAttempts() }}</p>
+    </div>
+
+    <!-- Listado de monedas favoritas -->
+    <div *ngIf="favoriteCoins.length > 0">
+      <h3>Monedas Favoritas</h3>
+      <ul>
+        <li *ngFor="let currency of favoriteCoins">
+          {{ currency.legend }}
+          <button (click)="deleteCurrency(currency.id)">Eliminar</button>
+        </li>
+      </ul>
     </div>
   </div>
 </div>

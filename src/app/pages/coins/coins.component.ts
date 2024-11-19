@@ -28,7 +28,7 @@ export class CoinsComponent implements OnInit {
       const userId = this.authService.getUserId();
 
       // Llamar a los servicios pasando el userId como argumento
-      this.userCurrencies = await this.currencyService.getUserCurrencies();
+      this.userCurrencies = await this.currencyService.getCurrencies();
       this.favoriteCurrencies = await this.currencyService.getFavoriteCurrencies(userId);
       this.defaultCurrencies = await this.currencyService.getDefaultCurrencies();
     } catch (error) {

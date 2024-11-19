@@ -1,45 +1,88 @@
-import { Component } from '@angular/core';
-import { SubscriptionService } from '../../services/sub.service'; // Ajusta la importación a tu caso
+import { Component, inject, OnInit } from '@angular/core';
+import { SubscriptionService } from '../../services/sub.service';
+import { Currency } from '../../interfaces/Currency';
+import { CurrencyService } from '../../services/currency.service'; // Nuevo servicio para manejar monedas
+
 
 @Component({
   selector: 'app-converter',
   templateUrl: './converter.component.html',
   styleUrls: ['./converter.component.scss']
 })
-export class ConverterComponent {
-
-  constructor(public subscriptionService: SubscriptionService) { }
-
+export class ConverterComponent implements OnInit {
+  amount: number = 0;
   selectedFromCoin: string = '';
   selectedToCoin: string = '';
-  message: string = '';
-  subscriptionType: string = 'Standard';
-  amount: number;
-  result: number;
+  currencies: Currency[] = [];
+  favoriteCoins: Currency[] = []; // Para almacenar las monedas favoritas
+  result: string = '';
+  userSubscriptionType: string = ''; // Para mostrar el tipo de suscripción
 
-  onFromCoinSelected(coin: string): void {
-    this.selectedFromCoin = coin;
-    console.log(`Moneda de origen seleccionada: ${this.selectedFromCoin}`);
+  subscriptionService = inject(SubscriptionService);
+  currencyService = inject(CurrencyService); // Nuevo servicio para interactuar con las monedas
+
+  ngOnInit() {
+    // Obtener las monedas del usuario cuando se inicia el componente
+    this.currencyService.getCurrencies().then((currencies) => {
+      this.currencies = currencies;
+      this.selectedFromCoin = this.currencies[0]?.legend || '';
+      this.selectedToCoin = this.currencies[0]?.legend || '';
+    });
   }
-
-  onToCoinSelected(coin: string): void {
-    this.selectedToCoin = coin;
-    console.log(`Moneda de destino seleccionada: ${this.selectedToCoin}`);
-  }
-
-  async convertCurrency(amount: number, fromCurrency: string, toCurrency: string): Promise<string | number> {
-    const remainingAttempts = this.subscriptionService.getRemainingAttempts();
-
-    if (remainingAttempts <= 0) {
-      return `You have reached your conversion limit for the ${this.subscriptionService.getSubscriptionType()} plan.`;
-    }
-
+  
+  async loadUserData() {
     try {
-      const convertedAmount = await this.subscriptionService.convert(amount, fromCurrency, toCurrency);
-      return convertedAmount;
+      // Obtener monedas favoritas y monedas del usuario
+      await this.currencyService.getUserCurrencies();
+      this.currencyService.getCurrencies().then((currencies) => {
+        this.currencies = currencies;
+      });
+      
+      // this.currencyService.getFavoriteCurrencies(userId).then((favoriteCurrencies) => {
+      //   this.favoriteCoins = favoriteCurrencies;
+      // });
+
+      // Establecer las monedas por defecto
+      this.selectedFromCoin = this.currencies[0]?.legend || '';
+      this.selectedToCoin = this.currencies[0]?.legend || '';
     } catch (error) {
-      console.error('Error in conversion:', error);
-      return 'There was an error during the conversion process.';
+      console.error('Error al obtener las monedas del usuario:', error);
+    }
+  }
+
+  onFromCoinSelected(event: any): void {
+    console.log('From coin selected:', event);
+    this.selectedFromCoin = event.legend;
+  }
+
+  onToCoinSelected(event: any): void {
+    console.log('To coin selected:', event);
+    this.selectedToCoin = event.legend;
+  }
+
+  async convertCurrency() {
+    const fromCurrencyId = this.currencies.find(currency => currency.legend === this.selectedFromCoin)?.id;
+    const toCurrencyId = this.currencies.find(currency => currency.legend === this.selectedToCoin)?.id;
+
+    if (fromCurrencyId && toCurrencyId) {
+      try {
+        const convertedAmount = await this.currencyService.convert(this.amount, fromCurrencyId, toCurrencyId);
+        this.result = `Resultado: ${convertedAmount}`;
+      } catch (error) {
+        this.result = 'Hubo un error en la conversión.';
+      }
+    } else {
+      this.result = 'Por favor selecciona monedas válidas.';
+    }
+  }
+
+  // Método para eliminar una moneda
+  async deleteCurrency(currencyId: number) {
+    try {
+      await this.currencyService.deleteCurrency(currencyId);
+      this.loadUserData(); // Recargar las monedas después de eliminar
+    } catch (error) {
+      console.error('Error al eliminar la moneda:', error);
     }
   }
 }

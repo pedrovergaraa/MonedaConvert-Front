@@ -12,7 +12,7 @@ export class CurrencyService  extends ApiService {
 
   apiService = inject(ApiService);
 
-  async getAllCurrencies(): Promise<any> {
+  async getUserCurrencies(): Promise<any> {
     const res = await this.apiService.getAuth('currency/all');
     if (res.ok) {
       return res.json();
@@ -20,12 +20,19 @@ export class CurrencyService  extends ApiService {
     throw new Error('Error al obtener las currencys');
   }
 
-  async getUserCurrencies(): Promise<any> {
-    const res = await this.apiService.getAuth('currency/all'); // Suponiendo que "all" trae todas las monedas
-    if (res.ok) {
-      return res.json();
+  async getCurrencies(): Promise<Currency[]> {
+    try {
+      const res = await this.apiService.getAuth('currency/all'); // Endpoint correcto
+      if (!res.ok) {
+        const errorMessage = await res.text();
+        throw new Error(`Error al obtener las monedas: ${errorMessage}`);
+      }
+  
+      return res.json(); // Asegúrate de que la respuesta sea del tipo esperado
+    } catch (error) {
+      console.error('Error al obtener las monedas del usuario:', error);
+      throw new Error('Hubo un problema al comunicarse con la API.');
     }
-    throw new Error('Error al obtener las monedas del usuario');
   }
   
 
@@ -42,7 +49,7 @@ export class CurrencyService  extends ApiService {
     const res = await this.apiService.getAuth(`currency/favorites/${userId}`);
     
     if (res.ok) {
-      return res.json(); // Asume que la respuesta es un arreglo de objetos Currency
+      return res.json(); 
     } else {
       const errorMessage = await res.text();
       throw new Error(`Error al obtener las monedas favoritas: ${errorMessage}`);
@@ -61,13 +68,33 @@ export class CurrencyService  extends ApiService {
     throw new Error('Error al obtener las currencys por defecto');
   }
 
-  async convert(amount: number, toConvert: any): Promise<any> {
-    const res = await this.apiService.getAuth(`currency/convert?amount=${amount}&CurrencyFromId=${toConvert.CurrencyFromId}&CurrencyToId=${toConvert.CurrencyToId}`);
-    if (res.ok) {
-      return res.json();
+  async convert(amount: number, currencyFromId: number, currencyToId: number): Promise<any> {
+    const url = `${API}currency/convert?amount=${amount}&currencyFromId=${currencyFromId}&currencyToId=${currencyToId}`;
+  
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + this.auth.token(),
+        },
+      });
+  
+      if (!response.ok) {
+        console.error('Error en la solicitud al backend');
+        return "-2"; // Status personalizado para errores en la solicitud
+      }
+  
+      // Parsear la respuesta en JSON (si el backend devuelve JSON) o texto
+      const result = await response.json();
+      return result;
+  
+    } catch (error) {
+      console.error('Error al realizar la solicitud:', error);
+      return "-2"; // Status personalizado para errores en el fetch
     }
-    throw new Error('Error en la conversión de currency');
   }
+  
 
   async createCurrency(currency: Currency): Promise<boolean> {
     if (currency.id) return false;
