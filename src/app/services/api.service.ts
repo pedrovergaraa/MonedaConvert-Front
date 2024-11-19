@@ -6,18 +6,26 @@ import { API } from '../constants/api';
   providedIn: 'root',
 })
 export class ApiService {
-  auth = inject(AuthService); 
+  auth = inject(AuthService);
+  constructor() { }
 
-  constructor() {}
   async getAuth(endpoint: string) {
+    const token = this.auth.token();  // Obtener el token desde AuthService
+    if (!token) {
+      console.error("Token is missing or invalid.");
+      throw new Error("Token is missing or invalid.");
+    }
+  
     const res = await fetch(API + endpoint, {
       headers: {
-        Authorization: 'Bearer ' + this.auth.getToken(), 
+        Authorization: "Bearer " + token,
       },
     });
+  
     if (res.status === 401) {
-      this.auth.logOut();  
+      this.auth.logOut();
     }
     return res;
   }
+  
 }

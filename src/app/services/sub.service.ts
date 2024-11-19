@@ -11,7 +11,13 @@ export type SubscriptionType = 'Free' | 'Trial' | 'Pro';
 export class SubscriptionService  extends ApiService {
 
 
+
+  
   async getSub(userId: number) {
+    if (!userId) {
+      throw new Error("Invalid userId provided");
+    }
+  
     const response = await fetch(API + `subscription/userSub/${userId}`, {
       method: "GET",
       headers: {
@@ -24,8 +30,8 @@ export class SubscriptionService  extends ApiService {
       throw new Error("Network response was not ok");
     }
   
-    const subscription = await response.json(); // Cambié a .json() para obtener un objeto
-    return subscription.AllowedAttempts; // Esto te devuelve los intentos restantes
+    const subscription = await response.json();
+    return subscription.AllowedAttempts;
   }
   
   async getAllSubscriptions(): Promise<Subscription[]> {
@@ -41,7 +47,7 @@ export class SubscriptionService  extends ApiService {
       throw new Error("Network response was not ok");
     }
   
-    const subscriptions: Subscription[] = await response.json(); // Aseguramos que la respuesta es un array de tipo Subscription
+    const subscriptions: Subscription[] = await response.json();
     return subscriptions;
   }
   

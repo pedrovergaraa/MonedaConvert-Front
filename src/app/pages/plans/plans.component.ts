@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { SubscriptionService } from '../../services/sub.service';
 import { Router } from '@angular/router';
-import { Subscription } from 'src/app/interfaces/Subscription'; // Importamos la interfaz Subscription
+import { Subscription } from 'src/app/interfaces/Subscription'; 
 
 @Component({
   selector: 'app-plans',
@@ -13,10 +13,10 @@ export class PlansComponent implements OnInit {
   subscriptionService = inject(SubscriptionService);
   router = inject(Router);
 
-  subscriptions: Subscription[] = []; // Tipamos la propiedad con la interfaz Subscription
+  subscriptions: Subscription[] = []; 
 
   ngOnInit(): void {
-    this.loadSubscriptions(); // Llamamos a la función para cargar las suscripciones al iniciar el componente
+    this.loadSubscriptions(); 
   }
 
   async loadSubscriptions() {

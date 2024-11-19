@@ -11,7 +11,7 @@ export class CurrencyService  extends ApiService {
 
 
   async getUserCurrencies(): Promise<Currency[]> {
-    const res = await fetch(API + "Currency/all", {
+    const res = await fetch(API + "currency/all", {
 			method: "GET",
 			headers: {
 				"Content-type": "application/json",
@@ -23,10 +23,10 @@ export class CurrencyService  extends ApiService {
   }
 
   async getCurrencyById(currencyId: number): Promise<Currency> {
-		const res = await fetch(API + `Currency/${currencyId}`, {
+		const res = await fetch(API + `currency/${currencyId}`, {
 			method: "GET",
 			headers: {
-				"Content-type": "application/json",
+				"Content-Type": "application/json",
 				Authorization: "Bearer " + this.auth.token(),
 			},
 		});
@@ -71,13 +71,12 @@ export class CurrencyService  extends ApiService {
         },
       });
   
-      // Parsear la respuesta en JSON (si el backend devuelve JSON) o texto
       const result = await response.json();
       return result;
   
     } catch (error) {
       console.error('Error al realizar la solicitud:', error);
-      return "-2"; // Status personalizado para errores en el fetch
+      return "-2"; 
     }
   }
   
@@ -87,7 +86,7 @@ export class CurrencyService  extends ApiService {
     const res = await fetch(API + 'currency/create', {
       method: 'POST',
       headers: {
-        'Content-type': 'application/json',
+        'Content-Type': 'application/json',
         Authorization: 'Bearer ' + this.auth.token(),
       },
       body: JSON.stringify(currency),
@@ -100,7 +99,7 @@ export class CurrencyService  extends ApiService {
     const res = await fetch(API + `currency/edit/${currencyId}`, {
       method: 'PUT',
       headers: {
-        'Content-type': 'application/json',
+        'Content-Type': 'application/json',
         Authorization: 'Bearer ' + this.auth.token(),
       },
       body: JSON.stringify(currency),
@@ -125,7 +124,7 @@ export class CurrencyService  extends ApiService {
     const res = await fetch(API + 'currency/favorite', {
       method: 'POST',
       headers: {
-        'Content-type': 'application/json',
+        'Content-Type': 'application/json',
         Authorization: 'Bearer ' + this.auth.token(),
       },
       body: JSON.stringify({ CurrencyId: currencyId }),
