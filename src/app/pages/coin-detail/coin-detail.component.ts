@@ -1,8 +1,9 @@
-import { Component, inject, Inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CurrencyService } from '../../services/currency.service';
 import { Currency } from '../../interfaces/Currency';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { ErrorMessage, SuccessMessage } from 'src/app/helpers/messageModal';
 
 @Component({
   selector: 'app-coin-detail',
@@ -21,25 +22,25 @@ export class CoinDetailComponent implements OnInit {
     this.loadCurrencyDetails();
   }
 
-  // Cargar los detalles de la moneda
   async loadCurrencyDetails() {
     try {
-      const currencyId = 1; // Deberás obtener el ID dinámicamente
+      const currencyId = 1;
       this.currency = await this.currencyService.getCurrencyById(currencyId);
     } catch (error) {
       console.error('Error al cargar los detalles de la moneda', error);
     }
   }
 
-  // Método para editar la moneda
   async editCurrency() {
     try {
       if (this.currency) {
         await this.currencyService.editCurrency(this.currency.currencyId, this.currency);
-
+        SuccessMessage('Moneda editada correctamente');
+        this.router.navigate(['/converter']);
       }
     } catch (error) {
       console.error('Error al editar la moneda', error);
+      ErrorMessage('Error al editar la moneda');
     }
   }
 
@@ -62,14 +63,37 @@ export class CoinDetailComponent implements OnInit {
       }
     });
   }
-  // Método para eliminar la moneda
-  async deleteCurrency() {
+
+  confirmDelete() {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: `¿Deseas eliminar la moneda ${this.currency?.legend}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await this.deleteCoin();
+      }
+    });
+  }
+
+  async deleteCoin() {
     try {
       if (this.currency) {
-        await this.currencyService.deleteCurrency(this.currency.currencyId);
+        const response = await this.currencyService.deleteCurrency(this.currency.currencyId);
+        if (response) {
+          SuccessMessage('Moneda eliminada correctamente');
+          this.router.navigate(['/converter']);
+        } else {
+          ErrorMessage('Error eliminando la moneda');
+        }
       }
     } catch (error) {
-      console.error('Error al eliminar la moneda', error);
+      ErrorMessage('Error al eliminar la moneda');
     }
   }
 }
