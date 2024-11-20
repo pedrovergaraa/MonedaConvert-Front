@@ -1,5 +1,5 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { Currency } from 'src/app/interfaces/Currency';
+import { Currency, FavoriteCurrency } from 'src/app/interfaces/Currency'; 
 import { CurrencyService } from 'src/app/services/currency.service';
 
 @Component({
@@ -11,9 +11,9 @@ export class FavoriteCoinComponent {
   @Input() selectedCoin: string;
   @Output() coinSelected = new EventEmitter<string>();
 
-  currencyService = inject(CurrencyService)
+  currencyService = inject(CurrencyService);
 
-  currencyFav : Currency = {
+  currencyFav: Currency = {
       currencyId: 0,
       legend: '',
       symbol: '',
@@ -21,37 +21,41 @@ export class FavoriteCoinComponent {
       isDefault: false,
       userId: 0
   }
-    
-    showDropdown: boolean = false;
-    availableCoins: string[] = ['USD', 'EUR', 'GBP', 'JYN', 'ARS']; 
-    favoriteCoins: Set<string> = new Set(); 
 
-    toggleDropdown() {
-        this.showDropdown = !this.showDropdown;
-    }
+  showDropdown: boolean = false;
+  availableCoins: Currency[] = [
+    { currencyId: 1, legend: 'USD', symbol: '$', ic: 0, isDefault: false, userId: 0 },
+    { currencyId: 2, legend: 'EUR', symbol: '€', ic: 1, isDefault: false, userId: 0 },
+    { currencyId: 3, legend: 'GBP', symbol: '£', ic: 2, isDefault: false, userId: 0 },
+    { currencyId: 4, legend: 'JYN', symbol: '¥', ic: 3, isDefault: false, userId: 0 },
+    { currencyId: 5, legend: 'ARS', symbol: '$', ic: 4, isDefault: false, userId: 0 }
+  ];
 
-    selectCoin(coin: string) {
-      this.coinSelected.emit(coin); 
-      this.showDropdown = false; 
+  favoriteCoins: Set<Currency> = new Set();
+
+  toggleDropdown() {
+      this.showDropdown = !this.showDropdown;
   }
-  
 
-    toggleFavorite(coin: string, event: MouseEvent) {
-        event.stopPropagation(); 
+  selectCoin(coin: Currency) {
+    this.coinSelected.emit(coin.symbol);
+    this.showDropdown = false;
+  }
 
-        if (this.favoriteCoins.has(coin)) {
-            this.favoriteCoins.delete(coin); 
-        } else {
-            this.favoriteCoins.add(coin); 
-        }
-    }
+  toggleFavorite(coin: Currency, event: MouseEvent) {
+      event.stopPropagation();
 
-    get availableNonFavoriteCoins() {
-        
-        return this.availableCoins.filter(coin => !this.favoriteCoins.has(coin));
-    }
+      if (this.favoriteCoins.has(coin)) {
+          this.favoriteCoins.delete(coin);
+      } else {
+          this.favoriteCoins.add(coin);
+      }
+  }
 
-    editCoin() {
-       
-    }
+  get availableNonFavoriteCoins() {
+      return this.availableCoins.filter(coin => !this.favoriteCoins.has(coin));
+  }
+
+  editCoin() {
+  }
 }

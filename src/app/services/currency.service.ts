@@ -34,22 +34,17 @@ export class CurrencyService  extends ApiService {
 		return data;
 	}
 
-  
-  async getFavoriteCurrencies(userId: number): Promise<Currency[]> {
-  try {
-    const res = await fetch(API +`currency/favorites/${userId}`);
-    
-    if (res.ok) {
-      return res.json(); 
-    } else {
-      const errorMessage = await res.text();
-      throw new Error(`Error al obtener las monedas favoritas: ${errorMessage}`);
-    }
-  } catch (error) {
-    console.error('Error en la solicitud a la API:', error);
-    throw new Error('Hubo un problema al obtener las monedas favoritas.');
+  getFavoriteCurrencies(userId: number): Promise<any> {
+    return fetch(`https://localhost:7274/api/favorites/${userId}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Error al obtener las monedas favoritas: ${response.statusText}`);
+        }
+        return response.json();
+      });
   }
-}
+  
+  
 
   async getDefaultCurrencies(): Promise<any> {
     const res = await fetch('currency/defaultCurrencies');
@@ -59,28 +54,30 @@ export class CurrencyService  extends ApiService {
     throw new Error('Error al obtener las currencys por defecto');
   }
 
-  async convert(amount: number, currencyFromId: number, currencyToId: number): Promise<any> {
-    const url = `${API}currency/convert?amount=${amount}&currencyFromId=${currencyFromId}&currencyToId=${currencyToId}`;
+
   
-    try {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + this.auth.token(),
-        },
-      });
+  async convert(amount: number, fromCurrencyId: number, toCurrencyId: number): Promise<number> {
+    const response = await fetch(API + `currency/convert`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.auth.token()}`,
+      },
+      body: JSON.stringify({
+        amount,
+        fromCurrencyId,
+        toCurrencyId,
+      }),
+    });
   
-      const result = await response.json();
-      return result;
-  
-    } catch (error) {
-      console.error('Error al realizar la solicitud:', error);
-      return "-2"; 
+    if (!response.ok) {
+      throw new Error("Error en la conversión de monedas.");
     }
+  
+    const { convertedAmount } = await response.json();
+    return convertedAmount;
   }
   
-
   async createCurrency(currency: Currency): Promise<boolean> {
     if (currency.currencyId) return false;
     const res = await fetch(API + 'currency/create', {

@@ -33,6 +33,23 @@ export class ConverterComponent implements OnInit {
     this.getUserSubscription();
     this.loadRemainingAttempts();
   }
+  
+  async loadCurrencies(): Promise<void> {
+    try {
+      this.loading.set(true);
+      const data = await this.currencyService.getUserCurrencies();
+      this.currencies = data;
+  
+      // Clasificar las monedas favoritas y no favoritas
+      this.favoriteCoins = data.filter((coin) => coin.isDefault); // Ejemplo: isDefault indica si es favorita
+    } catch (err) {
+      console.error("Error al cargar las monedas:", err);
+      this.error.set("No se pudieron cargar las monedas. Inténtalo más tarde.");
+    } finally {
+      this.loading.set(false);
+    }
+  }
+  
 
   async loadRemainingAttempts() {
     try {
@@ -40,19 +57,6 @@ export class ConverterComponent implements OnInit {
       this.remainingAttempts = await this.subscriptionService.getSub(this.userId);
     } catch (err) {
       console.warn("Error fetching remaining attempts", err);
-    }
-  }
-
-  private async loadCurrencies(): Promise<void> {
-    try {
-      this.loading.set(true);
-      const data: Currency[] = await this.currencyService.getUserCurrencies();
-      this.currencies = data;
-    } catch (err) {
-      console.error("Error al cargar las monedas:", err);
-      this.error.set("No se pudieron cargar las monedas. Inténtalo más tarde.");
-    } finally {
-      this.loading.set(false);
     }
   }
 

@@ -10,8 +10,19 @@ export type SubscriptionType = 'Free' | 'Trial' | 'Pro';
 })
 export class SubscriptionService  extends ApiService {
 
+  private selectedSubscription: Subscription | null = null;
 
+  setSubscription(subscription: Subscription) {
+    this.selectedSubscription = subscription;
+  }
 
+  getSubscription(): Subscription | null {
+    return this.selectedSubscription;
+  }
+
+  clearSubscription() {
+    this.selectedSubscription = null;
+  }
   
   async getSub(userId: number) {
     if (!userId) {

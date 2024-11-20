@@ -13,33 +13,33 @@ export class PlansComponent implements OnInit {
   subscriptionService = inject(SubscriptionService);
   router = inject(Router);
 
-  subscriptions: Subscription[] = []; 
+  subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
-    this.loadSubscriptions(); 
+    this.loadSubscriptions();
   }
 
   async loadSubscriptions() {
     try {
       this.subscriptions = await this.subscriptionService.getAllSubscriptions();
     } catch (err) {
-      console.warn("Error loading subscriptions", err);
+      console.warn('Error loading subscriptions', err);
     }
   }
 
-  async updateSubscription(subId: number) {
+  async updateSubscription(subscription: Subscription) {
     try {
-      const res = await this.subscriptionService.updateSubscription({
-        subId,
-        name: '',
-        allowedAttempts: 0,
-        price: 0
-      });
+      const res = await this.subscriptionService.updateSubscription(subscription);
       if (res.ok) {
-        this.router.navigate(["/converter"]);
+        // Almacena la suscripción seleccionada en el servicio compartido
+        this.subscriptionService.setSubscription(subscription);
+  
+        // Redirige al conversor
+        this.router.navigate(['/converter']);
       }
     } catch (err) {
-      console.warn("Error updating subscription", err);
+      console.warn('Error updating subscription', err);
     }
   }
+  
 }
