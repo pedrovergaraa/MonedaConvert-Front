@@ -25,11 +25,8 @@ export class CoinsComponent implements OnInit {
 
   async loadCurrencies() {
     try {
-      
       const userId = this.authService.getUserId();
-
       this.userCurrencies = await this.currencyService.getUserCurrencies();
-
       this.favoriteCurrencies = await this.currencyService.getFavoriteCurrencies(userId);
       this.defaultCurrencies = await this.currencyService.getDefaultCurrencies();
     } catch (error) {
@@ -50,16 +47,15 @@ export class CoinsComponent implements OnInit {
       });
     }
   }
-  
 
   async removeFavoriteCurrency(favoriteCurrencyId: number) {
     try {
       const userId = 1; // Reemplaza con el ID dinámico
       await this.currencyService.removeFavoriteCurrency(favoriteCurrencyId);
-  
+
       // Actualiza la lista de monedas favoritas después de eliminar
       this.favoriteCurrencies = this.favoriteCurrencies.filter(currency => currency.currencyId !== favoriteCurrencyId);
-  
+
       Swal.fire({
         icon: 'success',
         title: 'Eliminado',
@@ -74,7 +70,6 @@ export class CoinsComponent implements OnInit {
       });
     }
   }
-  
 
   openCreateCoinModal() {
     this.isCreateCoinModalOpen = true;

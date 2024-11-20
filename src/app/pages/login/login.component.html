@@ -31,7 +31,7 @@
         />
         <p class="error" *ngIf="password.invalid && (password.touched || password.dirty)">Ingrese su contraseña</p>
       </div>
-      <button type="submit" [disabled]="loginForm.invalid" class="login-button">Iniciar Sesión</button>
+      <button (click)="login()" [disabled]="!isFormValid()" class="login-button">Iniciar sesión</button>
       <p class="form-label">¿No tienes cuenta? <a [routerLink]="['/register']" routerLinkActive="router-link-active">Regístrate</a></p>
     </form>
   </div>

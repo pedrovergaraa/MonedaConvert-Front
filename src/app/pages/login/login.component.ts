@@ -2,7 +2,6 @@ import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginData } from 'src/app/interfaces/User';
 import { AuthService } from 'src/app/services/auth.service';
-
 import Swal from 'sweetalert2';
 
 @Component({
@@ -15,11 +14,14 @@ export class LoginComponent {
   router = inject(Router);
   errorLogin = signal(false);
 
-  loginData: LoginData= {
-    email:"",
+  loginData: LoginData = {
+    email: "",
     password: ""
   }
-
+  
+  isFormValid(): boolean {
+    return this.loginData.email !== "" && this.loginData.password !== "";
+  }
 
   login() {
     this.errorLogin.set(false);
@@ -52,5 +54,4 @@ export class LoginComponent {
       });
     });
   }
-  
 }

@@ -80,9 +80,17 @@
   transition: background-color 0.3s;
 }
 
+
+.login-button:disabled {
+  background-color: grey;  
+  color: #bbb;  
+  cursor: not-allowed;  
+}
+
 .login-button:hover {
   background-color: darken($primary-color, 10%);
 }
+
 
 p {
   font-size: 14px;

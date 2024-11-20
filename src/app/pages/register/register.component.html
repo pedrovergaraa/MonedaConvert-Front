@@ -44,7 +44,7 @@
         />
         <p class="error" *ngIf="confirmPassword.invalid && (confirmPassword.touched || confirmPassword.dirty)">Las contraseñas no coinciden</p>
       </div>
-      <button type="submit" [disabled]="registerForm.invalid" class="register-button">Registrarse</button>
+      <button (click)="register()" [disabled]="!isFormValid()" class="register-button">Registrar</button>
       <p class="form-label">¿Ya tienes cuenta? <a [routerLink]="['/login']" routerLinkActive="router-link-active">Iniciar Sesión</a></p>
     </form>
   </div>
