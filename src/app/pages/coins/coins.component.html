@@ -1,51 +1,71 @@
 <div class="container">
-
-    <div class="category">
-      <div class="title">
-        <h1>Por defecto</h1>
-      </div>
-      <div class="coin-container">
+  <!-- Por Defecto -->
+  <div class="category">
+    <div class="title">
+      <h1>Por defecto</h1>
+    </div>
+    <div class="coin-container">
+      <ng-container *ngIf="defaultCurrencies.length > 0; else noDefaultCurrencies">
         <div class="coin" *ngFor="let coin of defaultCurrencies">
           <app-card-coin [currency]="coin"></app-card-coin>
-          
         </div>
-
-      </div>
+      </ng-container>
+      <ng-template #noDefaultCurrencies>
+        <div class="empty-message">
+          No hay monedas por defecto disponibles.
+        </div>
+      </ng-template>
     </div>
+  </div>
 
-    <div class="category">
-      <div class="title">
-        <h1>
-          Favoritas
-          <img src="./../../../assets/images/starIcon.png" alt="Star" class="star-icon" />
-        </h1>
-      </div>
-      <div class="coin-container">
+  <!-- Favoritas -->
+  <div class="category">
+    <div class="title">
+      <h1>
+        Favoritas
+        <img src="./../../../assets/images/starIcon.png" alt="Star" class="star-icon" />
+      </h1>
+    </div>
+    <div class="coin-container">
+      <ng-container *ngIf="favoriteCurrencies.length > 0; else noFavoriteCurrencies">
         <div class="coin" *ngFor="let coin of favoriteCurrencies">
           <app-card-coin [currency]="coin"></app-card-coin>
           <button (click)="removeFavoriteCurrency(coin.currencyId)" class="delete-button">Eliminar</button>
         </div>
+      </ng-container>
+      <ng-template #noFavoriteCurrencies>
+        <div class="empty-message">
+          No hay monedas favoritas disponibles.
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- Mis Monedas -->
+  <div class="category">
+    <div class="title">
+      <h1>Mis Monedas</h1>
+      <div class="button-container">
+        <button class="create-button" (click)="openCreateCoinModal()">Crear +</button>
       </div>
     </div>
-
-    <div class="category">
-      <div class="title">
-        <h1>Mis Monedas</h1>
-        <div class="button-container">
-          <button class="create-button" (click)="openCreateCoinModal()">Crear +</button>
-        </div>
-      </div>
-      <div class="coin-container">
+    <div class="coin-container">
+      <ng-container *ngIf="userCurrencies.length > 0; else noUserCurrencies">
         <div class="coin" *ngFor="let coin of userCurrencies">
           <app-card-coin [currency]="coin"></app-card-coin>
         </div>
-      </div>
-    </div>
+      </ng-container>
+      <ng-template #noUserCurrencies>
+        <div class="empty-message">
+          No hay monedas disponibles en tu cuenta.
+        </div>
+      </ng-template>
   </div>
+</div>
 
-  <div *ngIf="isCreateCoinModalOpen" class="modal-overlay">
-    <div class="modal-content">
-      <app-creat-coin (close)="closeCreateCoinModal()"></app-creat-coin>
-    </div>
+<!-- Modal para Crear Monedas -->
+<div *ngIf="isCreateCoinModalOpen" class="modal-overlay">
+  <div class="modal-content">
+    <app-creat-coin (close)="closeCreateCoinModal()"></app-creat-coin>
   </div>
-
+</div>

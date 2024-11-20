@@ -30,25 +30,33 @@ export class CreatCoinComponent {
   ngOnInit(): void {
     const message = localStorage.getItem('mensajeOkey');
     if (message) {
-      ErrorMessage(message);
+      SuccessMessage(message); // Cambié a SuccessMessage para mostrar mensaje de éxito
       localStorage.removeItem('mensajeOkey');
     }
   }
   
   onSubmit() {
     if (!this.currency.legend || !this.currency.symbol || this.currency.ic <= 0) {
-      SuccessMessage('Por favor complete todos los campos correctamente.');
+      // Mostrar un mensaje de error si los campos no están completos
+      ErrorMessage('Por favor complete todos los campos correctamente.');
       return;
     }
 
     this.currencyService.createCurrency(this.currency).then(res => {
       this.close.emit();
       if (res) {
-        localStorage.setItem('mensajeOkey', 'Creada correctamente');
-        location.reload(); 
+        // Si la respuesta es exitosa, muestra el mensaje de éxito
+        SuccessMessage('Moneda creada correctamente.');
+        localStorage.setItem('mensajeOkey', 'Moneda creada correctamente.');
+        location.reload(); // Recarga la página o redirige según sea necesario
       } else {
-        SuccessMessage('Error creando moneda');
+        // Si hay un error en la creación de la moneda, muestra el mensaje de error
+        ErrorMessage('Error creando moneda.');
       }
+    }).catch(error => {
+      // Maneja el error si la promesa falla
+      console.error(error);
+      ErrorMessage('Hubo un error al intentar crear la moneda.');
     });
   }
 }

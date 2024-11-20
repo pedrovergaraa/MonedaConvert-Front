@@ -107,16 +107,27 @@ export class CurrencyService  extends ApiService {
   
 
   async deleteCurrency(currencyId: number): Promise<boolean> {
-    const res = await fetch(API + `currency/${currencyId}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: 'Bearer ' + this.auth.token(),
-      },
-    });
-
-    return res.ok;
+    try {
+      const res = await fetch(API + `currency/${currencyId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: 'Bearer ' + this.auth.token(),
+        },
+      });
+  
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.error('Error al eliminar la moneda:', errorData);
+        return false; // Devuelve false si la eliminación falla
+      }
+  
+      return true; // Si la respuesta es OK, devuelve true
+    } catch (error) {
+      console.error('Error en la solicitud DELETE:', error);
+      throw new Error('Hubo un error al eliminar la moneda.');
+    }
   }
-
+  
   async addFavoriteCurrency(currencyId: number): Promise<boolean> {
     const res = await fetch(API + 'currency/favorite', {
       method: 'POST',

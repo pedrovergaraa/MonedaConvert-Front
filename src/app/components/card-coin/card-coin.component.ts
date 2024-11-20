@@ -14,7 +14,7 @@ import { CurrencyService } from 'src/app/services/currency.service';
 export class CardCoinComponent {
   @Input() currency!: Currency;
 
-  coinsService = inject(CurrencyService);
+  currencyService = inject(CurrencyService);
   router = inject(Router);
 
   confirmDelete() {
@@ -36,7 +36,7 @@ export class CardCoinComponent {
 
   async deleteCoin() {
     try {
-      const response = await this.coinsService.deleteCurrency(this.currency.currencyId);
+      const response = await this.currencyService.deleteCurrency(this.currency.currencyId);
       if (response) {
         SuccessMessage('Eliminada correctamente');
         this.router.navigate(['/converter']);
