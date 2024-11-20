@@ -13,7 +13,7 @@ header {
   z-index: 1000;
 }
 
-#logout {
+#backButton {
   background: none;
   border: none;
   cursor: pointer;
@@ -23,6 +23,26 @@ header {
   padding: 5px;
   margin-left: 10px;
 
+  img {
+    width: 24px;
+    height: 24px;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+#logout {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  margin-left: auto;  /* Esto mueve el logout a la derecha */
+  
   img {
     width: 24px;
     height: 24px;

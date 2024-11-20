@@ -1,9 +1,13 @@
 <header>
-    <button id="logout" (click)="Logout()">
-        <img src="./../../../assets/images/Logout.png">
+    <button id="backButton" *ngIf="showBackButton" (click)="goBack()">
+      <img src="./../../../assets/images/back-arrow-navigation-svgrepo-com.svg" alt="Back">
     </button>
     <div class="header-content">
-        <h1>Moneda Convert</h1>
-        <h2>CONVERTER</h2>
+      <h1>Moneda Convert</h1>
+      <h2>CONVERTER</h2>
     </div>
-</header>
+    <button id="logout" (click)="Logout()">
+      <img src="./../../../assets/images/logout-svgrepo-com.svg" alt="Logout">
+    </button>
+  </header>
+  
