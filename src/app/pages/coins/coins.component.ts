@@ -27,7 +27,7 @@ export class CoinsComponent implements OnInit {
     try {
       const userId = this.authService.getUserId();
       this.userCurrencies = await this.currencyService.getUserCurrencies();
-      this.favoriteCurrencies = await this.currencyService.getFavoriteCurrencies(userId);
+      this.favoriteCurrencies = await this.currencyService.getFavoriteCurrencies();
       this.defaultCurrencies = await this.currencyService.getDefaultCurrencies();
     } catch (error) {
       console.error('Error loading currencies:', error);
@@ -37,7 +37,7 @@ export class CoinsComponent implements OnInit {
   async loadFavoriteCurrencies() {
     try {
       const userId = 1; // Aquí reemplaza con el ID dinámico del usuario
-      this.favoriteCurrencies = await this.currencyService.getFavoriteCurrencies(userId);
+      this.favoriteCurrencies = await this.currencyService.getFavoriteCurrencies();
     } catch (error) {
       console.error('Error al cargar las monedas favoritas:', error);
       Swal.fire({

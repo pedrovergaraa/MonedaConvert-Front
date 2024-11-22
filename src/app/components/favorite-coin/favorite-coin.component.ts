@@ -23,13 +23,7 @@ export class FavoriteCoinComponent {
   }
 
   showDropdown: boolean = false;
-  availableCoins: Currency[] = [
-    { currencyId: 1, legend: 'USD', symbol: '$', ic: 0, isDefault: false, userId: 0 },
-    { currencyId: 2, legend: 'EUR', symbol: '€', ic: 1, isDefault: false, userId: 0 },
-    { currencyId: 3, legend: 'GBP', symbol: '£', ic: 2, isDefault: false, userId: 0 },
-    { currencyId: 4, legend: 'JYN', symbol: '¥', ic: 3, isDefault: false, userId: 0 },
-    { currencyId: 5, legend: 'ARS', symbol: '$', ic: 4, isDefault: false, userId: 0 }
-  ];
+  availableCoins: Currency[] = [];
 
   favoriteCoins: Set<Currency> = new Set();
 

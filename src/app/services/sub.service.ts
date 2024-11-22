@@ -10,41 +10,27 @@ export type SubscriptionType = 'Free' | 'Trial' | 'Pro';
 })
 export class SubscriptionService  extends ApiService {
 
-  private selectedSubscription: Subscription | null = null;
+  async getUserSubscription(userId) {
+    const apiUrl = `${API}subscription/userSub/${userId}`; 
 
-  setSubscription(subscription: Subscription) {
-    this.selectedSubscription = subscription;
-  }
-
-  getSubscription(): Subscription | null {
-    return this.selectedSubscription;
-  }
-
-  clearSubscription() {
-    this.selectedSubscription = null;
-  }
-  
-  async getSub(userId: number) {
-    if (!userId) {
-      throw new Error("Invalid userId provided");
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'GET', 
+            headers: {
+                'Content-Type': 'application/json', 
+            },
+        });
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+        const subscription = await response.json();
+        return subscription;
+    } catch (error) {
+        console.error('Error fetching subscription:', error);
+        throw error;
     }
-  
-    const response = await fetch(API + `subscription/userSub/${userId}`, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: "Bearer " + this.auth.token(),
-      },
-    });
-  
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-  
-    const subscription = await response.json();
-    return subscription.AllowedAttempts;
-  }
-  
+}
+
   async getAllSubscriptions(): Promise<Subscription[]> {
     const response = await fetch(API + `subscription/all`, {
       method: "GET",

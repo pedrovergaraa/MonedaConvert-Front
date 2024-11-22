@@ -34,8 +34,8 @@ export class CurrencyService  extends ApiService {
 		return data;
 	}
 
-  getFavoriteCurrencies(userId: number): Promise<any> {
-    return fetch(`https://localhost:7274/api/favorites/${userId}`)
+  getFavoriteCurrencies(): Promise<any> {
+    return fetch('currency/favorites')
       .then((response) => {
         if (!response.ok) {
           throw new Error(`Error al obtener las monedas favoritas: ${response.statusText}`);
@@ -47,7 +47,7 @@ export class CurrencyService  extends ApiService {
   
 
   async getDefaultCurrencies(): Promise<any> {
-    const res = await fetch('currency/defaultCurrencies');
+    const res = await fetch('currency/default');
     if (res.ok) {
       return res.json();
     }
@@ -58,7 +58,7 @@ export class CurrencyService  extends ApiService {
   
   async convert(amount: number, fromCurrencyId: number, toCurrencyId: number): Promise<number> {
     const response = await fetch(API + `currency/convert`, {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${this.auth.token()}`,
@@ -129,7 +129,7 @@ export class CurrencyService  extends ApiService {
   }
   
   async addFavoriteCurrency(currencyId: number): Promise<boolean> {
-    const res = await fetch(API + 'currency/favorite', {
+    const res = await fetch(API + 'currency/addFavorite', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -141,8 +141,8 @@ export class CurrencyService  extends ApiService {
     return res.ok;
   }
 
-  async removeFavoriteCurrency(favoriteCurrencyId: number): Promise<boolean> {
-    const res = await fetch(API + `currency/favorite/${favoriteCurrencyId}`, {
+  async removeFavoriteCurrency(currencyId: number): Promise<boolean> {
+    const res = await fetch(API + `currency/favorite/${currencyId}`, {
       method: 'DELETE',
       headers: {
         Authorization: 'Bearer ' + this.auth.token(),

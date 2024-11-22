@@ -32,7 +32,7 @@ export class PlansComponent implements OnInit {
       const res = await this.subscriptionService.updateSubscription(subscription);
       if (res.ok) {
         // Almacena la suscripción seleccionada en el servicio compartido
-        this.subscriptionService.setSubscription(subscription);
+        this.subscriptionService.getUserSubscription(subscription);
   
         // Redirige al conversor
         this.router.navigate(['/converter']);

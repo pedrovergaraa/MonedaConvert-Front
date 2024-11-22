@@ -54,7 +54,7 @@ export class ConverterComponent implements OnInit {
   async loadRemainingAttempts() {
     try {
       // Asegúrate de que el `userId` es válido y está disponible
-      this.remainingAttempts = await this.subscriptionService.getSub(this.userId);
+      this.remainingAttempts = await this.subscriptionService.getUserSubscription(this.userId);
     } catch (err) {
       console.warn("Error fetching remaining attempts", err);
     }
@@ -62,7 +62,7 @@ export class ConverterComponent implements OnInit {
 
   
   async getUserSubscription() {
-    const sub = await this.subscriptionService.getSub(this.userId);
+    const sub = await this.subscriptionService.getUserSubscription(this.userId);
     console.log(sub); // Aquí tienes los intentos restantes
   }
 
