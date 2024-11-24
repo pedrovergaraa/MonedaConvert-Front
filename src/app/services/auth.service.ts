@@ -14,10 +14,10 @@ export class AuthService {
     this.token.set(localStorage.getItem('token'));
    }
 
-  getUserId(): number {
-    const userId = localStorage.getItem('userId');
-    return userId ? parseInt(userId, 10) : 0;  
-  }
+  // getUserId(): number {
+  //   const userId = localStorage.getItem('userId');
+  //   return userId ? parseInt(userId, 10) : 0;  
+  // }
 
   async login(loginData: LoginData): Promise<boolean> {
     try {
@@ -65,7 +65,6 @@ export class AuthService {
 
   logOut(): void {
     localStorage.removeItem('token');
-    localStorage.removeItem('userId');
     this.token.set(null);  
     this.router.navigate(['/login']);
   }

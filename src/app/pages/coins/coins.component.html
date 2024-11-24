@@ -30,7 +30,6 @@
       <ng-container *ngIf="favoriteCurrencies.length > 0; else noFavoriteCurrencies">
         <div class="coin" *ngFor="let coin of favoriteCurrencies">
           <app-card-coin [currency]="coin"></app-card-coin>
-          <button (click)="removeFavoriteCurrency(coin.currencyId)" class="delete-button">Eliminar</button>
         </div>
       </ng-container>
       <ng-template #noFavoriteCurrencies>
@@ -60,8 +59,10 @@
           No hay monedas disponibles en tu cuenta.
         </div>
       </ng-template>
+    </div>
   </div>
 </div>
+
 
 <!-- Modal para Crear Monedas -->
 <div *ngIf="isCreateCoinModalOpen" class="modal-overlay">

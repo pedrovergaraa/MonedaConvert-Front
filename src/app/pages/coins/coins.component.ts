@@ -12,7 +12,6 @@ import Swal from 'sweetalert2';
 export class CoinsComponent implements OnInit {
 
   currencyService = inject(CurrencyService)
-  authService = inject(AuthService)
 
   userCurrencies: Currency[] = [];
   favoriteCurrencies: Currency[] = [];
@@ -25,7 +24,6 @@ export class CoinsComponent implements OnInit {
 
   async loadCurrencies() {
     try {
-      const userId = this.authService.getUserId();
       this.userCurrencies = await this.currencyService.getUserCurrencies();
       this.favoriteCurrencies = await this.currencyService.getFavoriteCurrencies();
       this.defaultCurrencies = await this.currencyService.getDefaultCurrencies();

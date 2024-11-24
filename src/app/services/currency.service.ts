@@ -34,24 +34,30 @@ export class CurrencyService  extends ApiService {
 		return data;
 	}
 
-  getFavoriteCurrencies(): Promise<any> {
-    return fetch('currency/favorites')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Error al obtener las monedas favoritas: ${response.statusText}`);
-        }
-        return response.json();
-      });
+  async getFavoriteCurrencies(): Promise<any> {
+    const res = await fetch(API + "currency/favorites", {
+			method: "GET",
+			headers: {
+				"Content-type": "application/json",
+				Authorization: "Bearer " + this.auth.token(),
+			},
+		});
+		const data = await res.json();
+		return data;
   }
   
   
 
   async getDefaultCurrencies(): Promise<any> {
-    const res = await fetch('currency/default');
-    if (res.ok) {
-      return res.json();
-    }
-    throw new Error('Error al obtener las currencys por defecto');
+    const res = await fetch(API + "currency/default", {
+			method: "GET",
+			headers: {
+				"Content-type": "application/json",
+				Authorization: "Bearer " + this.auth.token(),
+			},
+		});
+		const data = await res.json();
+		return data;
   }
 
 
