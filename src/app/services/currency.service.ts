@@ -159,9 +159,15 @@ export class CurrencyService  extends ApiService {
       },
       body: JSON.stringify({ CurrencyId: currencyId }),
     });
-
-    return res.ok;
+  
+    if (res.ok) {
+      return true;
+    } else {
+      console.error('Error al agregar moneda favorita:', await res.text());
+      return false;
+    }
   }
+  
 
   async removeFavoriteCurrency(currencyId: number): Promise<boolean> {
     const res = await fetch(API + `currency/favorite/${currencyId}`, {
