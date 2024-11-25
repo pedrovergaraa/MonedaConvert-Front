@@ -7,7 +7,6 @@ body {
   margin: 0;
 }
 
-
 .container {
   display: flex;
   flex-direction: column;
@@ -26,7 +25,6 @@ body {
 }
 
 .title {
-  padding: 10px;
   text-align: center; /* Centrado de los títulos */
   background-color: $header-background;
   color: $text-color;
@@ -34,13 +32,12 @@ body {
   font-weight: bold;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   z-index: 10;
-
-  &.fixed {
-    position: sticky;
-    top: 0;
-  }
+  position: sticky;
+  top: 0;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Agrega sombra para separar del contenido */
 
   .star-icon {
     width: 20px;
@@ -50,8 +47,11 @@ body {
 }
 
 .coin-container {
-  flex: 1;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 100px; /* Limita la altura para mostrar solo 3 monedas */
+  overflow-y: auto;  /* Permite el scroll para ver más monedas */
   position: relative;
 
   /* Sombras para indicar scroll */
@@ -76,6 +76,13 @@ body {
   }
 }
 
+.coin-item {
+  padding: 10px;
+  background-color: $background-color;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
 .empty-message {
   text-align: center;
   color: $text-color;
@@ -85,6 +92,7 @@ body {
 
 .create-button {
   background-color: $primary-color;
+  font-size: 20px;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -114,22 +122,22 @@ body {
 }
 
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-  }
-  
-  .modal-content {
-    background-color:$background-color;
-    padding: 20px;
-    border-radius: 10px;
-    width: 400px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color:$background-color;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}

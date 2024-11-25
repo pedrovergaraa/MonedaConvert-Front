@@ -15,7 +15,7 @@ export class PlansComponent implements OnInit {
   router = inject(Router);
 
   subscriptions: Subscription[] = [];
-  currentSubscriptionId: number = 0; // Suscripción actual del usuario
+  currentSubscriptionId: number = 0; 
 
   SubscriptionUpdate: SubscriptionData = {
     newSubscriptionId: 0,
@@ -23,7 +23,7 @@ export class PlansComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadSubscriptions();
-    this.loadCurrentSubscription(); // Carga la suscripción actual
+    this.loadCurrentSubscription(); 
   }
 
   async loadSubscriptions() {
@@ -36,9 +36,9 @@ export class PlansComponent implements OnInit {
 
   async loadCurrentSubscription() {
     try {
-      const userId = this.getUserId(); // Obtén el ID del usuario (puedes ajustarlo según cómo lo manejes)
+      const userId = this.getUserId(); 
       const subscription = await this.subscriptionService.getUserSubscription(userId);
-      this.currentSubscriptionId = subscription.subscriptionId; // Asigna el ID de la suscripción actual
+      this.currentSubscriptionId = subscription.subscriptionId; 
     } catch (err) {
       console.warn('Error loading current subscription', err);
     }
@@ -48,14 +48,13 @@ export class PlansComponent implements OnInit {
     if (subscriptionId === this.currentSubscriptionId) {
       console.log('Comparing:', subscriptionId, this.currentSubscriptionId);
 
-      // Validación: Ya tiene esta suscripción
       Swal.fire({
         title: 'Already Subscribed',
-        text: 'You already have this subscription.',
+        text: 'Ya tienes esta suscripción',
         icon: 'info',
         confirmButtonText: 'OK',
       });
-      return; // Detener el proceso de actualización
+      return;
     }
 
     this.SubscriptionUpdate.newSubscriptionId = subscriptionId;
@@ -64,14 +63,12 @@ export class PlansComponent implements OnInit {
       if (res.ok) {
         const data = await res.json();
 
-        // Notificación de éxito
         Swal.fire({
           title: 'Success!',
-          text: 'Your subscription has been updated successfully.',
+          text: 'Su suscripción ha sido actualizada con éxito',
           icon: 'success',
-          confirmButtonText: 'Go to Converter',
+          confirmButtonText: 'Ir a la pantalla principal',
         }).then(() => {
-          // Redirigir al usuario
           this.router.navigate(['/converter']);
         });
       }
@@ -89,7 +86,6 @@ export class PlansComponent implements OnInit {
   }
 
   private getUserId(): number {
-    // Implementa esta función para obtener el ID del usuario (según tu lógica de autenticación)
     return parseInt(localStorage.getItem('userId') || '0', 10);
   }
 }
