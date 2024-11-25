@@ -1,25 +1,18 @@
 <div class="dropdown">
   <div class="input-container">
-    <!-- Input para mostrar la moneda seleccionada -->
     <input type="text" [value]="selectedCoin" placeholder="Selecciona una moneda" (click)="toggleDropdown()" readonly>
-    
-    <!-- Enlace para editar la moneda seleccionada -->
-    <a [routerLink]="['/coin-detail']" class="edit-icon">✏️</a>
-    
-    <!-- Flecha del dropdown que cambia al hacer clic -->
     <span class="dropdown-arrow" [ngClass]="{'rotated': showDropdown}" (click)="toggleDropdown()">
       {{ showDropdown ? '▲' : '▼' }}
     </span>
   </div>
-  
-  <!-- Lista desplegable de monedas favoritas y no favoritas -->
+
   <ul *ngIf="showDropdown" class="dropdown-menu">
     <!-- Monedas favoritas -->
     <li *ngFor="let coin of favoriteCoins" (click)="selectCoin(coin)">
-      {{ coin.legend }} ({{ coin.symbol }}) 
+      {{ coin.legend }} ({{ coin.symbol }})
       <i class="fas fa-star favorite" (click)="toggleFavorite(coin, $event)"></i>
     </li>
-    
+
     <!-- Monedas no favoritas -->
     <li *ngFor="let coin of availableNonFavoriteCoins" (click)="selectCoin(coin)">
       {{ coin.legend }} ({{ coin.symbol }})

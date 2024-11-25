@@ -18,8 +18,6 @@ export class ConverterComponent implements OnInit {
   userSubscriptionType: string = '';
   userConversionsLeft: number = 0; // Para los intentos restantes
   userId: number; // O cualquier valor adecuado
-  remainingAttempts: number 
-
   loading: WritableSignal<boolean> = signal(false);
   error: WritableSignal<string | null> = signal(null);
 
@@ -54,24 +52,18 @@ export class ConverterComponent implements OnInit {
       const sub = await this.subscriptionService.getUserSubscription(this.userId);
 
       if (sub && sub.name && sub.conversions >= 0) {
-        this.userSubscriptionType = sub.name; // Nombre de la suscripción
-        this.userConversionsLeft = sub.conversions; // Intentos restantes
-      } else {
-        this.userSubscriptionType = 'No suscrito';
-        this.userConversionsLeft = 0;
+        this.userSubscriptionType = sub.name; // Tipo de suscripción
       }
     } catch (err) {
-      console.error('Error al obtener la suscripción del usuario:', err);
-      this.userSubscriptionType = 'Error al obtener el plan';
-      this.userConversionsLeft = 0;
+      console.error('Error al obtener la suscripción:', err);
     }
   }
 
-  async loadRemainingAttempts() {
+  async loadRemainingAttempts(): Promise<void> {
     try {
-      this.remainingAttempts = await this.currencyService.getRemainingAttempts(this.userId);
+      this.userConversionsLeft = await this.currencyService.getRemainingAttempts(this.userId);
     } catch (err) {
-      console.warn('Error al obtener los intentos restantes:', err);
+      console.error('Error al cargar los intentos restantes:', err);
     }
   }
 
@@ -91,7 +83,7 @@ export class ConverterComponent implements OnInit {
       try {
         const { convertedAmount, remainingAttempts } = await this.currencyService.convert(this.amount, fromCurrencyId, toCurrencyId);
         this.result = `Resultado: ${convertedAmount}`;
-        this.remainingAttempts = remainingAttempts; // Actualiza los intentos restantes
+        this.userConversionsLeft = remainingAttempts; // Actualiza los intentos restantes
 
         // Opcional: Recargar los datos de suscripción
         this.getUserSubscription();

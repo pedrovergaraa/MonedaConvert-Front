@@ -1,55 +1,71 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { Currency, FavoriteCurrency } from 'src/app/interfaces/Currency'; 
-import { CurrencyService } from 'src/app/services/currency.service';
+import { Component, Input, Output, EventEmitter, OnInit, inject } from '@angular/core';
+import { CurrencyService } from '../../services/currency.service';
+import { Currency } from '../../interfaces/Currency';
 
 @Component({
-    selector: 'app-favorite-coin',
-    templateUrl: './favorite-coin.component.html',
-    styleUrls: ['./favorite-coin.component.scss']
+  selector: 'app-favorite-coin',
+  templateUrl: './favorite-coin.component.html',
+  styleUrls: ['./favorite-coin.component.scss']
 })
-export class FavoriteCoinComponent {
-  @Input() selectedCoin: string;
-  @Output() coinSelected = new EventEmitter<string>();
-
+export class FavoriteCoinComponent implements OnInit {
+  @Input() selectedCoin: string = ''; // Moneda seleccionada
+  @Output() coinSelected = new EventEmitter<Currency>();
   currencyService = inject(CurrencyService);
 
-  currencyFav: Currency = {
-      currencyId: 0,
-      legend: '',
-      symbol: '',
-      ic: 0,
-      isDefault: false,
-      userId: 0
+  favoriteCoins: Currency[] = [];
+  availableNonFavoriteCoins: Currency[] = [];
+  showDropdown = false;
+
+  constructor() {}
+
+  ngOnInit() {
+    this.loadCurrencies();
   }
 
-  showDropdown: boolean = false;
-  availableCoins: Currency[] = [];
+  async loadCurrencies() {
+    try {
+      const { favorites, nonFavorites } = await this.getSortedCurrencies();
+      this.favoriteCoins = favorites;
+      this.availableNonFavoriteCoins = nonFavorites;
+    } catch (error) {
+      console.error('Error al cargar monedas:', error);
+    }
+  }
 
-  favoriteCoins: Set<Currency> = new Set();
+  async getSortedCurrencies(): Promise<{ favorites: Currency[], nonFavorites: Currency[] }> {
+    const currencies = await this.currencyService.getUserCurrencies(); // Usa el servicio
+
+    const favorites = currencies.filter((coin) => coin.isDefault);
+    const nonFavorites = currencies.filter((coin) => !coin.isDefault);
+
+    return { favorites, nonFavorites };
+  }
 
   toggleDropdown() {
-      this.showDropdown = !this.showDropdown;
+    this.showDropdown = !this.showDropdown;
   }
 
   selectCoin(coin: Currency) {
-    this.coinSelected.emit(coin.symbol);
-    this.showDropdown = false;
+    this.selectedCoin = coin.legend; // Actualiza el texto en el input
+    this.coinSelected.emit(coin); // Emite el evento para notificar al componente padre
+    this.toggleDropdown();
   }
 
-  toggleFavorite(coin: Currency, event: MouseEvent) {
-      event.stopPropagation();
+  async toggleFavorite(coin: Currency, event: MouseEvent) {
+    event.stopPropagation(); // Evita que el evento afecte la selección de la moneda
 
-      if (this.favoriteCoins.has(coin)) {
-          this.favoriteCoins.delete(coin);
+    try {
+      if (coin.isDefault) {
+        await this.currencyService.removeFavoriteCurrency(coin.currencyId);
+        coin.isDefault = false; // Actualiza el estado local
       } else {
-          this.favoriteCoins.add(coin);
+        await this.currencyService.addFavoriteCurrency(coin.currencyId);
+        coin.isDefault = true;
       }
-  }
 
-  get availableNonFavoriteCoins() {
-      return this.availableCoins.filter(coin => !this.favoriteCoins.has(coin));
-  }
-
-  editCoin() {
+      this.loadCurrencies(); // Recarga las listas ordenadas
+    } catch (error) {
+      console.error('Error al cambiar el estado de favorito:', error);
+    }
   }
 }

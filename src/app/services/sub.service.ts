@@ -52,7 +52,7 @@ export class SubscriptionService  extends ApiService {
   
 
   async updateSubscription(newSubscriptionId: SubscriptionData) {
-		const res = await fetch(API + `subscription/updateSubscription`, {
+		const res = await fetch(API + `subscription/update`, {
 			method: "PUT",
 			headers: {
 				"Content-type": "application/json",

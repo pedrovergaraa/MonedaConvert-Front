@@ -14,10 +14,10 @@ export class AuthService {
     this.token.set(localStorage.getItem('token'));
    }
 
-  // getUserId(): number {
-  //   const userId = localStorage.getItem('userId');
-  //   return userId ? parseInt(userId, 10) : 0;  
-  // }
+  getUserId(): number {
+    const userId = localStorage.getItem('userId');
+    return userId ? parseInt(userId, 10) : 0;  
+  }
 
   async login(loginData: LoginData): Promise<boolean> {
     try {
@@ -30,16 +30,11 @@ export class AuthService {
       });
   
       if (!res.ok) return false;
-  
-      // Parsear la respuesta JSON
-      const responseBody = await res.json();  // Aquí se obtiene el objeto completo
-  
-      // Acceder al token dentro del objeto
-      const receivedToken = responseBody.token;  // Aquí accedes al campo `token`
-  
+      const responseBody = await res.json(); 
+      const receivedToken = responseBody.token;  
       if (receivedToken) {
         localStorage.setItem('token', receivedToken);
-        this.token.set(receivedToken);  // Guardar el token en el estado de Angular
+        this.token.set(receivedToken); 
         return true;
       } else {
         console.error("Token no recibido en la respuesta");

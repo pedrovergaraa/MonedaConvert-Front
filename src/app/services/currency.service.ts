@@ -11,7 +11,7 @@ export class CurrencyService  extends ApiService {
 
 
   async getUserCurrencies(): Promise<Currency[]> {
-    const res = await fetch(API + "currency/all", {
+    const res = await fetch(API + "currency/user", {
 			method: "GET",
 			headers: {
 				"Content-type": "application/json",
@@ -60,26 +60,23 @@ export class CurrencyService  extends ApiService {
 		return data;
   }
 
-  async getRemainingAttempts(userId): Promise<number> {
+  async getRemainingAttempts(userId: number): Promise<number> {
     const response = await fetch(API + `currency/remaining-conversions/${userId}`, {
-      method: 'PUT',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + this.auth.token(),
       },
-      body: JSON.stringify(userId),
     });
   
     if (!response.ok) {
       throw new Error("Error al obtener los intentos restantes.");
     }
   
-    const { remainingAttempts } = await response.json();
-    return remainingAttempts;
-  }
-  
+    const { remainingConversions } = await response.json(); // Asegúrate de que el nombre del campo coincida con la respuesta
+    return remainingConversions;
+}
 
-  
   async convert(amount: number, fromCurrencyId: number, toCurrencyId: number): Promise<{ convertedAmount: number; remainingAttempts: number }> {
     const response = await fetch(API + `currency/convert`, {
       method: "POST",
