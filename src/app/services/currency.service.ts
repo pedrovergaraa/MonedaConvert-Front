@@ -60,9 +60,27 @@ export class CurrencyService  extends ApiService {
 		return data;
   }
 
+  async getRemainingAttempts(userId): Promise<number> {
+    const response = await fetch(API + `currency/remaining-conversions/${userId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.auth.token(),
+      },
+      body: JSON.stringify(userId),
+    });
+  
+    if (!response.ok) {
+      throw new Error("Error al obtener los intentos restantes.");
+    }
+  
+    const { remainingAttempts } = await response.json();
+    return remainingAttempts;
+  }
+  
 
   
-  async convert(amount: number, fromCurrencyId: number, toCurrencyId: number): Promise<number> {
+  async convert(amount: number, fromCurrencyId: number, toCurrencyId: number): Promise<{ convertedAmount: number; remainingAttempts: number }> {
     const response = await fetch(API + `currency/convert`, {
       method: "POST",
       headers: {
@@ -80,9 +98,10 @@ export class CurrencyService  extends ApiService {
       throw new Error("Error en la conversión de monedas.");
     }
   
-    const { convertedAmount } = await response.json();
-    return convertedAmount;
+    const { convertedAmount, remainingAttempts } = await response.json();
+    return { convertedAmount, remainingAttempts };
   }
+  
   
   async createCurrency(currency: Currency): Promise<boolean> {
     if (currency.currencyId) return false;
