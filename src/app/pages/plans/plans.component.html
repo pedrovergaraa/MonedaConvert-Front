@@ -1,8 +1,11 @@
 <div class="plans-container">
-  <div *ngFor="let subscription of subscriptions" class="plan-card" (click)="updateSubscription(subscription)">
+  <div 
+    *ngFor="let subscription of subscriptions" 
+    class="plan-card" 
+    (click)="updateSubscription(subscription.subId)">
     <h3 class="plan-title">{{ subscription.name }}</h3>
     <p class="plan-description">
-      {{ subscription.allowedAttempts }} conversiones
+      {{ subscription.conversions }} conversiones
     </p>
   </div>
 </div>

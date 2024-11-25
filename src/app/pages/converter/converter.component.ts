@@ -16,11 +16,9 @@ export class ConverterComponent implements OnInit {
   favoriteCoins: Currency[] = [];
   result: string = '';
   userSubscriptionType: string = '';
-  subscription: string = '';
-  convertCount: number = 0;
+  userConversionsLeft: number = 0;  // Para los intentos restantes
   userId: number; // O cualquier valor adecuado, o bien pasarlo desde el contexto si corresponde
 
-  
   loading: WritableSignal<boolean> = signal(false);
   error: WritableSignal<string | null> = signal(null);
 
@@ -29,11 +27,12 @@ export class ConverterComponent implements OnInit {
   remainingAttempts: number;
 
   ngOnInit() {
+    this.userId = parseInt(localStorage.getItem('userId') ?? '0');
     this.loadCurrencies();
     this.getUserSubscription();
     this.loadRemainingAttempts();
   }
-  
+
   async loadCurrencies(): Promise<void> {
     try {
       this.loading.set(true);
@@ -49,23 +48,34 @@ export class ConverterComponent implements OnInit {
       this.loading.set(false);
     }
   }
-  
+
+  async getUserSubscription() {
+    try {
+      const sub = await this.subscriptionService.getUserSubscription(this.userId);
+      console.log("Subscription data:", sub);  // Verifica los datos completos recibidos
+      
+      // Asignamos el nombre de la suscripción y los intentos restantes
+      if (sub && sub.name && sub.conversions >= 0) {
+        this.userSubscriptionType = sub.name;  // Nombre de la suscripción
+        this.userConversionsLeft = sub.conversions;  // Intentos restantes
+      } else {
+        this.userSubscriptionType = 'No suscrito';
+        this.userConversionsLeft = 0;
+      }
+    } catch (err) {
+      console.error("Error al obtener la suscripción del usuario:", err);
+      this.userSubscriptionType = 'Error al obtener el plan';
+      this.userConversionsLeft = 0;
+    }
+  }
 
   async loadRemainingAttempts() {
     try {
-      // Asegúrate de que el `userId` es válido y está disponible
       this.remainingAttempts = await this.subscriptionService.getUserSubscription(this.userId);
     } catch (err) {
       console.warn("Error fetching remaining attempts", err);
     }
   }
-
-  
-  async getUserSubscription() {
-    const sub = await this.subscriptionService.getUserSubscription(this.userId);
-    console.log(sub); // Aquí tienes los intentos restantes
-  }
-
 
   onFromCoinSelected(event: any): void {
     this.selectedFromCoin = event.legend;
@@ -91,7 +101,6 @@ export class ConverterComponent implements OnInit {
     }
   }
 
-  // Método para eliminar una moneda
   async deleteCurrency(currencyId: number) {
     try {
       await this.currencyService.deleteCurrency(currencyId);

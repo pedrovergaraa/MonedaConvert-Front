@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { API } from '../constants/api';
 import { ApiService } from './api.service';
 import { Subscription } from '../interfaces/Subscription';
+import { SubscriptionData } from '../interfaces/User';
 export type SubscriptionType = 'Free' | 'Trial' | 'Pro';
 
 @Injectable({
@@ -50,9 +51,9 @@ export class SubscriptionService  extends ApiService {
   
   
 
-  async updateSubscription(newSubscriptionId: Subscription) {
-		const res = await fetch(API + `subscription/change`, {
-			method: "POST",
+  async updateSubscription(newSubscriptionId: SubscriptionData) {
+		const res = await fetch(API + `subscription/updateSubscription`, {
+			method: "PUT",
 			headers: {
 				"Content-type": "application/json",
 				Authorization: "Bearer " + this.auth.token(),

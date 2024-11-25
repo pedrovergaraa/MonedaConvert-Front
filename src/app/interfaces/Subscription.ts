@@ -1,6 +1,6 @@
 export interface Subscription {
   subId: number;
   name: string;
-  allowedAttempts: number;
+  conversions: number;
   price: number;
 }
