@@ -9,15 +9,16 @@ import { Currency } from '../../interfaces/Currency';
   styleUrls: ['./converter.component.scss']
 })
 export class ConverterComponent implements OnInit {
-  amount: number ;
+  amount: number;
   selectedFromCurrency: string = '';
   selectedToCurrency: string = '';
   currencies: Currency[] = [];
   favoriteCurrencies: Currency[] = [];
   result: string = '';
   userSubscriptionType: string = '';
-  userConversionsLeft: number ; 
-  userId: number; 
+  userConversionsLeft: number | string = 0;
+
+  userId: number;
   loading: WritableSignal<boolean> = signal(false);
   error: WritableSignal<string | null> = signal(null);
 
@@ -27,8 +28,8 @@ export class ConverterComponent implements OnInit {
   ngOnInit() {
     this.userId = parseInt(localStorage.getItem('userId') ?? '0');
     this.loadCurrencies();
-    this.getUserSubscription();
-    this.loadRemainingAttempts();
+    this.getUserSubscription();  // Obtener la suscripción al iniciar
+    this.loadUserDetails();
   }
 
   async loadCurrencies(): Promise<void> {
@@ -36,8 +37,6 @@ export class ConverterComponent implements OnInit {
       this.loading.set(true);
       const data = await this.currencyService.getUserCurrencies();
       this.currencies = data;
-
-      // Clasificar las monedas favoritas y no favoritas
       this.favoriteCurrencies = data.filter((currency) => currency.isDefault); // Ejemplo: isDefault indica si es favorita
     } catch (err) {
       console.error('Error al cargar las monedas:', err);
@@ -49,21 +48,29 @@ export class ConverterComponent implements OnInit {
 
   async getUserSubscription() {
     try {
-      const sub = await this.subscriptionService.getUserSubscription(this.userId);
+        const sub = await this.subscriptionService.getUserSubscription(this.userId);
 
-      if (sub && sub.name && sub.conversions >= 0) {
-        this.userSubscriptionType = sub.name; // Tipo de suscripción
-      }
+        if (sub && sub.name && sub.conversions >= 0) {
+            this.userSubscriptionType = sub.name; // Tipo de suscripción
+            this.userConversionsLeft = sub.conversions; // Número de conversiones restantes
+        }
     } catch (err) {
-      console.error('Error al obtener la suscripción:', err);
+        console.error('Error al obtener la suscripción:', err);
+        this.userSubscriptionType = 'Error al obtener la suscripción';
+        this.userConversionsLeft = 'Error al obtener las conversiones';
     }
-  }
+}
 
-  async loadRemainingAttempts(): Promise<void> {
+
+  async loadUserDetails(): Promise<void> {
     try {
-      this.userConversionsLeft = await this.currencyService.getRemainingAttempts(this.userId);
+      const sub = await this.subscriptionService.getUserSubscription(this.userId);
+      this.userSubscriptionType = sub?.name || 'Plan no disponible';
+      this.userConversionsLeft = sub?.conversions || 0;
     } catch (err) {
-      console.error('Error al cargar los intentos restantes:', err);
+      console.error('Error al cargar los detalles del usuario:', err);
+      this.userSubscriptionType = 'Error al obtener el plan';
+      this.userConversionsLeft = 'Error al cargar intentos';
     }
   }
 
@@ -75,7 +82,7 @@ export class ConverterComponent implements OnInit {
     this.selectedToCurrency = event.legend;
   }
 
-  async convertCurrency() {
+  async convertCurrency(): Promise<void> {
     const fromCurrencyId = this.currencies.find(currency => currency.legend === this.selectedFromCurrency)?.currencyId;
     const toCurrencyId = this.currencies.find(currency => currency.legend === this.selectedToCurrency)?.currencyId;
 
@@ -93,15 +100,6 @@ export class ConverterComponent implements OnInit {
       }
     } else {
       this.result = 'Por favor selecciona monedas válidas.';
-    }
-  }
-
-  async deleteCurrency(currencyId: number) {
-    try {
-      await this.currencyService.deleteCurrency(currencyId);
-      this.loadCurrencies(); // Recargar las monedas después de eliminar
-    } catch (error) {
-      console.error('Error al eliminar la moneda:', error);
     }
   }
 }

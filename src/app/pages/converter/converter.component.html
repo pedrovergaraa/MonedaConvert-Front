@@ -25,9 +25,8 @@
       </app-favorite-coin>
     </div>
 
-    <button class="convert-button" type="button" (click)="convertCurrency()">Convertir</button>
-
-    <p id="result"> Resultado: {{ result }}</p>
+    <button class="convert-button" type="button" (click)="convertCurrency()" [disabled]="!selectedFromCurrency || !selectedToCurrency">Convertir</button>
+    <p id="result"> {{ result }}</p>
 
     <div class="p-text">
       <p>Intentos restantes: {{ userConversionsLeft ?? 'Cargando...' }}</p>
