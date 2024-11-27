@@ -1,27 +1,27 @@
 <div class="container">
   <div class="body">
     <!-- Muestra el tipo de suscripción del usuario -->
-    <p class="p-text">Plan: {{ userSubscriptionType }}</p>
+    <p class="p-text">Plan:  {{ userSubscriptionType || 'No disponible' }}</p>
     
     <!-- Botón para ver todas las monedas -->
     <button class="view-coins-button" [routerLink]="['/coins']">Ver Monedas</button>
 
     <label for="amount">Importe</label>
-    <input type="text" id="amount" placeholder="1,00 $" [(ngModel)]="amount" />
+    <input type="text" id="amount" placeholder="100" [(ngModel)]="amount" />
 
     <div class="input-container">
       <label for="from">De</label>
       <app-favorite-coin 
-        [selectedCoin]="selectedFromCoin" 
-        (coinSelected)="onFromCoinSelected($event)">
+        [selectedCurrency]="selectedFromCurrency" 
+        (currencySelected)="onFromCurrencySelected($event)">
       </app-favorite-coin>
     </div>
 
     <div class="input-container">
       <label for="to">A</label>
       <app-favorite-coin 
-        [selectedCoin]="selectedToCoin" 
-        (coinSelected)="onToCoinSelected($event)">
+        [selectedCurrency]="selectedToCurrency" 
+        (currencySelected)="onToCurrencySelected($event)">
       </app-favorite-coin>
     </div>
 
@@ -30,7 +30,7 @@
     <p id="result"> Resultado: {{ result }}</p>
 
     <div class="p-text">
-      <p>Intentos restantes: {{ userConversionsLeft  }}</p>
+      <p>Intentos restantes: {{ userConversionsLeft ?? 'Cargando...' }}</p>
     </div>
     
 <!-- 

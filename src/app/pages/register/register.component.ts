@@ -18,13 +18,7 @@ export class RegisterComponent {
   registerData: RegisterData = {
     email: "",
     password: "",
-    confirmPassword: "",
-    userId: 0,
-    attempts: 0,
-    subscriptionId: 0,
-    subscription: undefined,
-    currencies: [],
-    favoriteCurrencies: []
+    confirmPassword: ""
   };
 
   isFormValid(): boolean {

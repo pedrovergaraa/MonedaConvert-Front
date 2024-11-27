@@ -9,15 +9,15 @@ import { Currency } from '../../interfaces/Currency';
   styleUrls: ['./converter.component.scss']
 })
 export class ConverterComponent implements OnInit {
-  amount: number = 0;
-  selectedFromCoin: string = '';
-  selectedToCoin: string = '';
+  amount: number ;
+  selectedFromCurrency: string = '';
+  selectedToCurrency: string = '';
   currencies: Currency[] = [];
-  favoriteCoins: Currency[] = [];
+  favoriteCurrencies: Currency[] = [];
   result: string = '';
   userSubscriptionType: string = '';
-  userConversionsLeft: number = 0; // Para los intentos restantes
-  userId: number; // O cualquier valor adecuado
+  userConversionsLeft: number ; 
+  userId: number; 
   loading: WritableSignal<boolean> = signal(false);
   error: WritableSignal<string | null> = signal(null);
 
@@ -38,7 +38,7 @@ export class ConverterComponent implements OnInit {
       this.currencies = data;
 
       // Clasificar las monedas favoritas y no favoritas
-      this.favoriteCoins = data.filter((coin) => coin.isDefault); // Ejemplo: isDefault indica si es favorita
+      this.favoriteCurrencies = data.filter((currency) => currency.isDefault); // Ejemplo: isDefault indica si es favorita
     } catch (err) {
       console.error('Error al cargar las monedas:', err);
       this.error.set('No se pudieron cargar las monedas. Inténtalo más tarde.');
@@ -67,17 +67,17 @@ export class ConverterComponent implements OnInit {
     }
   }
 
-  onFromCoinSelected(event: any): void {
-    this.selectedFromCoin = event.legend;
+  onFromCurrencySelected(event: any): void {
+    this.selectedFromCurrency = event.legend;
   }
 
-  onToCoinSelected(event: any): void {
-    this.selectedToCoin = event.legend;
+  onToCurrencySelected(event: any): void {
+    this.selectedToCurrency = event.legend;
   }
 
   async convertCurrency() {
-    const fromCurrencyId = this.currencies.find(currency => currency.legend === this.selectedFromCoin)?.currencyId;
-    const toCurrencyId = this.currencies.find(currency => currency.legend === this.selectedToCoin)?.currencyId;
+    const fromCurrencyId = this.currencies.find(currency => currency.legend === this.selectedFromCurrency)?.currencyId;
+    const toCurrencyId = this.currencies.find(currency => currency.legend === this.selectedToCurrency)?.currencyId;
 
     if (fromCurrencyId && toCurrencyId) {
       try {

@@ -1,9 +1,10 @@
 import { Currency, FavoriteCurrency } from "./Currency";
 import { Subscription } from "./Subscription";
 
-export interface RegisterData extends User {
-    password: string,
-    confirmPassword: string;
+export interface RegisterData {
+    email: "",
+    password: "",
+    confirmPassword: ""
 }
 
 export interface User{
