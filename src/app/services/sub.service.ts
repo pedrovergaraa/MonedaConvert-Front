@@ -11,27 +11,33 @@ export type SubscriptionType = 'Free' | 'Trial' | 'Pro';
 })
 export class SubscriptionService  extends ApiService {
 
-  async getUserSubscription(userId) {
-    const apiUrl = `${API}subscription/userSub/${userId}`; 
-
+  async getUserSubscription(userId: number): Promise<Subscription> {
     try {
-        const response = await fetch(apiUrl, {
-            method: 'GET', 
-            headers: {
-                'Content-Type': 'application/json', 
-            },
-        });
-        if (!response.ok) {
-            throw new Error(`Error: ${response.statusText}`);
-        }
-        const subscription = await response.json();
-        return subscription;
+      const response = await fetch(API + `subscription/userSub/${userId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + this.auth.token(),
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+  
+      // Asegúrate de que la respuesta tenga el formato esperado
+      const subscription: Subscription = await response.json();
+      if (!subscription) {
+        throw new Error('La respuesta no contiene una suscripción válida');
+      }
+  
+      return subscription; // Siempre retorna un objeto de tipo Subscription
     } catch (error) {
-        console.error('Error fetching subscription:', error);
-        throw error;
+      console.error('Error fetching subscription:', error);
+      throw error; // Si ocurre un error, se lanza para manejarlo externamente
     }
-}
-
+  }
+  
   async getAllSubscriptions(): Promise<Subscription[]> {
     const response = await fetch(API + `subscription/all`, {
       method: "GET",

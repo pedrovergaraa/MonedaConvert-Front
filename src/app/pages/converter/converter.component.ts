@@ -2,11 +2,13 @@ import { Component, inject, OnInit, WritableSignal, signal } from '@angular/core
 import { SubscriptionService } from '../../services/sub.service';
 import { CurrencyService } from '../../services/currency.service';
 import { Currency } from '../../interfaces/Currency';
+import { Subscription } from 'src/app/interfaces/Subscription';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-converter',
   templateUrl: './converter.component.html',
-  styleUrls: ['./converter.component.scss']
+  styleUrls: ['./converter.component.scss'],
 })
 export class ConverterComponent implements OnInit {
   amount: number;
@@ -15,23 +17,24 @@ export class ConverterComponent implements OnInit {
   currencies: Currency[] = [];
   favoriteCurrencies: Currency[] = [];
   result: string = '';
-  userSubscriptionType: string = '';
-  userConversionsLeft: number | string = 0;
+  userSubscriptionType: string | null = null;
+  userConversionsLeft: number | null = null;
+  userId: number = 0; // Asegúrate de que este ID se obtenga correctamente (puede ser del localStorage o servicio de auth)
 
-  userId: number;
   loading: WritableSignal<boolean> = signal(false);
   error: WritableSignal<string | null> = signal(null);
 
   subscriptionService = inject(SubscriptionService);
   currencyService = inject(CurrencyService);
+  authService = inject(AuthService)
 
   ngOnInit() {
-    this.userId = parseInt(localStorage.getItem('userId') ?? '0');
     this.loadCurrencies();
-    this.getUserSubscription();  // Obtener la suscripción al iniciar
     this.loadUserDetails();
+    this.userId = this.authService.getUserId(); // Asegúrate de que esto no sea 0
   }
-
+  
+  // Cargar monedas
   async loadCurrencies(): Promise<void> {
     try {
       this.loading.set(true);
@@ -46,54 +49,63 @@ export class ConverterComponent implements OnInit {
     }
   }
 
-  async getUserSubscription() {
+  // Obtener la suscripción del usuario
+  async getUserSubscription(): Promise<Subscription> {
     try {
-        const sub = await this.subscriptionService.getUserSubscription(this.userId);
+      const subscription = await this.subscriptionService.getUserSubscription(this.userId);
 
-        if (sub && sub.name && sub.conversions >= 0) {
-            this.userSubscriptionType = sub.name; // Tipo de suscripción
-            this.userConversionsLeft = sub.conversions; // Número de conversiones restantes
-        }
+      if (subscription && subscription.name && subscription.conversions >= 0) {
+        this.userSubscriptionType = subscription.name;
+        this.userConversionsLeft = subscription.conversions;
+      }
+      return subscription;
     } catch (err) {
-        console.error('Error al obtener la suscripción:', err);
-        this.userSubscriptionType = 'Error al obtener la suscripción';
-        this.userConversionsLeft = 'Error al obtener las conversiones';
-    }
-}
-
-
-  async loadUserDetails(): Promise<void> {
-    try {
-      const sub = await this.subscriptionService.getUserSubscription(this.userId);
-      this.userSubscriptionType = sub?.name || 'Plan no disponible';
-      this.userConversionsLeft = sub?.conversions || 0;
-    } catch (err) {
-      console.error('Error al cargar los detalles del usuario:', err);
-      this.userSubscriptionType = 'Error al obtener el plan';
-      this.userConversionsLeft = 'Error al cargar intentos';
+      console.error('Error al obtener la suscripción:', err);
+      throw err;
     }
   }
 
+  async loadUserDetails(): Promise<void> {
+    if (this.userId === 0) {
+      console.error('El userId es inválido');
+      this.error.set('Usuario no autenticado.');
+      return;
+    }
+  
+    try {
+      const subscription = await this.getUserSubscription();
+      this.userSubscriptionType = subscription.name;
+      this.userConversionsLeft = subscription.conversions;
+    } catch (error) {
+      console.error('Error al cargar los detalles del usuario:', error);
+      this.userSubscriptionType = 'Error al cargar';
+      this.userConversionsLeft = null;
+    }
+  }
+  
+
+  // Selección de moneda de origen
   onFromCurrencySelected(event: any): void {
     this.selectedFromCurrency = event.legend;
   }
 
+  // Selección de moneda de destino
   onToCurrencySelected(event: any): void {
     this.selectedToCurrency = event.legend;
   }
 
+  // Convertir moneda
   async convertCurrency(): Promise<void> {
-    const fromCurrencyId = this.currencies.find(currency => currency.legend === this.selectedFromCurrency)?.currencyId;
-    const toCurrencyId = this.currencies.find(currency => currency.legend === this.selectedToCurrency)?.currencyId;
+    const fromCurrencyId = this.currencies.find((currency) => currency.legend === this.selectedFromCurrency)?.currencyId;
+    const toCurrencyId = this.currencies.find((currency) => currency.legend === this.selectedToCurrency)?.currencyId;
 
     if (fromCurrencyId && toCurrencyId) {
       try {
         const { convertedAmount, remainingAttempts } = await this.currencyService.convert(this.amount, fromCurrencyId, toCurrencyId);
         this.result = `Resultado: ${convertedAmount}`;
-        this.userConversionsLeft = remainingAttempts; // Actualiza los intentos restantes
+        this.userConversionsLeft = remainingAttempts;
 
-        // Opcional: Recargar los datos de suscripción
-        this.getUserSubscription();
+        await this.getUserSubscription(); // Actualiza datos de suscripción después de la conversión
       } catch (error) {
         console.error('Error en la conversión:', error);
         this.result = 'Hubo un error en la conversión.';
@@ -102,4 +114,6 @@ export class ConverterComponent implements OnInit {
       this.result = 'Por favor selecciona monedas válidas.';
     }
   }
+
+  
 }

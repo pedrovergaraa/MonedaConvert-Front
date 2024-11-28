@@ -29,15 +29,22 @@ export class AuthService {
         body: JSON.stringify(loginData),
       });
   
-      if (!res.ok) return false;
-      const responseBody = await res.json(); 
-      const receivedToken = responseBody.token;  
-      if (receivedToken) {
+      if (!res.ok) {
+        console.error("Error al autenticar:", res.statusText);
+        return false;
+      }
+  
+      const responseBody = await res.json();
+      const receivedToken = responseBody.token;
+      const userId = responseBody.userId; // Ahora debería estar presente
+  
+      if (receivedToken && userId) {
         localStorage.setItem('token', receivedToken);
-        this.token.set(receivedToken); 
+        localStorage.setItem('userId', userId.toString());
+        this.token.set(receivedToken);
         return true;
       } else {
-        console.error("Token no recibido en la respuesta");
+        console.error("Datos faltantes en la respuesta del backend");
         return false;
       }
     } catch (error) {
@@ -45,6 +52,8 @@ export class AuthService {
       return false;
     }
   }
+  
+  
   
 
   async register(registerData: RegisterData) {
@@ -60,7 +69,9 @@ export class AuthService {
 
   logOut(): void {
     localStorage.removeItem('token');
-    this.token.set(null);  
+    localStorage.removeItem('userId'); // Limpia también el userId
+    this.token.set(null);
     this.router.navigate(['/login']);
   }
+  
 }
