@@ -20,39 +20,39 @@ export class AuthService {
   }
 
   async login(loginData: LoginData): Promise<boolean> {
-    try {
-      const res = await fetch(API + 'authentication/authenticate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(loginData),
-      });
-  
-      if (!res.ok) {
-        console.error("Error al autenticar:", res.statusText);
-        return false;
-      }
-  
-      const responseBody = await res.json();
-      const receivedToken = responseBody.token;
-      const userId = responseBody.userId; // Ahora debería estar presente
-  
-      if (receivedToken && userId) {
-        localStorage.setItem('token', receivedToken);
-        localStorage.setItem('userId', userId.toString());
-        this.token.set(receivedToken);
-        return true;
-      } else {
-        console.error("Datos faltantes en la respuesta del backend");
-        return false;
-      }
-    } catch (error) {
-      console.error("Error al intentar iniciar sesión:", error);
+  try {
+    const res = await fetch(API + 'authentication/authenticate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(loginData),
+    });
+
+    if (!res.ok) {
+      console.error("Error al autenticar:", res.statusText);
       return false;
     }
+
+    const responseBody = await res.json();
+    const receivedToken = responseBody.token;
+    const userId = responseBody.userId; // Ahora debería estar presente
+
+    if (receivedToken && userId) {
+      localStorage.setItem('token', receivedToken);
+      localStorage.setItem('userId', userId.toString());
+      this.token.set(receivedToken);
+      return true;
+    } else {
+      console.error("Datos faltantes en la respuesta del backend");
+      return false;
+    }
+  } catch (error) {
+    console.error("Error al intentar iniciar sesión:", error);
+    return false;
   }
-  
+}
+
   
   
 
