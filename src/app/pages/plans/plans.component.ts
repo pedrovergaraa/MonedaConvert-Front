@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SubscriptionData } from 'src/app/interfaces/User';
 import { Subscription } from '../../interfaces/Subscription';
 import { SubscriptionService } from '../../services/sub.service';
+import Swal from 'sweetalert2'; // Importa SweetAlert2
 
 @Component({
   selector: 'app-plans',
@@ -42,7 +43,15 @@ export class PlansComponent implements OnInit {
       const newSubscriptionData: SubscriptionData = { newSubscriptionId: subscriptionId };
 
       await this.subscriptionService.updateSubscription(newSubscriptionData);
-      alert('¡Suscripción actualizada con éxito!');
+      
+      // Muestra el modal de éxito con SweetAlert2
+      Swal.fire({
+        title: '¡Éxito!',
+        text: 'La suscripción se ha actualizado correctamente.',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      });
+
       await this.loadSubscriptions(); // Recargar la lista para reflejar cambios si es necesario
     } catch (error) {
       console.error('Error al actualizar la suscripción:', error);

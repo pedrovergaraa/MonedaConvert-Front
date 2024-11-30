@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Currency } from '../interfaces/Currency';
 import {API} from '../constants/api'
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,8 @@ import {API} from '../constants/api'
 
 export class CurrencyService  extends ApiService {
 
-
+  favoriteUpdated = new Subject<boolean>();
+  
   async getUserCurrencies(): Promise<Currency[]> {
     const res = await fetch(API + "currency/user", {
 			method: "GET",

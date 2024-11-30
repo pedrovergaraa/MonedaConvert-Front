@@ -30,8 +30,8 @@ const routes: Routes = [
     loadChildren: ()=> import('./pages/coins/coins.module').then(m => m.CoinsModule)
   },
   {
-    path:"coin-detail",
-    //canActivate: [usuarioLogueadoGuard],
+    path:"coin-detail/:currencyId",
+    canActivate: [userLoggedGuard],
     loadChildren: ()=> import('./pages/coin-detail/coin-detail.module').then(m => m.CoinDetailModule)
   },
   {

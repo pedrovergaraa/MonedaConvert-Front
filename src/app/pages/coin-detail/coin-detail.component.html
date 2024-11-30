@@ -1,29 +1,44 @@
+<div *ngIf="currency">
+  <form>
+    <label for="name">Nombre</label>
+    <input
+      name="name"
+      id="name"
+      type="text"
+      [(ngModel)]="currency.legend"
+      placeholder="Ingrese el nombre"
+    />
 
+    <label for="symbol">Símbolo</label>
+    <input
+      name="symbol"
+      id="symbol"
+      type="text"
+      [(ngModel)]="currency.symbol"
+      placeholder="Ingrese el símbolo"
+    />
 
-<div class="currency-form-container">
-  <h2 class="edit-title">Editar Moneda</h2>
-  <div class="currency-header">
+    <label for="ic">Índice de convertibilidad</label>
+    <input
+      name="ic"
+      id="ic"
+      type="number"
+      [(ngModel)]="currency.ic"
+      placeholder="Índice de convertibilidad"
+    />
 
-    <div class="currency">
-      <div  class="currency-container">
-          <app-card-coin [currency]="selectedCurrency"></app-card-coin>
-      </div>
+    <div class="form-buttons">
+      <button type="button" class="confirm-button" (click)="editCurrency()">
+        Confirmar
+      </button>
+      <button type="button" class="cancel-button" (click)="cancelEdit()">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>
 
-  <div class="currency-form-card">
-    <form>
-      <label for="name"></label>
-      <input id="name" type="text" placeholder="Name" />
-
-      <label for="legend"></label>
-      <input id="legend" type="text" placeholder="Leyenda" />
-
-      <label for="convertibility-index"></label>
-      <input id="convertibility-index" type="number" placeholder="Indice convertibilidad" />
-
-      <div class="form-buttons">
-        <button type="submit" class="confirm-button" (click)="editCurrency()">Confirmar</button>
-        <button type="button" class="cancel-button"(click)="cancelEdit()">Cancelar</button>
-      </div>
-    </form>
-  </div>
+<!-- Mensaje cuando no se encuentra la moneda -->
+<div *ngIf="!currency">
+  <p>No se encontró la moneda solicitada.</p>
 </div>

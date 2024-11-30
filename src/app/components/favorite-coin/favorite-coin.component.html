@@ -7,31 +7,35 @@
       (click)="toggleDropdown()"
       readonly
     />
+    <!-- Ícono de edición -->
+    <a
+  class="edit-icon"
+  (click)="goToEditPage(selectedCurrencyObj)"
+  *ngIf="selectedCurrencyObj"
+>
+  ✏️
+</a>
 
-    <a [routerLink]="['/coin-detail']" class="edit-icon">✏️</a>
-    
-    <span class="dropdown-arrow" [ngClass]="{'rotated': showDropdown}" (click)="toggleDropdown()">
+    <span
+      class="dropdown-arrow"
+      [ngClass]="{ rotated: showDropdown }"
+      (click)="toggleDropdown()"
+    >
       {{ showDropdown ? '▲' : '▼' }}
     </span>
   </div>
-  
+
   <ul *ngIf="showDropdown" class="dropdown-menu">
-    <li *ngFor="let currency of favoriteCurrencies" (click)="selectCurrency(currency)">
+    <li
+      *ngFor="let currency of favoriteCurrencies.concat(availableNonFavoriteCurrencies)"
+      (click)="selectCurrency(currency)"
+    >
       {{ currency.legend }} ({{ currency.symbol }})
       <i
-        class="fas fa-star favorite star-icon"
+        class="star-icon"
+        [ngClass]="currency.isDefault ? 'fas fa-star favorite' : 'far fa-star' "
         (click)="toggleFavorite(currency, $event)"
-        title="Remove from favorites"
-      ></i>
-    </li>
-    
-    <!-- Monedas no favoritas -->
-    <li *ngFor="let currency of availableNonFavoriteCurrencies" (click)="selectCurrency(currency)">
-      {{ currency.legend }} ({{ currency.symbol }})
-      <i
-        class="far fa-star star-icon"
-        (click)="toggleFavorite(currency, $event)"
-        title="Add to favorites"
+        [title]="currency.isDefault ? 'Remover de favoritos' : 'Agregar a favoritos'"
       ></i>
     </li>
   </ul>
