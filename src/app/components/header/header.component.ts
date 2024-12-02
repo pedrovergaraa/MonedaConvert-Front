@@ -15,7 +15,6 @@ export class HeaderComponent {
   showBackButton: boolean = false;
 
   ngOnInit() {
-    // Verificar si la ruta actual no es de login o register
     const currentRoute = this.router.url;
     if (!currentRoute.includes('login') && !currentRoute.includes('register')) {
       this.showBackButton = true;
@@ -23,12 +22,10 @@ export class HeaderComponent {
   }
 
   goBack() {
-    // Navegar hacia atrás en el historial
     window.history.back();
   }
 
   Logout() {
-    // Mostrar un modal de confirmación antes de hacer logout
     Swal.fire({
       title: '¿Estás seguro?',
       text: '¿Quieres cerrar sesión?',
@@ -40,9 +37,8 @@ export class HeaderComponent {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        // Si el usuario confirma, hacer el logout
         this.auth.logOut();
-        this.router.navigate(['/login']); // Redirigir al login o a la página deseada
+        this.router.navigate(['/login']); 
       }
     });
   }

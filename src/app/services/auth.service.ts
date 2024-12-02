@@ -2,7 +2,6 @@ import { Injectable, WritableSignal, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginData, RegisterData } from '../interfaces/User';
 import { API } from '../constants/api';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -33,10 +32,9 @@ export class AuthService {
       console.error("Error al autenticar:", res.statusText);
       return false;
     }
-
     const responseBody = await res.json();
     const receivedToken = responseBody.token;
-    const userId = responseBody.userId; // Ahora debería estar presente
+    const userId = responseBody.userId; 
 
     if (receivedToken && userId) {
       localStorage.setItem('token', receivedToken);
@@ -52,9 +50,6 @@ export class AuthService {
     return false;
   }
 }
-
-  
-  
 
   async register(registerData: RegisterData) {
     const res = await fetch(API + 'user/register', {
@@ -73,5 +68,4 @@ export class AuthService {
     this.token.set(null);
     this.router.navigate(['/login']);
   }
-  
 }

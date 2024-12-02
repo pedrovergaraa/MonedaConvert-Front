@@ -25,14 +25,14 @@ export class FavoriteCoinComponent implements OnInit {
   async loadFavoriteCurrencies() {
     try {
       this.favoriteCurrencies = await this.currencyService.getUserCurrencies();
-      this.sortCurrencies(); // Ordenar monedas al cargar
+      this.sortCurrencies(); 
     } catch (error) {
       console.error('Error al cargar las monedas:', error);
     }
   }
   
   toggleFavorite(currency: any, event: MouseEvent): void {
-    event.stopPropagation(); // Evitar cerrar el dropdown
+    event.stopPropagation(); 
   
     if (currency.isFavorite) {
       this.currencyService.removeFavoriteCurrency(currency.currencyId)

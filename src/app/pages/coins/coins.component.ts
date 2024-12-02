@@ -13,7 +13,7 @@ export class CoinsComponent implements OnInit {
 
   currencyService = inject(CurrencyService);
   authService = inject(AuthService);
-
+  
   userCurrencies: Currency[] = [];
   favoriteCurrencies: Currency[] = [];
   defaultCurrencies: Currency[] = [];
@@ -26,23 +26,19 @@ export class CoinsComponent implements OnInit {
   async loadCurrencies() {
     try {
       console.log('Cargando monedas...');
-      // Verificamos si las monedas se están cargando correctamente.
       const [userCurrencies, favoriteCurrencies, defaultCurrencies] = await Promise.all([
         this.currencyService.getUserCurrencies(),
         this.currencyService.getFavoriteCurrencies(),
         this.currencyService.getDefaultCurrencies(),
       ]);
-      
       this.userCurrencies = userCurrencies;
       this.favoriteCurrencies = favoriteCurrencies;
       this.defaultCurrencies = defaultCurrencies;
-
       console.log('Monedas cargadas:', {
         userCurrencies: this.userCurrencies,
         favoriteCurrencies: this.favoriteCurrencies,
         defaultCurrencies: this.defaultCurrencies
       });
-
     } catch (error) {
       console.error('Error al cargar las monedas:', error);
       Swal.fire({
@@ -56,12 +52,10 @@ export class CoinsComponent implements OnInit {
   async removeFavoriteCurrency(favoriteCurrencyId: number) {
     try {
       const success = await this.currencyService.removeFavoriteCurrency(favoriteCurrencyId);
-
       if (success) {
         this.favoriteCurrencies = this.favoriteCurrencies.filter(
           currency => currency.currencyId !== favoriteCurrencyId
         );
-
         Swal.fire({
           icon: 'success',
           title: 'Eliminado',
@@ -83,13 +77,11 @@ export class CoinsComponent implements OnInit {
   async addFavoriteCurrency(currencyId: number) {
     try {
       const success = await this.currencyService.addFavoriteCurrency(currencyId);
-
       if (success) {
         const addedCurrency = this.defaultCurrencies.find(currency => currency.currencyId === currencyId);
         if (addedCurrency) {
           this.favoriteCurrencies.push(addedCurrency);
         }
-
         Swal.fire({
           icon: 'success',
           title: 'Agregado',

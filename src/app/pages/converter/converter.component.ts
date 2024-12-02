@@ -19,7 +19,7 @@ export class ConverterComponent implements OnInit {
   result: string = '';
   userSubscriptionType: string | null = null;
   userConversionsLeft: number | null = null;
-  userId: number = 0; // Asegúrate de que este ID se obtenga correctamente (puede ser del localStorage o servicio de auth)
+  userId: number = 0; 
 
   loading: WritableSignal<boolean> = signal(false);
   error: WritableSignal<string | null> = signal(null);
@@ -30,8 +30,8 @@ export class ConverterComponent implements OnInit {
 
   ngOnInit() {
     this.loadCurrencies();
-    this.userId = this.authService.getUserId(); // Asegúrate de que esto no sea 0
-    this.loadUserSubscription(); // Cargar suscripción y intentos al inicio
+    this.userId = this.authService.getUserId(); 
+    this.loadUserSubscription(); 
   }
   
   async loadCurrencies(): Promise<void> {
@@ -39,7 +39,7 @@ export class ConverterComponent implements OnInit {
       this.loading.set(true);
       const data = await this.currencyService.getUserCurrencies();
       this.currencies = data;
-      this.favoriteCurrencies = data.filter((currency) => currency.isDefault); // Favoritas
+      this.favoriteCurrencies = data.filter((currency) => currency.isDefault); 
     } catch (err) {
       console.error('Error al cargar las monedas:', err);
       this.error.set('No se pudieron cargar las monedas. Inténtalo más tarde.');
@@ -48,8 +48,6 @@ export class ConverterComponent implements OnInit {
     }
   }
   
-
-  // Obtener la suscripción y los intentos restantes
   async loadUserSubscription(): Promise<void> {
     if (this.userId === 0) {
       console.error('El userId es inválido');
@@ -59,9 +57,9 @@ export class ConverterComponent implements OnInit {
   
     try {
       const response = await this.currencyService.getRemainingAttempts(this.userId);
-      this.userConversionsLeft = response; // Actualizar intentos restantes (ahora asumimos que `response` es solo un número)
+      this.userConversionsLeft = response; 
       const subscription = await this.subscriptionService.getUserSubscription(this.userId);
-      this.userSubscriptionType = subscription.name; // Asignar nombre de la suscripción
+      this.userSubscriptionType = subscription.name; 
     } catch (err) {
       console.error('Error al obtener la suscripción o intentos restantes:', err);
       this.error.set('Error al cargar los detalles del usuario.');
@@ -93,12 +91,10 @@ export class ConverterComponent implements OnInit {
       this.result = 'Por favor selecciona monedas válidas.';
       return;
     }
-
     try {
       const { convertedAmount, remainingAttempts } = await this.currencyService.convert(amountToConvert, fromCurrencyId, toCurrencyId);
       this.result = `Resultado: ${convertedAmount}`;
       this.userConversionsLeft = remainingAttempts; 
-
       await this.loadUserSubscription();
     } catch (error) {
       console.error('Error en la conversión:', error);

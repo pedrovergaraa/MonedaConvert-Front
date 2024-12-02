@@ -1,5 +1,4 @@
 <div class="container">
-  <!-- Monedas por defecto -->
   <div class="category">
     <div class="title">
       <h1>Por defecto</h1>
@@ -18,7 +17,6 @@
     </div>
   </div>
 
-  <!-- Monedas favoritas -->
   <div class="category">
     <div class="title">
       <h1>
@@ -40,7 +38,6 @@
     </div>
   </div>
 
-  <!-- Mis monedas -->
   <div class="category">
     <div class="title">
       <h1>Todas las monedas</h1>
@@ -63,7 +60,6 @@
   </div>
 </div>
 
-<!-- Modal para Crear Monedas -->
 <div *ngIf="isCreateCurrencyModalOpen" class="modal-overlay">
   <div class="modal-content">
     <app-creat-coin (close)="closeCreateCurrencyModal()"></app-creat-coin>

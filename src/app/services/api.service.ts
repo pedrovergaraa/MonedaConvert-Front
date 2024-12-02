@@ -1,7 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { AuthService } from './auth.service';
 import { API } from '../constants/api';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -20,5 +19,4 @@ export class ApiService {
     }
     return res;
   }
-  
 }

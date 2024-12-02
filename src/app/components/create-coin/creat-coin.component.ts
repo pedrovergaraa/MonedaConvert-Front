@@ -28,25 +28,19 @@ export class CreatCoinComponent {
   };
 
   onSubmit() {
-    // Verificar si los campos no están vacíos
     if (!this.currency.legend || !this.currency.symbol || this.currency.ic <= 0) {
-      // Si los campos están incompletos, muestra un mensaje de error
       ErrorMessage('Por favor complete todos los campos correctamente.');
       return;
     }
 
-    // Crear la moneda
     this.currencyService.createCurrency(this.currency).then(res => {
-      this.close.emit(); // Cierra el formulario
+      this.close.emit(); 
       if (res) {
-        // Si la respuesta es exitosa, muestra el mensaje de éxito
         SuccessMessage('Moneda creada correctamente.');
       } else {
-        // Si la creación falla, muestra el mensaje de error
         ErrorMessage('Error creando moneda.');
       }
     }).catch(error => {
-      // Si ocurre un error en la llamada al servidor, muestra el mensaje de error
       console.error(error);
       ErrorMessage('Hubo un error al intentar crear la moneda.');
     });

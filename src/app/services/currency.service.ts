@@ -48,8 +48,6 @@ export class CurrencyService  extends ApiService {
 		return data;
   }
   
-  
-
   async getDefaultCurrencies(): Promise<any> {
     const res = await fetch(API + "currency/default", {
 			method: "GET",
@@ -82,7 +80,6 @@ export class CurrencyService  extends ApiService {
     }
   }
 
-  // Método para realizar la conversión
   async convert(amount: number, fromCurrencyId: number, toCurrencyId: number): Promise<{ convertedAmount: number; remainingAttempts: number }> {
     try {
       const response = await fetch(API + `currency/convert`, {
@@ -101,7 +98,6 @@ export class CurrencyService  extends ApiService {
       if (!response.ok) {
         throw new Error("Error en la conversión de monedas.");
       }
-
       const { convertedAmount, remainingAttempts } = await response.json();
       return { convertedAmount, remainingAttempts };
     } catch (error) {
@@ -109,7 +105,6 @@ export class CurrencyService  extends ApiService {
       throw error;
     }
   }
-  
   
   async createCurrency(currency: Currency): Promise<boolean> {
     if (currency.currencyId) return false;
@@ -138,7 +133,6 @@ export class CurrencyService  extends ApiService {
     return res.ok;
   }
   
-
   async deleteCurrency(currencyId: number): Promise<boolean> {
     try {
       const res = await fetch(API + `currency/${currencyId}`, {
@@ -151,10 +145,9 @@ export class CurrencyService  extends ApiService {
       if (!res.ok) {
         const errorData = await res.json();
         console.error('Error al eliminar la moneda:', errorData);
-        return false; // Devuelve false si la eliminación falla
+        return false; 
       }
-  
-      return true; // Si la respuesta es OK, devuelve true
+      return true; 
     } catch (error) {
       console.error('Error en la solicitud DELETE:', error);
       throw new Error('Hubo un error al eliminar la moneda.');
@@ -170,7 +163,6 @@ export class CurrencyService  extends ApiService {
       },
       body: JSON.stringify({ CurrencyId: currencyId }),
     });
-  
     if (res.ok) {
       return true;
     } else {
@@ -178,7 +170,6 @@ export class CurrencyService  extends ApiService {
       return false;
     }
   }
-  
 
   async removeFavoriteCurrency(currencyId: number): Promise<boolean> {
     const res = await fetch(API + `currency/favorites/${currencyId}`, {
@@ -189,7 +180,6 @@ export class CurrencyService  extends ApiService {
       },
       body: JSON.stringify({ CurrencyId: currencyId }),
     });
-  
     if (res.ok) {
       return true;
     } else {
@@ -197,6 +187,4 @@ export class CurrencyService  extends ApiService {
       return false;
     }
   }
-  
-  
 }

@@ -20,21 +20,17 @@ export class SubscriptionService  extends ApiService {
           Authorization: 'Bearer ' + this.auth.token(),
         },
       });
-  
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
       }
-  
-      // Asegúrate de que la respuesta tenga el formato esperado
       const subscription: Subscription = await response.json();
       if (!subscription) {
         throw new Error('La respuesta no contiene una suscripción válida');
       }
-  
-      return subscription; // Siempre retorna un objeto de tipo Subscription
+      return subscription; 
     } catch (error) {
       console.error('Error fetching subscription:', error);
-      throw error; // Si ocurre un error, se lanza para manejarlo externamente
+      throw error; 
     }
   }
   
@@ -46,16 +42,12 @@ export class SubscriptionService  extends ApiService {
         Authorization: "Bearer " + this.auth.token(),
       },
     });
-  
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-  
     const subscriptions: Subscription[] = await response.json();
     return subscriptions;
   }
-  
-  
 
   async updateSubscription(newSubscriptionId: SubscriptionData) {
 		const res = await fetch(API + `subscription/update`, {
@@ -68,8 +60,5 @@ export class SubscriptionService  extends ApiService {
 		});
 		return res;
 	}
-
-  
-
 
 }
