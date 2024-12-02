@@ -1,11 +1,7 @@
 <div class="container">
   <div class="body">
-    <!-- Muestra el tipo de suscripción del usuario -->
     <p class="p-text">Plan:  {{ userSubscriptionType || 'No disponible' }}</p>
-    
-    <!-- Botón para ver todas las monedas -->
     <button class="view-coins-button" [routerLink]="['/coins']">Ver Monedas</button>
-
     <label for="amount">Importe</label>
     <input type="text" id="amount" placeholder="100" [(ngModel)]="amount" />
 

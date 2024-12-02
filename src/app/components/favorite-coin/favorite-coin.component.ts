@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, inject } from '@angular/core';
 import { CurrencyService } from '../../services/currency.service';
 import { Currency } from '../../interfaces/Currency';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-favorite-coin',
@@ -16,6 +16,7 @@ export class FavoriteCoinComponent implements OnInit {
   @Output() currencySelected = new EventEmitter<Currency>();
 
   router = inject(Router)
+  route = inject(ActivatedRoute);
   currencyService = inject(CurrencyService);
   favoriteCurrencies: Currency[] = [];
   availableNonFavoriteCurrencies: Currency[] = [];
@@ -24,7 +25,7 @@ export class FavoriteCoinComponent implements OnInit {
 
 selectCurrency(currency: Currency) {
   this.selectedCurrency = currency.legend;
-  this.selectedCurrencyObj = currency; // Guardar la referencia completa
+  this.selectedCurrencyObj = currency; 
   this.currencySelected.emit(currency);
   this.toggleDropdown();
 }

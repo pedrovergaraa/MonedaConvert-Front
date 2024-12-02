@@ -24,6 +24,7 @@ export class CoinDetailComponent implements OnInit {
   cancelEdit() {
     console.log('Edición cancelada');
     this.resetCurrency();
+    this.router.navigate(['/converter']);
   }
 
   private resetCurrency() {
@@ -39,19 +40,27 @@ export class CoinDetailComponent implements OnInit {
 
   async loadCurrencyDetails() {
     const currencyId = this.route.snapshot.paramMap.get('currencyId');
-    if (currencyId) {
-      try {
-        this.currency = await this.currencyService.getCurrencyById(Number(currencyId));
-        console.log('Moneda cargada:', this.currency); // Este log debería aparecer con la moneda cargada
-        if (!this.currency) {
-          this.resetCurrency();
-          ErrorMessage('Moneda no encontrada');
-        }
-      } catch (error) {
-        console.error('Error al cargar los detalles de la moneda', error);
+    console.log('ID de moneda recibido:', currencyId);
+  
+    if (!currencyId || isNaN(Number(currencyId))) {
+      ErrorMessage('ID de moneda inválido');
+      this.router.navigate(['/coins']);
+      return;
+    }
+  
+    try {
+      this.currency = await this.currencyService.getCurrencyById(Number(currencyId));
+      console.log('Moneda cargada:', this.currency);
+      if (!this.currency) {
+        this.resetCurrency();
+        ErrorMessage('Moneda no encontrada');
       }
+    } catch (error) {
+      ErrorMessage('Error al cargar los detalles de la moneda');
+      console.error(error);
     }
   }
+  
   
   
   

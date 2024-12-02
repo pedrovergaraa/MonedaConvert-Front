@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ErrorMessage, SuccessMessage } from 'src/app/helpers/messageModal';
@@ -12,6 +12,9 @@ import { CurrencyService } from 'src/app/services/currency.service';
   styleUrls: ['./card-coin.component.scss']
 })
 export class CardCoinComponent {
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
   @Input() currency!: Currency;
 
   currencyService = inject(CurrencyService);
