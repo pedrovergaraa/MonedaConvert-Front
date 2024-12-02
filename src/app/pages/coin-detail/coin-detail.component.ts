@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CurrencyService } from '../../services/currency.service';
 import { Currency } from '../../interfaces/Currency';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-coin-detail',
@@ -34,11 +35,17 @@ export class CoinDetailComponent implements OnInit {
 
     try {
       await this.currencyService.editCurrency(this.currency.currencyId, this.currency);
-      alert('Moneda actualizada correctamente');
       this.router.navigate(['/']);
+      Swal.fire({
+        title: '¡Éxito!',
+        text: 'La moneda se ha editado correctamente.',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      });
     } catch (error) {
       console.error('Error al actualizar moneda:', error);
     }
+   
   }
 
   cancelEdit() {

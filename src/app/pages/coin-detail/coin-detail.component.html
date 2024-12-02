@@ -1,5 +1,5 @@
 <div *ngIf="currency" class="coin-detail">
-  <h2>Editar Moneda</h2>
+  <h2 class="edit-title">Editar Moneda</h2>
   <form (ngSubmit)="editCurrency()">
     <label>
       Leyenda:
@@ -13,10 +13,13 @@
       IC:
       <input [(ngModel)]="currency.ic" name="ic" type="number" required />
     </label>
-    <button type="submit">Guardar</button>
-    <button type="button" (click)="cancelEdit()">Cancelar</button>
+    <div class="form-buttons">
+      <button class="confirm-button" type="submit">Guardar</button>
+      <button class="cancel-button" type="button" (click)="cancelEdit()">Cancelar</button>
+    </div>
   </form>
 </div>
+
 <ng-template #loading>
   <p>Cargando moneda...</p>
 </ng-template>

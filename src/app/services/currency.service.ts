@@ -181,13 +181,22 @@ export class CurrencyService  extends ApiService {
   
 
   async removeFavoriteCurrency(currencyId: number): Promise<boolean> {
-    const res = await fetch(API + `currency/favorite/${currencyId}`, {
+    const res = await fetch(API + `currency/favorites/${currencyId}`, {
       method: 'DELETE',
       headers: {
+        'Content-Type': 'application/json',
         Authorization: 'Bearer ' + this.auth.token(),
       },
+      body: JSON.stringify({ CurrencyId: currencyId }),
     });
-
-    return res.ok;
+  
+    if (res.ok) {
+      return true;
+    } else {
+      console.error('Error al remover moneda favorita:', await res.text());
+      return false;
+    }
   }
+  
+  
 }

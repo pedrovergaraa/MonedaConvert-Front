@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./converter.component.scss'],
 })
 export class ConverterComponent implements OnInit {
-  amount: number = 0;
+  amount: number;
   selectedFromCurrency: Currency | null = null;
   selectedToCurrency: Currency | null = null;
   currencies: Currency[] = [];
