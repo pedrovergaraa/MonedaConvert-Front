@@ -81,26 +81,33 @@ export class CurrencyService  extends ApiService {
       throw error;
     }
   }
+
+  // Método para realizar la conversión
   async convert(amount: number, fromCurrencyId: number, toCurrencyId: number): Promise<{ convertedAmount: number; remainingAttempts: number }> {
-    const response = await fetch(API + `currency/convert`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${this.auth.token()}`,
-      },
-      body: JSON.stringify({
-        amount,
-        fromCurrencyId,
-        toCurrencyId,
-      }),
-    });
-  
-    if (!response.ok) {
-      throw new Error("Error en la conversión de monedas.");
+    try {
+      const response = await fetch(API + `currency/convert`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.auth.token()}`,
+        },
+        body: JSON.stringify({
+          amount,
+          fromCurrencyId,
+          toCurrencyId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error en la conversión de monedas.");
+      }
+
+      const { convertedAmount, remainingAttempts } = await response.json();
+      return { convertedAmount, remainingAttempts };
+    } catch (error) {
+      console.error('Error en la conversión:', error);
+      throw error;
     }
-  
-    const { convertedAmount, remainingAttempts } = await response.json();
-    return { convertedAmount, remainingAttempts };
   }
   
   

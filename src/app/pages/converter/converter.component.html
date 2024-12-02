@@ -3,22 +3,22 @@
     <p class="p-text">Plan:  {{ userSubscriptionType || 'No disponible' }}</p>
     <button class="view-coins-button" [routerLink]="['/coins']">Ver Monedas</button>
     <label for="amount">Importe</label>
-    <input type="text" id="amount" placeholder="100" [(ngModel)]="amount" />
+    <input type="number" id="amount" placeholder="100" [(ngModel)]="amount" />
 
     <div class="input-container">
       <label for="from">De</label>
-      <app-favorite-coin 
-        [selectedCurrency]="selectedFromCurrency" 
-        (currencySelected)="onFromCurrencySelected($event)">
-      </app-favorite-coin>
+      <app-favorite-coin
+      [selectedCurrency]="selectedFromCurrency"
+      (selectedCurrencyChange)="onFromCurrencyChange($event)"
+    ></app-favorite-coin>
     </div>
 
     <div class="input-container">
       <label for="to">A</label>
-      <app-favorite-coin 
-        [selectedCurrency]="selectedToCurrency" 
-        (currencySelected)="onToCurrencySelected($event)">
-      </app-favorite-coin>
+      <app-favorite-coin
+      [selectedCurrency]="selectedToCurrency"
+      (selectedCurrencyChange)="onToCurrencyChange($event)"
+    ></app-favorite-coin>
     </div>
 
     <button class="convert-button" type="button" (click)="convertCurrency()" [disabled]="!selectedFromCurrency || !selectedToCurrency">Convertir</button>
@@ -27,16 +27,5 @@
     <div class="p-text">
       <p>Intentos restantes: {{ userConversionsLeft ?? 'Cargando...' }}</p>
     </div>
-    
-<!-- 
-    <div *ngIf="favoriteCoins.length > 0">
-      <h3>Monedas Favoritas</h3>
-      <ul>
-        <li *ngFor="let currency of favoriteCoins">
-          {{ currency.legend }}
-          <button (click)="deleteCurrency(currency.currencyId)">Eliminar</button>
-        </li>
-      </ul>
-    </div> -->
   </div>
 </div>

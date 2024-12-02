@@ -1,7 +1,7 @@
-import { Component, Input, Output, EventEmitter, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, Output, EventEmitter, Input } from '@angular/core';
 import { CurrencyService } from '../../services/currency.service';
 import { Currency } from '../../interfaces/Currency';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-favorite-coin',
@@ -9,109 +9,41 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./favorite-coin.component.scss'],
 })
 export class FavoriteCoinComponent implements OnInit {
-  
-  
-  @Input() selectedCurrency: string = '';
-  @Input() currency!: Currency;
-  @Output() currencySelected = new EventEmitter<Currency>();
-
-  router = inject(Router)
-  route = inject(ActivatedRoute);
-  currencyService = inject(CurrencyService);
-  favoriteCurrencies: Currency[] = [];
-  availableNonFavoriteCurrencies: Currency[] = [];
+  @Input() favoriteCurrencies: any[] = []; 
+  @Input() selectedCurrency: Currency | null = null;
+  @Output() selectedCurrencyChange = new EventEmitter<Currency>();
   showDropdown = false;
-  selectedCurrencyObj!: Currency;
 
-selectCurrency(currency: Currency) {
-  this.selectedCurrency = currency.legend;
-  this.selectedCurrencyObj = currency; 
-  this.currencySelected.emit(currency);
-  this.toggleDropdown();
-}
-
-goToEditPage(currency: Currency) {
-  if (currency && currency.currencyId) {
-    this.router.navigate(['/coin-detail', currency.currencyId]);
-  } else {
-    console.error('La moneda seleccionada no tiene un ID válido.');
-  }
-}
-
+  currencyService = inject(CurrencyService);
+  router = inject(Router);
 
   ngOnInit() {
-    this.loadCurrencies();
+    this.loadFavoriteCurrencies();
   }
 
-  async loadCurrencies() {
+  async loadFavoriteCurrencies() {
     try {
-      const userCurrencies = await this.currencyService.getUserCurrencies();
-      this.sortCurrencies(userCurrencies);
+      this.favoriteCurrencies = await this.currencyService.getUserCurrencies();
     } catch (error) {
-      console.error('Error al cargar monedas del usuario:', error);
+      console.error('Error al cargar las monedas:', error);
     }
   }
 
-  sortCurrencies(currencies: Currency[]) {
-    this.favoriteCurrencies = currencies.filter((currency) => currency.isDefault);
-    this.availableNonFavoriteCurrencies = currencies.filter((currency) => !currency.isDefault);
+  toggleFavorite(currency: any): void {
+    currency.isFavorite = !currency.isFavorite;  // Cambia el estado de favorito
   }
-
+  
   toggleDropdown() {
     this.showDropdown = !this.showDropdown;
   }
 
-  // selectCurrency(currency: Currency) {
-  //   this.selectedCurrency = currency.legend;
-  //   this.currencySelected.emit(currency);
-  //   this.toggleDropdown();
-  // }
-
-  // goToEditPage(currency: Currency) {
-  //   this.router.navigate(['/coin-detail', currency.currencyId]);
-  // }
-  
-
-  async toggleFavorite(currency: Currency, event: MouseEvent) {
-    event.stopPropagation(); // Evitar que el evento afecte la selección de moneda
-    try {
-      if (currency.isDefault) {
-        await this.removeFavorite(currency);
-      } else {
-        await this.addFavorite(currency);
-      }
-    } catch (error) {
-      console.error('Error al cambiar el estado de favorito:', error);
-    }
+  selectCurrency(currency: Currency) {
+    this.selectedCurrency = currency;
+    this.selectedCurrencyChange.emit(currency); // Notifica al padre la selección
   }
 
-  async addFavorite(currency: Currency) {
-    const success = await this.currencyService.addFavoriteCurrency(currency.currencyId);
-    if (success) {
-      currency.isDefault = true;
-      this.updateCurrencyLists(currency);
-    }
-  }
-
-  async removeFavorite(currency: Currency) {
-    const success = await this.currencyService.removeFavoriteCurrency(currency.currencyId);
-    if (success) {
-      currency.isDefault = false;
-      this.updateCurrencyLists(currency);
-    }
-  }
-
-  updateCurrencyLists(updatedCurrency: Currency) {
-    if (updatedCurrency.isDefault) {
-      this.favoriteCurrencies = [...this.favoriteCurrencies, updatedCurrency];
-      this.availableNonFavoriteCurrencies = this.availableNonFavoriteCurrencies.filter(
-        (currency) => currency.currencyId !== updatedCurrency.currencyId
-      );
-    } else {
-      this.availableNonFavoriteCurrencies = [...this.availableNonFavoriteCurrencies, updatedCurrency];
-      this.favoriteCurrencies = this.favoriteCurrencies.filter(
-        (currency) => currency.currencyId !== updatedCurrency.currencyId
-      );
-    }
+  goToEditPage(currency: Currency, event: MouseEvent) {
+    event.stopPropagation(); // Evitar cerrar el dropdown
+    this.router.navigate(['/coin-detail', currency.currencyId]);
   }
 }

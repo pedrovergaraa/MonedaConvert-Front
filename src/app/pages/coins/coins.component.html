@@ -1,13 +1,13 @@
 <div class="container">
-  <!-- Por Defecto -->
+  <!-- Monedas por defecto -->
   <div class="category">
     <div class="title">
       <h1>Por defecto</h1>
     </div>
     <div class="coin-container">
       <ng-container *ngIf="defaultCurrencies.length > 0; else noDefaultCurrencies">
-        <div class="coin" *ngFor="let coin of defaultCurrencies">
-          <app-card-coin [currency]="coin"></app-card-coin>
+        <div class="coin" *ngFor="let currency of defaultCurrencies">
+          <app-card-coin [currency]="currency"></app-card-coin>
         </div>
       </ng-container>
       <ng-template #noDefaultCurrencies>
@@ -18,7 +18,7 @@
     </div>
   </div>
 
-  <!-- Favoritas -->
+  <!-- Monedas favoritas -->
   <div class="category">
     <div class="title">
       <h1>
@@ -28,8 +28,8 @@
     </div>
     <div class="coin-container">
       <ng-container *ngIf="favoriteCurrencies.length > 0; else noFavoriteCurrencies">
-        <div class="coin" *ngFor="let coin of favoriteCurrencies">
-          <app-card-coin [currency]="coin"></app-card-coin>
+        <div class="coin" *ngFor="let currency of favoriteCurrencies">
+          <app-card-coin [currency]="currency"></app-card-coin>
         </div>
       </ng-container>
       <ng-template #noFavoriteCurrencies>
@@ -40,18 +40,18 @@
     </div>
   </div>
 
-  <!-- Mis Monedas -->
+  <!-- Mis monedas -->
   <div class="category">
     <div class="title">
       <h1>Todas las monedas</h1>
       <div class="button-container">
-        <button class="create-button" (click)="openCreateCoinModal()">Crear +</button>
+        <button class="create-button" (click)="openCreateCurrencyModal()">Crear +</button>
       </div>
     </div>
     <div class="coin-container">
       <ng-container *ngIf="userCurrencies.length > 0; else noUserCurrencies">
-        <div class="coin" *ngFor="let coin of userCurrencies">
-          <app-card-coin [currency]="coin"></app-card-coin>
+        <div class="coin" *ngFor="let currency of userCurrencies">
+          <app-card-coin [currency]="currency"></app-card-coin>
         </div>
       </ng-container>
       <ng-template #noUserCurrencies>
@@ -63,10 +63,9 @@
   </div>
 </div>
 
-
 <!-- Modal para Crear Monedas -->
-<div *ngIf="isCreateCoinModalOpen" class="modal-overlay">
+<div *ngIf="isCreateCurrencyModalOpen" class="modal-overlay">
   <div class="modal-content">
-    <app-creat-coin (close)="closeCreateCoinModal()"></app-creat-coin>
+    <app-creat-coin (close)="closeCreateCurrencyModal()"></app-creat-coin>
   </div>
 </div>

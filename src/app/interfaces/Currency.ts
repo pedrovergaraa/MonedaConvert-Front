@@ -7,6 +7,7 @@ export interface Currency{
     ic: number;
     isDefault: boolean;
     userId: number;
+    isFavorite?: boolean;
 }
 export interface FavoriteCurrency{
   favoriteCurrencyId: number;

@@ -4,42 +4,41 @@
     display: flex;
     align-items: center;
     width: 100%;
-}
-
-.dropdown {
+  }
+  
+  .dropdown-container {
     position: relative;
     display: inline-block;
     width: 100%;
-    margin: 10px 0; 
-}
-
-.dropdown-arrow {
+    margin: 10px 0;
+  }
+  
+  .dropdown-arrow {
     margin-left: 8px;
     cursor: pointer;
-    transition: transform 0.3s ease; 
-}
-
-.dropdown-arrow.rotated {
-    transform: rotate(360deg); 
-}
-
-.dropdown-menu {
+    transition: transform 0.3s ease;
+  }
+  
+  .dropdown-arrow.rotated {
+    transform: rotate(180deg); /* Para rotar la flecha */
+  }
+  
+  .dropdown-menu {
     display: block;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 20%; 
+    min-width: 20%;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
     margin-top: 5px;
     border-radius: 4px;
-}
-
-
-.dropdown-menu li:hover {
+  }
+  
+  .dropdown-menu li:hover {
     background-color: #f1f1f1;
-}
-
-li {
+  }
+  
+  li {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -47,22 +46,36 @@ li {
     cursor: pointer;
   }
   
+  .icons-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .edit-button {
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-right: 10px;
+  }
+  
   .star-icon {
     margin-left: 8px;
     cursor: pointer;
-    transition: color 0.3s ease;
+    font-size: 1.2rem;
   }
   
   .favorite {
-    color: $primary-color; 
+    color: $primary-color; /* Color para marcar como favorito */
   }
   
-label {
+  label {
     color: $primary-color;
     font-size: 1rem;
-}
-
-input[type="text"] {
+  }
+  
+  input[type="text"] {
     background-color: white;
     border: 2px solid $primary-color;
     border-radius: 20px;
@@ -71,8 +84,9 @@ input[type="text"] {
     padding: 10px;
     width: 95%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-a{
+  }
+  
+  a {
     color: $background-color;
-}
+  }
+  

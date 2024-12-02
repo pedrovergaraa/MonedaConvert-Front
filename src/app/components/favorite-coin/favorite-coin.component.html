@@ -1,41 +1,15 @@
-<div class="dropdown">
-  <div class="input-container">
-    <input
-      type="text"
-      [value]="selectedCurrency"
-      placeholder="Selecciona una moneda"
-      (click)="toggleDropdown()"
-      readonly
-    />
-    <a
-  class="edit-icon"
-  (click)="goToEditPage(selectedCurrencyObj)"
-  *ngIf="selectedCurrencyObj"
->
-  ✏️
-</a>
-
-    <span
-      class="dropdown-arrow"
-      [ngClass]="{ rotated: showDropdown }"
-      (click)="toggleDropdown()"
-    >
-      {{ showDropdown ? '▲' : '▼' }}
-    </span>
+<div class="dropdown-container">
+  <div class="dropdown" (click)="toggleDropdown()">
+    <span *ngIf="!selectedCurrency">Seleccione una moneda</span>
+    <span *ngIf="selectedCurrency">{{ selectedCurrency.legend }}</span>
+    <i class="fas fa-chevron-down"></i>
   </div>
-
   <ul *ngIf="showDropdown" class="dropdown-menu">
-    <li
-      *ngFor="let currency of favoriteCurrencies.concat(availableNonFavoriteCurrencies)"
-      (click)="selectCurrency(currency)"
-    >
-      {{ currency.legend }} ({{ currency.symbol }})
-      <i
-        class="star-icon"
-        [ngClass]="currency.isDefault ? 'fas fa-star favorite' : 'far fa-star' "
-        (click)="toggleFavorite(currency, $event)"
-        [title]="currency.isDefault ? 'Remover de favoritos' : 'Agregar a favoritos'"
-      ></i>
+    <li *ngFor="let currency of favoriteCurrencies" (click)="selectCurrency(currency)">
+      {{ currency.legend }}
+      <button class="edit-button" (click)="goToEditPage(currency, $event)">
+        <i class="fas fa-edit"></i>
+      </button>
     </li>
   </ul>
 </div>

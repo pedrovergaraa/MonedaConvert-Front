@@ -11,9 +11,9 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./converter.component.scss'],
 })
 export class ConverterComponent implements OnInit {
-  amount: number;
-  selectedFromCurrency: string = '';
-  selectedToCurrency: string = '';
+  amount: number = 0;
+  selectedFromCurrency: Currency | null = null;
+  selectedToCurrency: Currency | null = null;
   currencies: Currency[] = [];
   favoriteCurrencies: Currency[] = [];
   result: string = '';
@@ -26,7 +26,7 @@ export class ConverterComponent implements OnInit {
 
   subscriptionService = inject(SubscriptionService);
   currencyService = inject(CurrencyService);
-  authService = inject(AuthService)
+  authService = inject(AuthService);
 
   ngOnInit() {
     this.loadCurrencies();
@@ -34,13 +34,12 @@ export class ConverterComponent implements OnInit {
     this.loadUserSubscription(); // Cargar suscripción y intentos al inicio
   }
   
-  // Cargar monedas
   async loadCurrencies(): Promise<void> {
     try {
       this.loading.set(true);
       const data = await this.currencyService.getUserCurrencies();
       this.currencies = data;
-      this.favoriteCurrencies = data.filter((currency) => currency.isDefault); // Ejemplo: isDefault indica si es favorita
+      this.favoriteCurrencies = data.filter((currency) => currency.isDefault); // Favoritas
     } catch (err) {
       console.error('Error al cargar las monedas:', err);
       this.error.set('No se pudieron cargar las monedas. Inténtalo más tarde.');
@@ -48,6 +47,7 @@ export class ConverterComponent implements OnInit {
       this.loading.set(false);
     }
   }
+  
 
   // Obtener la suscripción y los intentos restantes
   async loadUserSubscription(): Promise<void> {
@@ -68,35 +68,41 @@ export class ConverterComponent implements OnInit {
     }
   }
 
-  // Selección de moneda de origen
-  onFromCurrencySelected(event: any): void {
-    this.selectedFromCurrency = event.legend;
+  onFromCurrencyChange(currency: Currency) {
+    this.selectedFromCurrency = currency;
   }
 
-  // Selección de moneda de destino
-  onToCurrencySelected(event: any): void {
-    this.selectedToCurrency = event.legend;
+  onToCurrencyChange(currency: Currency) {
+    this.selectedToCurrency = currency;
   }
 
-  // Convertir moneda
   async convertCurrency(): Promise<void> {
-    const fromCurrencyId = this.currencies.find((currency) => currency.legend === this.selectedFromCurrency)?.currencyId;
-    const toCurrencyId = this.currencies.find((currency) => currency.legend === this.selectedToCurrency)?.currencyId;
+    const amountToConvert = Number(this.amount);
+    if (isNaN(amountToConvert) || amountToConvert <= 0) {
+      this.result = 'Por favor ingresa un número válido mayor que 0.';
+      return;
+    }
+    if (!this.selectedFromCurrency || !this.selectedToCurrency) {
+      this.result = 'Por favor selecciona monedas válidas para convertir.';
+      return;
+    }
+    const fromCurrencyId = this.selectedFromCurrency.currencyId;
+    const toCurrencyId = this.selectedToCurrency.currencyId;
 
-    if (fromCurrencyId && toCurrencyId) {
-      try {
-        const { convertedAmount, remainingAttempts } = await this.currencyService.convert(this.amount, fromCurrencyId, toCurrencyId);
-        this.result = `Resultado: ${convertedAmount}`;
-        this.userConversionsLeft = remainingAttempts; // Actualizar intentos restantes después de la conversión
-
-        // Recargar los detalles de la suscripción después de la conversión
-        await this.loadUserSubscription(); 
-      } catch (error) {
-        console.error('Error en la conversión:', error);
-        this.result = 'Hubo un error en la conversión.';
-      }
-    } else {
+    if (!fromCurrencyId || !toCurrencyId) {
       this.result = 'Por favor selecciona monedas válidas.';
+      return;
+    }
+
+    try {
+      const { convertedAmount, remainingAttempts } = await this.currencyService.convert(amountToConvert, fromCurrencyId, toCurrencyId);
+      this.result = `Resultado: ${convertedAmount}`;
+      this.userConversionsLeft = remainingAttempts; 
+
+      await this.loadUserSubscription();
+    } catch (error) {
+      console.error('Error en la conversión:', error);
+      this.result = 'Hubo un error en la conversión.';
     }
   }
 }

@@ -1,44 +1,22 @@
-<div *ngIf="currency">
-  <form>
-    <label for="name">Nombre</label>
-    <input
-      name="name"
-      id="name"
-      type="text"
-      [(ngModel)]="currency.legend"
-      placeholder="Ingrese el nombre"
-    />
-
-    <label for="symbol">Símbolo</label>
-    <input
-      name="symbol"
-      id="symbol"
-      type="text"
-      [(ngModel)]="currency.symbol"
-      placeholder="Ingrese el símbolo"
-    />
-
-    <label for="ic">Índice de convertibilidad</label>
-    <input
-      name="ic"
-      id="ic"
-      type="number"
-      [(ngModel)]="currency.ic"
-      placeholder="Índice de convertibilidad"
-    />
-
-    <div class="form-buttons">
-      <button type="button" class="confirm-button" (click)="editCurrency()">
-        Confirmar
-      </button>
-      <button type="button" class="cancel-button" (click)="cancelEdit()">
-        Cancelar
-      </button>
-    </div>
+<div *ngIf="currency" class="coin-detail">
+  <h2>Editar Moneda</h2>
+  <form (ngSubmit)="editCurrency()">
+    <label>
+      Leyenda:
+      <input [(ngModel)]="currency.legend" name="legend" required />
+    </label>
+    <label>
+      Símbolo:
+      <input [(ngModel)]="currency.symbol" name="symbol" required />
+    </label>
+    <label>
+      IC:
+      <input [(ngModel)]="currency.ic" name="ic" type="number" required />
+    </label>
+    <button type="submit">Guardar</button>
+    <button type="button" (click)="cancelEdit()">Cancelar</button>
   </form>
 </div>
-
-<!-- Mensaje cuando no se encuentra la moneda -->
-<div *ngIf="!currency">
-  <p>No se encontró la moneda solicitada.</p>
-</div>
+<ng-template #loading>
+  <p>Cargando moneda...</p>
+</ng-template>
