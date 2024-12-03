@@ -77,7 +77,7 @@ export class ConverterComponent implements OnInit {
   async convertCurrency(): Promise<void> {
     const amountToConvert = Number(this.amount);
     if (isNaN(amountToConvert) || amountToConvert <= 0) {
-      this.result = 'Por favor ingresa un número válido mayor que 0.';
+      this.result = 'Ingrese un número válido mayor que 0.';
       return;
     }
     if (!this.selectedFromCurrency || !this.selectedToCurrency) {
