@@ -39,7 +39,6 @@ export class FavoriteCoinComponent implements OnInit {
         .then((success) => {
           if (success) {
             currency.isFavorite = false;
-            console.log(`Moneda ${currency.legend} removida de favoritas`);
           } else {
             console.error('Error al remover moneda favorita');
           }
@@ -52,7 +51,6 @@ export class FavoriteCoinComponent implements OnInit {
         .then((success) => {
           if (success) {
             currency.isFavorite = true;
-            console.log(`Moneda ${currency.legend} marcada como favorita`);
           } else {
             console.error('Error al agregar moneda favorita');
           }
