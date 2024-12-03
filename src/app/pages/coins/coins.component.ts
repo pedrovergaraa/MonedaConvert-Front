@@ -48,55 +48,8 @@ export class CoinsComponent implements OnInit {
     }
   }
 
-  async removeFavoriteCurrency(favoriteCurrencyId: number) {
-    try {
-      const success = await this.currencyService.removeFavoriteCurrency(favoriteCurrencyId);
-      if (success) {
-        this.favoriteCurrencies = this.favoriteCurrencies.filter(
-          currency => currency.currencyId !== favoriteCurrencyId
-        );
-        Swal.fire({
-          icon: 'success',
-          title: 'Eliminado',
-          text: 'La moneda favorita ha sido eliminada.',
-        });
-      } else {
-        throw new Error('No se pudo eliminar la moneda favorita.');
-      }
-    } catch (error) {
-      console.error('Error al eliminar la moneda favorita:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Hubo un problema al eliminar la moneda favorita.',
-      });
-    }
-  }
-
-  async addFavoriteCurrency(currencyId: number) {
-    try {
-      const success = await this.currencyService.addFavoriteCurrency(currencyId);
-      if (success) {
-        const addedCurrency = this.defaultCurrencies.find(currency => currency.currencyId === currencyId);
-        if (addedCurrency) {
-          this.favoriteCurrencies.push(addedCurrency);
-        }
-        Swal.fire({
-          icon: 'success',
-          title: 'Agregado',
-          text: 'La moneda se ha agregado a favoritos.',
-        });
-      } else {
-        throw new Error('No se pudo agregar la moneda a favoritos.');
-      }
-    } catch (error) {
-      console.error('Error al agregar la moneda favorita:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Hubo un problema al agregar la moneda a favoritos.',
-      });
-    }
+  onCurrencyCreated(newCurrency: Currency) {
+    this.userCurrencies.push(newCurrency); 
   }
 
   openCreateCurrencyModal() {
