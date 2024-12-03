@@ -1,24 +1,22 @@
-}<div class="dropdown-container">
-  <div class="input-container">
+<div class="dropdown-container">
+  <div class="input-container" (click)="toggleDropdown()">
     <input 
       type="text" 
       *ngIf="!selectedCurrency" 
       placeholder="Selecciona una moneda" 
       readonly 
-      (click)="toggleDropdown()" />
-    <div *ngIf="selectedCurrency" class="selected-currency-container">
-      <span class="selected-currency">
-        {{ selectedCurrency.legend }}
-      </span>
-      <i 
-        class="fas fa-pencil-alt edit-icon" 
-        (click)="goToEditPage(selectedCurrency, $event)">
-      </i>
-    </div>
+    />
+    <span *ngIf="selectedCurrency" class="selected-currency">
+      {{ selectedCurrency.legend }}
+    </span>
+    <i 
+      class="fas fa-pencil-alt edit-icon" 
+      (click)="goToEditPage(selectedCurrency, $event)" 
+      *ngIf="selectedCurrency">
+    </i>
     <span 
       class="dropdown-arrow" 
-      [ngClass]="{'rotated': showDropdown}" 
-      (click)="toggleDropdown()">
+      [ngClass]="{'rotated': showDropdown}">
       {{ showDropdown ? '▲' : '▼' }}
     </span>
   </div>
@@ -30,10 +28,7 @@
       <span>{{ currency.legend }}</span>
       <i
         class="fas fa-star star-icon"
-        [ngClass]="{ 
-          'favorite': currency.isFavorite, 
-          'not-favorite': !currency.isFavorite 
-        }"
+        [ngClass]="{ 'favorite': currency.isFavorite }"
         (click)="toggleFavorite(currency, $event)">
       </i>
     </li>

@@ -34,6 +34,7 @@ form {
     label {
       color: $text-color;
       margin-bottom: 5px;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
 
     input {
@@ -62,6 +63,7 @@ form {
     display: flex;
     gap: 15px;
     width: 100%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 #create {
@@ -93,6 +95,7 @@ form {
     cursor: pointer;
     font-size: 1rem;
     width: 48%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 
     &:hover {
         background-color: darkgray;

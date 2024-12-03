@@ -24,7 +24,6 @@ export class CoinsComponent implements OnInit {
 
   async loadCurrencies() {
     try {
-      console.log('Cargando monedas...');
       const [userCurrencies, favoriteCurrencies, defaultCurrencies] = await Promise.all([
         this.currencyService.getUserCurrencies(),
         this.currencyService.getFavoriteCurrencies(),
@@ -33,11 +32,6 @@ export class CoinsComponent implements OnInit {
       this.userCurrencies = userCurrencies;
       this.favoriteCurrencies = favoriteCurrencies;
       this.defaultCurrencies = defaultCurrencies;
-      console.log('Monedas cargadas:', {
-        userCurrencies: this.userCurrencies,
-        favoriteCurrencies: this.favoriteCurrencies,
-        defaultCurrencies: this.defaultCurrencies
-      });
     } catch (error) {
       console.error('Error al cargar las monedas:', error);
       Swal.fire({
