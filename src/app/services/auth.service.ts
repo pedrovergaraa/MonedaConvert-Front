@@ -2,6 +2,7 @@ import { Injectable, WritableSignal, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginData, RegisterData } from '../interfaces/User';
 import { API } from '../constants/api';
+import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -16,6 +17,13 @@ export class AuthService {
   getUserId(): number {
     const userId = localStorage.getItem('userId');
     return userId ? parseInt(userId, 10) : 0;  
+  }
+
+  private showHeaderAndFooter = new BehaviorSubject<boolean>(true);
+  showHeaderAndFooter$ = this.showHeaderAndFooter.asObservable();
+
+  setVisibility(visible: boolean) {
+    this.showHeaderAndFooter.next(visible);
   }
 
   async login(loginData: LoginData): Promise<boolean> {

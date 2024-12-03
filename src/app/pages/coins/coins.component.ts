@@ -13,7 +13,6 @@ export class CoinsComponent implements OnInit {
 
   currencyService = inject(CurrencyService);
   authService = inject(AuthService);
-  
   userCurrencies: Currency[] = [];
   favoriteCurrencies: Currency[] = [];
   defaultCurrencies: Currency[] = [];

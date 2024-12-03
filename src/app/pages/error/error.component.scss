@@ -1,0 +1,56 @@
+@import 'src/assets/styles/variables.scss';
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+  background-color: $background-color;
+  justify-content: space-between;
+}
+
+header img,
+footer img {
+  width: 100%;
+}
+
+#error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.error-title {
+  color: $primary-color;
+  font-size: 2rem;
+  margin-bottom: 60px;
+  padding: 15px;
+}
+
+.error-subtitle {
+  color: white;
+  font-size: 1.5rem;
+  margin-bottom: 40px;
+}
+
+.back-link {
+  display: inline-block;
+  text-decoration: none;
+  background-color: $primary-color;
+  color: $background-color;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background-color: lighten($primary-color, 10%);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  }
+}
