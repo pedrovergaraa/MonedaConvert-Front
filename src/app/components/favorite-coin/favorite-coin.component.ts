@@ -66,7 +66,6 @@ export class FavoriteCoinComponent implements OnInit {
   
   sortCurrencies(): void {
     this.favoriteCurrencies.sort((a, b) => {
-      // Las favoritas primero; si ambas tienen el mismo estado, se mantiene el orden original
       return Number(b.isFavorite) - Number(a.isFavorite);
     });
   }
@@ -84,8 +83,8 @@ export class FavoriteCoinComponent implements OnInit {
 
   selectCurrency(currency: Currency): void {
     this.selectedCurrency = currency;
-    this.selectedCurrencyChange.emit(currency); // Notifica al padre la selección
-    this.showDropdown = false; // Cierra el dropdown
+    this.selectedCurrencyChange.emit(currency);
+    this.showDropdown = false; 
   }
  
 }
